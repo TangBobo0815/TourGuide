@@ -1,0 +1,189 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      sign up
+    </ion-title>
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content pedding>
+    <p class="count">{{stepCount}}</p>  
+  <form [formGroup]="registerForm" (ngSubmit)="signUp()">
+    <p text-center >夥伴，請填寫會員基本資料吧 !</p>
+    <ion-list class="signup-input" >
+      <ion-item >
+        <ion-label>姓名</ion-label>
+        <ion-input type="text" placeholder="輸入姓名" formControlName="Name"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="formErrors.Name">
+          <ion-text color="danger">
+            <p>{{ formErrors.Name }}</p>
+          </ion-text>
+        </ion-item>
+      <ion-item>
+        <ion-label>性別</ion-label>
+        <ion-select formControlName="gender" placeholder="Select One">
+          <ion-select-option >男</ion-select-option>
+          <ion-select-option >女</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="formErrors.gender">
+          <ion-text color="danger">
+            <p>{{ formErrors.gender }}</p>
+          </ion-text>
+        </ion-item>
+      <ion-item>
+          <ion-label>信箱</ion-label>
+          <ion-input type="email" placeholder="這是未來的帳號" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="formErrors.email">
+          <ion-text color="danger">
+            <p>{{ formErrors.email }}</p>
+          </ion-text>
+      </ion-item>
+
+      <div formGroupName="passwordGroup">
+        <ion-item>
+            <ion-label>密碼</ion-label>
+            <ion-input type="password" placeholder="6~15個英數字組合" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="formErrors.password">
+            <ion-text color="danger">
+              <p>{{ formErrors.password }}</p>
+            </ion-text>
+          </ion-item>
+        <ion-item>
+            <ion-label>確認密碼</ion-label>
+            <ion-input type="password" placeholder="再次輸入密碼" formControlName="confirmPassword"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="formErrors.confirmPassword">
+            <ion-text color="danger">
+              <p>{{ formErrors.confirmPassword }}</p>
+            </ion-text>
+          </ion-item>
+          <ion-item *ngIf="formErrors.matchPassword">
+            <ion-text color="danger">
+              <p>{{ formErrors.matchPassword }}</p>
+            </ion-text>
+          </ion-item>
+      </div>
+      
+      <ion-item>
+          <ion-label>出生日期</ion-label>
+          <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"  formControlName="date"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="formErrors.date">
+          <ion-text color="danger">
+            <p>{{ formErrors.date }}</p>
+          </ion-text>
+        </ion-item>
+      <ion-item>
+          <ion-label>手機</ion-label>
+          <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="formErrors.phone">
+          <ion-text color="danger">
+            <p>{{ formErrors.phone }}</p>
+          </ion-text>
+        </ion-item>
+      <ion-item>
+      <ion-label>住址</ion-label>
+          <ion-input type="text" placeholder="輸入住址" formControlName="address"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="formErrors.address">
+          <ion-text color="danger">
+            <p>{{ formErrors.address }}</p>
+          </ion-text>
+      </ion-item>
+    <div padding text-center class="b">
+      <ion-button type="submit" color="primary" [disabled]="!registerForm.valid">下一步</ion-button> 
+    </div> 
+    </ion-list>
+  </form>
+</ion-content>
+ 
+
+<!--<mat-horizontal-stepper>
+  <mat-step [stepControl]="userformGroup1">
+    <ng-template matStepLabel>輸入您的資料</ng-template>
+      <form [formGroup]="registerForm">
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="姓名" formControlName="Name" required>
+              <mat-error *ngIf="formErrors.Name">{{formErrors.Name}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>請選擇性別</mat-label>
+            <mat-select  formControlName="gender" required>
+              <mat-option *ngFor="let food of foods" [value]="food.value">
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp3" placeholder="選擇生日(必填)" disabled >
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="手機" formControlName="phone" required>
+            <mat-error *ngIf="formErrors.phone">{{formErrors.phone}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="地址" formControlName="address" required>
+            <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperNext>下一步</button>
+        </div>
+      </form>
+  </mat-step>
+  <mat-step [stepControl]="userformGroup2">
+      <ng-template matStepLabel>輸入您的帳號密碼</ng-template>
+        <form [formGroup]="emailForm">
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="信箱(未來登入使用)"  formControlName="email" required>
+                <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div formGroupName="passwordGroup">
+              <mat-form-field>
+                <input matInput placeholder="密碼" type="password" formControlName="password" required>
+                <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="確認密碼" type="password" formControlName="confirmPassword" required>
+                <mat-error *ngIf="formErrors.confirmPassword">{{formErrors.confirmPassword}}</mat-error>
+              </mat-form-field>
+              <mat-error *ngIf="formErrors.matchPassword">{{formErrors.matchPassword}}</mat-error>              
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>上一步</button>
+                <button mat-button matStepperNext>下一步</button>
+              </div>
+        </form>
+  </mat-step>
+  <mat-step [stepControl]="userformGroup3">
+      <ng-template matStepLabel>嚮導功能</ng-template>
+      <form [formGroup]="tourForm">
+        <div>
+         <mat-slide-toggle>是否開啟嚮導功能</mat-slide-toggle>
+        </div>
+      </form>
+  </mat-step>
+</mat-horizontal-stepper>-->
+

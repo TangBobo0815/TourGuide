@@ -1,6 +1,8 @@
 {
   "name": "TourG",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "90459af0"
 }
