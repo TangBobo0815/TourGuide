@@ -1,110 +1,231 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="login"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      sign up
+      註冊
     </ion-title>
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
 <ion-content pedding>
-    <p class="count">{{stepCount}}</p>  
+  <p class="count">{{stepCount}}</p>
   <form [formGroup]="registerForm" (ngSubmit)="signUp()">
-    <p text-center >夥伴，請填寫會員基本資料吧 !</p>
-    <ion-list class="signup-input" >
-      <ion-item >
-        <ion-label>姓名</ion-label>
-        <ion-input type="text" placeholder="輸入姓名" formControlName="Name"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.Name">
-          <ion-text color="danger">
-            <p>{{ formErrors.Name }}</p>
-          </ion-text>
-        </ion-item>
-      <ion-item>
-        <ion-label>性別</ion-label>
-        <ion-select formControlName="gender" placeholder="Select One">
-          <ion-select-option >男</ion-select-option>
-          <ion-select-option >女</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="formErrors.gender">
-          <ion-text color="danger">
-            <p>{{ formErrors.gender }}</p>
-          </ion-text>
-        </ion-item>
-      <ion-item>
-          <ion-label>信箱</ion-label>
-          <ion-input type="email" placeholder="這是未來的帳號" formControlName="email"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.email">
-          <ion-text color="danger">
-            <p>{{ formErrors.email }}</p>
-          </ion-text>
-      </ion-item>
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="myStepper1">
+        <ng-template matStepLabel>第一步</ng-template>
+        <div>
+          <p text-center>夥伴，請填寫會員基本資料吧 !</p>
+          <ion-list class="signup-input">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>姓名</ion-label>
+                    <ion-input type="text" placeholder="輸入姓名" formControlName="Name"></ion-input>
+                  </ion-item>
+                </ion-col>
 
-      <div formGroupName="passwordGroup">
-        <ion-item>
-            <ion-label>密碼</ion-label>
-            <ion-input type="password" placeholder="6~15個英數字組合" formControlName="password"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="formErrors.password">
-            <ion-text color="danger">
-              <p>{{ formErrors.password }}</p>
-            </ion-text>
+                <ion-item *ngIf="formErrors.Name">
+                  <ion-text color="danger">
+                    <p>{{ formErrors.Name }}</p>
+                  </ion-text>
+                </ion-item>
+
+                <ion-col>
+                  <ion-item>
+                    <ion-label>性別</ion-label>
+                    <ion-select formControlName="gender" placeholder="Select One">
+                      <ion-select-option>男</ion-select-option>
+                      <ion-select-option>女</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-item *ngIf="formErrors.gender">
+                <ion-text color="danger">
+                  <p>{{ formErrors.gender }}</p>
+                </ion-text>
+              </ion-item>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>信箱</ion-label>
+                    <ion-input type="email" placeholder="這是未來的帳號" formControlName="email"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-item *ngIf="formErrors.email">
+                <ion-text color="danger">
+                  <p>{{ formErrors.email }}</p>
+                </ion-text>
+              </ion-item>
+
+              <div formGroupName="passwordGroup">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>密碼</ion-label>
+                      <ion-input type="password" placeholder="6~15個英數字組合" formControlName="password"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item *ngIf="formErrors.password">
+                  <ion-text color="danger">
+                    <p>{{ formErrors.password }}</p>
+                  </ion-text>
+                </ion-item>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>確認密碼</ion-label>
+                      <ion-input type="password" placeholder="再次輸入密碼" formControlName="confirmPassword"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item *ngIf="formErrors.confirmPassword">
+                  <ion-text color="danger">
+                    <p>{{ formErrors.confirmPassword }}</p>
+                  </ion-text>
+                </ion-item>
+
+                <ion-item *ngIf="formErrors.matchPassword">
+                  <ion-text color="danger">
+                    <p>{{ formErrors.matchPassword }}</p>
+                  </ion-text>
+                </ion-item>
+              </div>
+
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>出生日期</ion-label>
+                    <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
+                      formControlName="date">
+                    </ion-datetime>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-item *ngIf="formErrors.date">
+                <ion-text color="danger">
+                  <p>{{ formErrors.date }}</p>
+                </ion-text>
+              </ion-item>
+
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>手機</ion-label>
+                    <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-item *ngIf="formErrors.phone">
+                <ion-text color="danger">
+                  <p>{{ formErrors.phone }}</p>
+                </ion-text>
+              </ion-item>
+
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>住址</ion-label>
+                    <ion-input type="text" placeholder="輸入住址" formControlName="address"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+
+              <ion-item *ngIf="formErrors.address">
+                <ion-text color="danger">
+                  <p>{{ formErrors.address }}</p>
+                </ion-text>
+              </ion-item>
+
+              <div>
+                <button mat-flat-button matStepperNext >下一步</button>
+              </div>
+            </ion-grid>
+          </ion-list>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="myStepper2">
+        <ng-template matStepLabel>第二步</ng-template>
+        <div class="font">
+          <p>夥伴，請問你是否想開啟響導功能呢?</p>
+          <p>何謂響導?</p>
+          <p class="size">除了有會員的功能之外<br>還能上傳自己的行程來提供給其他會員選擇</p>
+          <p class="size">開啟響導功能會需要提供您的身分證照</p>
+          <ion-item>
+            <ion-label text-center>你是否開啟響導功能?</ion-label>
+            <ion-toggle [(ngModel)]="disabled" color="dark"></ion-toggle>
           </ion-item>
-        <ion-item>
-            <ion-label>確認密碼</ion-label>
-            <ion-input type="password" placeholder="再次輸入密碼" formControlName="confirmPassword"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="formErrors.confirmPassword">
-            <ion-text color="danger">
-              <p>{{ formErrors.confirmPassword }}</p>
-            </ion-text>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item >
+                    <input id="file" type="file" onchange="angular.element(this).scope().upload(this)"
+                      style="display: none"/>
+                    <ion-button type="button" [disabled]="!disabled"  onclick="file.click()" color="dark">身分證照上傳
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item [disabled]="!disabled" >
+                    <ion-label>身分證號碼</ion-label>
+                    <ion-input placeholder="輸入身分證號碼"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
-          <ion-item *ngIf="formErrors.matchPassword">
-            <ion-text color="danger">
-              <p>{{ formErrors.matchPassword }}</p>
-            </ion-text>
-          </ion-item>
-      </div>
-      
-      <ion-item>
-          <ion-label>出生日期</ion-label>
-          <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"  formControlName="date"></ion-datetime>
-      </ion-item>
-      <ion-item *ngIf="formErrors.date">
-          <ion-text color="danger">
-            <p>{{ formErrors.date }}</p>
-          </ion-text>
-        </ion-item>
-      <ion-item>
-          <ion-label>手機</ion-label>
-          <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.phone">
-          <ion-text color="danger">
-            <p>{{ formErrors.phone }}</p>
-          </ion-text>
-        </ion-item>
-      <ion-item>
-      <ion-label>住址</ion-label>
-          <ion-input type="text" placeholder="輸入住址" formControlName="address"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="formErrors.address">
-          <ion-text color="danger">
-            <p>{{ formErrors.address }}</p>
-          </ion-text>
-      </ion-item>
-    <div padding text-center class="b">
-      <ion-button type="submit" color="primary" [disabled]="!registerForm.valid">下一步</ion-button> 
-    </div> 
-    </ion-list>
+        </div>
+        <div>
+          <button mat-flat-button matStepperNext color="dark">下一步</button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="myStepper3">
+        <ng-template matStepLabel>第三步</ng-template>
+        <div>
+          <p class="font">夥伴，你已註冊成功囉!</p>
+        </div>
+        <div>
+          <button mat-flat-button matStepperNext  type="submit" [disabled]="!registerForm.valid">完成</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
   </form>
 </ion-content>
- 
+
+<script>
+  //Controller 內
+  $scope.upload = function (e) {
+    var file = e.files[0];
+    if (!file) {
+      return;
+    }
+
+    //檔案上傳
+    //...
+    //檔案上傳
+
+    //上傳後將檔案清除
+    e.value = '';
+  }
+</script>
+
 
 <!--<mat-horizontal-stepper>
   <mat-step [stepControl]="userformGroup1">
@@ -186,4 +307,3 @@
       </form>
   </mat-step>
 </mat-horizontal-stepper>-->
-

@@ -35,6 +35,7 @@
     "cordova-plugin-pedometer": "0.4.1",
     "core-js": "^2.5.4",
     "firebase": "^5.8.6",
+    "hammerjs": "^2.0.8",
     "ionic-material": "^0.4.1",
     "ionic-stepper": "^1.1.0",
     "material-steppers": "^2.0.0",

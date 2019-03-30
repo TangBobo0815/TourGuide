@@ -12,6 +12,7 @@ import { map, finalize } from 'rxjs/operators';
 //-----------------
 import { Pedometer } from '@ionic-native/pedometer/ngx';
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.page.html',
@@ -19,6 +20,7 @@ import { Pedometer } from '@ionic-native/pedometer/ngx';
 })
 
 export class SignupPage implements OnInit {
+ 
   user ={} as User;
   registerForm:any;
   touron:boolean;
@@ -82,6 +84,7 @@ export class SignupPage implements OnInit {
      'matchPassword': '密碼不相符',
   }
 
+  
   constructor(private afAuth:AngularFireAuth,
               public navCtrl:NavController,
               private builder: FormBuilder,
@@ -92,11 +95,10 @@ export class SignupPage implements OnInit {
               )
   { }
 
-
   ngOnInit() {
     this.buildForm();
   }
-
+TextTrackCueList
   signUp() {
     let form = this.registerForm.value;
     const data = {
@@ -232,6 +234,9 @@ export class SignupPage implements OnInit {
     }
   }
 
+  
   //------------------------------------
 
 }
+
+
