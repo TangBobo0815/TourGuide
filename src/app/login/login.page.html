@@ -1,35 +1,42 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+  <ion-toolbar color="dark">
     <ion-title>
-      Login
+      登入
     </ion-title>
-  </ion-toolbar> 
+  </ion-toolbar>
 </ion-header>
 
-<ion-content >
-    &nbsp;
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <ion-list class="log-in1">
-        <ion-item>
-          <ion-icon name="person" color="primary"></ion-icon>&nbsp;
-          <ion-input type="email" placeholder="請輸入帳號"  formControlName="email" class="form-control"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="lock" color="primary"></ion-icon>&nbsp;
-            <ion-input input type="password" placeholder="請輸入密碼" formControlName="password" class="form-control"></ion-input>
-        </ion-item>
-      </ion-list>   
-      <div padding text-center class="b">
-        <ion-button type="submit" color="primary" [disabled]="!loginForm.valid" block >登入</ion-button> 
-          <br>
-        <a class="a" routerLink="/signup" >
-          <ion-icon name="person-add" >
-          </ion-icon> 
-        </a> 
-      </div>
-    </form>
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-list class="log-in1">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="person" color="dark"></ion-icon>&nbsp;
+              <ion-input type="email" placeholder="請輸入帳號" formControlName="email" class="form-control"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-icon name="lock" color="dark"></ion-icon>&nbsp;
+              <ion-input input type="password" placeholder="請輸入密碼" formControlName="password" class="form-control">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <div padding text-center >
+          <ion-button type="submit" color="dark" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
+          </ion-button>
+          <ion-button routerLink="/signup" fill="clear">
+            <ion-icon name="person-add" color="dark">
+            </ion-icon>
+          </ion-button>
+          <ion-button routerLink="/getpasswd" fill="clear" color="dark">忘記密碼?</ion-button>
+        </div>
+      </ion-grid>
+    </ion-list>
+  </form>
 </ion-content>
-
