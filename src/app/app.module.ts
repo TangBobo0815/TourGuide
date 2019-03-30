@@ -8,6 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PopoverComponent } from './popover/popover.component';
+
 
 //----------------------------
 import { AngularFireModule } from 'angularfire2';
@@ -24,8 +26,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 //----------------------------
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, PopoverComponent],
+  entryComponents: [PopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

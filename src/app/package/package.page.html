@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      上傳行程
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      <ion-icon [name]="item.icon" slot="start"></ion-icon>
+      {{item.title}}
+      <div class="item-note" slot="end">
+        {{item.note}}
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label  position="floating"><ion-icon name="create"></ion-icon>行程名稱</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+<ion-item>
+
+  <ion-label><ion-icon name="pin"></ion-icon>行程地區</ion-label>
+  <ion-select value="基隆市" okText="確定" cancelText="取消">
+    <ion-select-option value="01">基隆市</ion-select-option>
+            <ion-select-option value="02">臺北市</ion-select-option>
+            <ion-select-option value="03">新北市</ion-select-option>
+            <ion-select-option value="04">桃園市</ion-select-option>
+            <ion-select-option value="05">新竹市</ion-select-option>
+            <ion-select-option value="06">新竹縣</ion-select-option>
+            <ion-select-option value="07">苗栗縣</ion-select-option>
+            <ion-select-option value="08">臺中市</ion-select-option>
+            <ion-select-option value="09">彰化縣</ion-select-option>
+            <ion-select-option value="10">南投縣</ion-select-option>
+            <ion-select-option value="11">雲林縣</ion-select-option>
+            <ion-select-option value="12">嘉義市</ion-select-option>
+            <ion-select-option value="13">嘉義縣</ion-select-option>
+            <ion-select-option value="14">臺南市</ion-select-option>
+            <ion-select-option value="15">高雄市</ion-select-option>
+            <ion-select-option value="16">屏東縣</ion-select-option>
+            <ion-select-option value="17">臺東縣</ion-select-option>
+            <ion-select-option value="18">花蓮縣</ion-select-option>
+            <ion-select-option value="19">宜蘭縣</ion-select-option>
+            <ion-select-option value="20">澎湖縣</ion-select-option>
+            <ion-select-option value="21">金門縣</ion-select-option>
+            <ion-select-option value="22">連江縣</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label position="fixed">價格</ion-label>
+  <ion-input type= "number" value="333"></ion-input>
+</ion-item>
+
+
+
+  </ion-list>
+
+  <ion-button  routerLink="/package2" color="dark" block shape="round"  expand="full">完成</ion-button>
+
+  <!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div>
+  -->
+</ion-content>
