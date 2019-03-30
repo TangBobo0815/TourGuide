@@ -1,17 +1,42 @@
-<ion-header >
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" >
+      <ion-menu-button ></ion-menu-button>
     </ion-buttons>
-    <ion-searchbar color="light"></ion-searchbar>
-  </ion-toolbar>
+      <ion-item color="dark"> 
+        <ion-searchbar  ></ion-searchbar>
+        <ion-button size="small" shape="round" color="medium" (click)="popovers()">
+          <ion-icon name="options"></ion-icon>
+          <ion-badge color="dark" slot="end"></ion-badge>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar> 
 </ion-header>
 
 <ion-content>
+    <ion-refresher  slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
     <ion-card class="welcome-card">
-        <ion-chip>
-            <ion-avatar>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    <ion-card-header color="dark">
+        <ion-card-subtitle>熱門景點</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+    <ion-card class="welcome-card">
+      <ion-card-header color="dark">
+          <ion-card-subtitle>嚮導推薦</ion-card-subtitle>
+      </ion-card-header>
+      </ion-card>
+    <ion-card class="welcome-card">
+     <ion-card-header color="dark">
+          <ion-card-subtitle>人氣行程</ion-card-subtitle>
+      </ion-card-header>
+      </ion-card>
+      <ion-card class="welcome-card" >
+        <ion-chip >
+            <ion-avatar > 
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
             </ion-avatar>
             <ion-label>會員名稱</ion-label>
           </ion-chip>
@@ -23,4 +48,35 @@
         <p>套裝內容</p>
       </ion-card-content>
     </ion-card>
+
 </ion-content>
+
+<ion-split-pane>
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+            <ion-chip>
+                <ion-avatar>
+                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                </ion-avatar>
+                <ion-icon name="contact"></ion-icon>
+                <ion-label>會員響導訪客名稱</ion-label>
+              </ion-chip>
+      </ion-header>
+      <ion-content>
+          <ion-list class="menu">      
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+              <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
+                <ion-label>
+                  {{p.title}}
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+      <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
