@@ -1,0 +1,52 @@
+<ion-content>
+<ion-list no-padding no-margin>
+   <ion-list-header color="dark">
+   <ion-label class="fw700">篩選條件</ion-label>
+</ion-list-header>
+<ion-item>
+
+  <ion-label><ion-icon name="pricetag"></ion-icon>價格範圍</ion-label>
+  <ion-select value="1000以下" okText="確定" cancelText="取消">
+    <ion-select-option value="01">1000以下</ion-select-option>
+            <ion-select-option value="02">1000~2000</ion-select-option>
+            <ion-select-option value="03">2000~3000</ion-select-option>
+            <ion-select-option value="04">3000~5000</ion-select-option>
+            <ion-select-option value="05">5000以上</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+
+  <ion-label><ion-icon name="people"></ion-icon>人數</ion-label>
+  <ion-select value="1" okText="確定" cancelText="取消">
+    <ion-select-option value="01">1</ion-select-option>
+            <ion-select-option value="02">2</ion-select-option>
+            <ion-select-option value="03">3</ion-select-option>
+            <ion-select-option value="04">4</ion-select-option>
+            <ion-select-option value="05">5</ion-select-option>
+            <ion-select-option value="06">6</ion-select-option>
+            <ion-select-option value="07">7</ion-select-option>
+            <ion-select-option value="08">8</ion-select-option>
+            <ion-select-option value="09">9</ion-select-option>
+            <ion-select-option value="10">10人以上</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+    <ion-label>出發日期</ion-label>
+    <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select"></ion-datetime>
+</ion-item>
+<ion-item>
+    <ion-label>返回日期</ion-label>
+    <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select"></ion-datetime>
+</ion-item>
+<div padding text-center class="c">
+    <ion-button routerLink="/home" color="dark" block >搜尋</ion-button> 
+  </div> 
+
+
+  </ion-list>
+  <!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div>
+  -->
+</ion-content>
