@@ -137,7 +137,7 @@ export class AuthService {
   
   async registerFail(){
     const toast = await this.toast.create({
-      message: '這個郵件地址已存在',
+      message: '這個郵件地址已存在，請使用帳號密碼登入',
       showCloseButton: true,
       position: 'bottom',
       closeButtonText: 'Ok'
