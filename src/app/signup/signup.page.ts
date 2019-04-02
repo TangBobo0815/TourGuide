@@ -24,6 +24,7 @@ export class SignupPage implements OnInit {
   user ={} as User;
   registerForm:any;
   touron:boolean;
+  disabled:boolean=false;
   //-----------
   selectedFiles:FileList;
   uploadTask: AngularFireUploadTask;
@@ -98,7 +99,13 @@ export class SignupPage implements OnInit {
   ngOnInit() {
     this.buildForm();
   }
-TextTrackCueList
+  
+  //toggle開關
+  notify(){
+    this.disabled=!this.disabled
+  }
+
+  TextTrackCueList
   signUp() {
     let form = this.registerForm.value;
     const data = {

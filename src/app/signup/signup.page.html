@@ -167,7 +167,7 @@
           <p class="size">開啟響導功能會需要提供您的身分證照</p>
           <ion-item>
             <ion-label text-center>你是否開啟響導功能?</ion-label>
-            <ion-toggle [(ngModel)]="disabled" color="dark"></ion-toggle>
+            <ion-toggle [checked]="disabled" (ionChange)="notify()" color="dark"></ion-toggle>
           </ion-item>
           <ion-item>
             <ion-grid>
@@ -193,7 +193,7 @@
           </ion-item>
         </div>
         <div>
-          <button mat-flat-button matStepperNext color="dark">下一步</button>
+          <button mat-flat-button matStepperNext color="dark" [disabled]="!registerForm.valid">下一步</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="myStepper3">
@@ -202,7 +202,7 @@
           <p class="font">夥伴，你已註冊成功囉!</p>
         </div>
         <div>
-          <button mat-flat-button matStepperNext  type="submit" [disabled]="!registerForm.valid">完成</button>
+          <button mat-flat-button matStepperNext  type="submit" >完成</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>

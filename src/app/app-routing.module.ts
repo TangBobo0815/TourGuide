@@ -8,13 +8,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  {path: 'home',loadChildren: './home/home.module#HomePageModule'},
-  {path: 'list',loadChildren: './list/list.module#ListPageModule'}, 
+  { path: 'home',loadChildren: './home/home.module#HomePageModule' },
+  { path: 'list',loadChildren: './list/list.module#ListPageModule' }, 
   { path: 'package', loadChildren: './package/package.module#PackagePageModule' },
   { path: 'package2', loadChildren: './package2/package2.module#Package2PageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
-  { path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
+  //{ path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
   { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },
 ];
 
