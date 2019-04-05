@@ -10,16 +10,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-list class="font">
-    <p>夥伴，請輸入信箱以方便修改密碼!</p>
-    <ion-item>
-      <ion-icon name="mail" color="dark"></ion-icon>
-      <ion-label>信箱</ion-label>
-      <ion-input type="mail"></ion-input>
-    </ion-item>
-  </ion-list>
-  <div padding text-center>
-    <ion-button type="submit" color="dark" block shape="round" expand="full">登入
-    </ion-button>
-  </div>
+  <form [formGroup]="getpassedForm">
+    <ion-list class="font">
+      <p>夥伴，請輸入信箱以方便修改密碼!</p>
+      <ion-item>
+        <ion-icon name="mail" color="dark"></ion-icon>
+        <ion-label>信箱</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+    </ion-list>
+    <div padding text-center>
+      <ion-button type="button" color="dark" block shape="round" expand="full" (click)="resetPassword()">送出
+      </ion-button>
+    </div>
+  </form>
 </ion-content>

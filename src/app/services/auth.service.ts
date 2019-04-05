@@ -109,11 +109,11 @@ export class AuthService {
     return await this.afAuth.auth.sendPasswordResetEmail(String(user.email))
       .then(()=>{
         console.log('email sent success')
-        this.emailSucess();
+        this.resetemailSucess();
       })
       .catch((error)=>{
         console.log(error)
-        this.emailFail();
+        this.resetemailFail();
       })
     }
 
@@ -179,19 +179,19 @@ export class AuthService {
   }
 
   //---------------郵件傳送dialog
-  async emailSucess(){
+  async resetemailSucess(){
     const alert = await this.alertCtrl.create({
       header: '傳送成功!',
-      subHeader: '請至您的信箱確認驗證信',
+      message: '請至您的信箱確認',
       buttons: ['OK']
     });
     await alert.present();
   }
 
-  async emailFail(){
+  async resetemailFail(){
     const alert = await this.alertCtrl.create({
       header: '傳送失敗!',
-      subHeader: '請先在郵件處輸入您的email再按忘記密碼',
+      message: '請確認你是否確實有帳號',
       buttons: ['OK']
     });
     await alert.present();
