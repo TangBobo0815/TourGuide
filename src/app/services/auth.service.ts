@@ -6,10 +6,8 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 
 import { Observable, of } from 'rxjs';
 import { User } from "../../models/user";
-import { Tour } from "../../models/tour";
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
-import { AngularFireStorage } from 'angularfire2/storage';
 //-----------------
 
 @Injectable({
@@ -18,15 +16,13 @@ import { AngularFireStorage } from 'angularfire2/storage';
 
 export class AuthService {
   user: Observable<User>;
-  tour: Observable<Tour>;
   //----------------------
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
     private router: Router,
-    private storage: AngularFireStorage,
     public alertCtrl :AlertController,
-    private toast: ToastController
+    private toast: ToastController,
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -43,20 +39,18 @@ export class AuthService {
   signUp(user){
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
     .then(credential=>{
-      this.updateUserData(
+      this.infosignUp(
         credential.user,
         user.Name,
         user.gender,
         user.date,
         user.phone,
-        user.address,
-        //user.touron,
-        // user.imgsrc
+        user.address
       );
-      console.log('註冊成功');
-      this.registerSucess();
-      //this.router.navigate(['/login']);
+      console.log('第一階段註冊成功');
+      this.register1Sucess();
       this.afAuth.auth.currentUser.sendEmailVerification();
+      //this.router.navigate(['/login']);
     })
     .catch(error=>{
       console.log("註冊失敗:",error)
@@ -64,26 +58,34 @@ export class AuthService {
 
       if(errorCode==='auth/email-already-in-use'){ //嚴格相等
         console.log('這個email已註冊');
-        this.registerFail();
-        return;
+        this.alreadyFail();
+        return
+      }
+      if(errorCode === 'auth/invalid-email'){
+        this.useremailFail();
+        return
       }
     });
   }
 
-  private updateUserData(user, Name,gender,date,phone,address){
+  private infosignUp(user,Name,gender,date,phone,address){
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
     const data:User = {
+      uid:user.uid,
       email: user.email,
       Name: Name,
       date:date,
       gender:gender,
       phone:phone,
-      address:address,
-      // touron:touron,
-      // imgsrc:imgsrc
+      address:address
     }
     return userRef.set(data);
   }
+
+   imgsignUp(user:User,data:any){
+     this.register2Sucess();
+     return this.db.doc(`users/${user.uid}`).update(data);
+   }
 
   //-------------------------
 
@@ -123,23 +125,44 @@ export class AuthService {
   }
   
   //---------------註冊成功alert
+
+  async register1Sucess(){
+    const toast = await this.toast.create({
+      message: '第一階段註冊成功',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
   
-  async registerSucess() {
-    const alert = await this.alertCtrl.create({
-        header: '註冊成功',
-        subHeader: ' 回登入畫面繼續',
-        buttons: ['OK']
-    });
-    await alert.present();
+  async register2Sucess(){
+    const toast = await this.toast.create({
+      message: '第二階段註冊成功',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
   }
 
   //---------------註冊失敗toast
   
-  async registerFail(){
+  async alreadyFail(){
     const toast = await this.toast.create({
       message: '這個郵件地址已存在，請使用帳號密碼登入',
       showCloseButton: true,
-      position: 'bottom',
+      position: 'top',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async useremailFail(){
+    const toast = await this.toast.create({
+      message: '郵件輸入有誤',
+      showCloseButton: true,
+      position: 'top',
       closeButtonText: 'Ok'
     })
     toast.present();

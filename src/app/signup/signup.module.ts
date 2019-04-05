@@ -8,7 +8,6 @@ import { SignupPage } from './signup.page';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MatButtonModule, MatStepperModule } from '@angular/material';
-//import {IonicStepperModule} from 'ionic-stepper';
 
 const routes: Routes =[
   {
@@ -24,7 +23,6 @@ const routes: Routes =[
     IonicModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
-    //IonicStepperModule,
     RouterModule.forChild(routes),
     MatButtonModule,
     MatStepperModule

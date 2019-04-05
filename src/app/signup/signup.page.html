@@ -9,11 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content pedding>
+<ion-content pedding *ngIf="(auth.user | async) || {} as user">
   <p class="count">{{stepCount}}</p>
-  <form [formGroup]="registerForm" (ngSubmit)="signUp()">
     <mat-horizontal-stepper #stepper>
       <mat-step [stepControl]="myStepper1">
+        <form [formGroup]="firstForm"  (ngSubmit)="infosignUp()">
         <ng-template matStepLabel>第一步</ng-template>
         <div>
           <p text-center>夥伴，請填寫會員基本資料吧 !</p>
@@ -156,9 +156,10 @@
             </ion-grid>
           </ion-list>
         </div>
+      </form>
       </mat-step>
-
       <mat-step [stepControl]="myStepper2">
+        <form [formGroup]="secondForm" *ngIf="user.uid && !user.touron && !user.imgsrc && !user.userid" (ngSubmit)="imgSignUp(user)">
         <ng-template matStepLabel>第二步</ng-template>
         <div class="font">
           <p>夥伴，請問你是否想開啟響導功能呢?</p>
@@ -167,34 +168,44 @@
           <p class="size">開啟響導功能會需要提供您的身分證照</p>
           <ion-item>
             <ion-label text-center>你是否開啟響導功能?</ion-label>
-            <ion-toggle [checked]="disabled" (ionChange)="notify()" color="dark"></ion-toggle>
+            <ion-toggle [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
           </ion-item>
-          <ion-item>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-item >
-                    <input id="file" type="file" onchange="angular.element(this).scope().upload(this)"
-                      style="display: none"/>
-                    <ion-button type="button" [disabled]="!disabled"  onclick="file.click()" color="dark">身分證照上傳
-                    </ion-button>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-item [disabled]="!disabled" >
-                    <ion-label>身分證號碼</ion-label>
-                    <ion-input placeholder="輸入身分證號碼"></ion-input>
-                  </ion-item>
-                </ion-col>
-              </ion-row> 
-            </ion-grid>
-          </ion-item>
+          <div formGroupName="userImgInfo">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <input id="file" type="file" (change)="chooseFiles($event)" 
+                        style="display: none"  formControlName="imgsrc"/>
+                      <ion-button type="button" [disabled]="!disabled" onclick="file.click()"  color="dark">身分證照上傳
+                      </ion-button>
+                      <ion-input type="file" style="display: none" (change)="chooseFiles($event)"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item [disabled]="!disabled" >
+                      <ion-label>身分證號碼</ion-label>
+                      <ion-input type="text" placeholder="輸入身分證號碼" formControlName="userid"></ion-input>
+                    </ion-item>
+
+                    <ion-item *ngIf="formErrors.userid">
+                      <ion-text color="danger">
+                        <p>{{ formErrors.userid }}</p>
+                      </ion-text>
+                    </ion-item>
+                  </ion-col>
+                </ion-row> 
+              </ion-grid>
+            </ion-item>
+          </div>
         </div>
         <div>
-          <button mat-flat-button matStepperNext color="dark" [disabled]="!registerForm.valid">下一步</button>
+          <button mat-flat-button matStepperNext color="dark">下一步</button>
         </div>
+      </form>
       </mat-step>
       <mat-step [stepControl]="myStepper3">
         <ng-template matStepLabel>第三步</ng-template>
@@ -202,14 +213,14 @@
           <p class="font">夥伴，你已註冊成功囉!</p>
         </div>
         <div>
-          <button mat-flat-button matStepperNext  type="submit" >完成</button>
+          <button mat-flat-button matStepperNext  type="button" >完成</button>
         </div>
       </mat-step>
+      <!--[disabled]="!registerForm.valid"-->
     </mat-horizontal-stepper>
-  </form>
 </ion-content>
 
-<script>
+<!-- <script>
   //Controller 內
   $scope.upload = function (e) {
     var file = e.files[0];
@@ -224,7 +235,7 @@
     //上傳後將檔案清除
     e.value = '';
   }
-</script>
+</script> -->
 
 
 <!--<mat-horizontal-stepper>
