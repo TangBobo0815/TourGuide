@@ -129,10 +129,15 @@ export class SignupPage implements OnInit {
     const data = {
       touron:form.touron,
       imgsrc:this.imgurl,
-      fileRef:this.fileRef,
+      fileRef:this.fileRef ,
       userid:form.userImgInfo.userid,
     };
-    console.log(data)
+    if (data.touron==false){
+      data.imgsrc =null;
+      data.fileRef = null;
+      data.userid=null;
+    }
+    console.log(data);
     this.imgsrc$.subscribe(path=> data.imgsrc=path);
     this.auth.imgsignUp(user,data)
   }
