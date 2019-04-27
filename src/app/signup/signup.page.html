@@ -143,7 +143,6 @@
                   </ion-col>
                 </ion-row>
 
-
                 <ion-item *ngIf="formErrors.address">
                   <ion-text color="danger">
                     <p>{{ formErrors.address }}</p>
@@ -170,7 +169,7 @@
               <ion-label text-center>你是否開啟響導功能?</ion-label>
               <ion-toggle [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
             </ion-item>
-            <div formGroupName="userImgInfo">
+            <div formGroupName="userImgInfoGroup">
               <ion-item>
                 <ion-grid>
                   <ion-row>
