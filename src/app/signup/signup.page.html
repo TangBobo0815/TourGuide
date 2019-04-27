@@ -179,8 +179,12 @@
                           style="display: none"  formControlName="imgsrc"/>
                         <ion-button type="button" [disabled]="!disabled" onclick="file.click()"  color="dark">身分證照上傳
                         </ion-button>
+                        {{uploadPercent$ | async}}
                         <ion-input type="file" style="display: none" (change)="chooseFiles($event)"></ion-input>
                       </ion-item>
+                      <!--<ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
+                        [value]="pct"max="100"></ion-progress-bar></div>-->
+                      <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
                     </ion-col>
                   </ion-row>
                   <ion-row>

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AngularFireStorage , AngularFireStorageReference , AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.page.html',
@@ -23,6 +24,7 @@ export class SignupPage implements OnInit {
   touron:boolean;
   disabled:boolean=false;
   //-----------
+  progress=0;
   imgurl:string;
   fileRef:string;
   imgsrc$: Observable<string>;
@@ -30,8 +32,8 @@ export class SignupPage implements OnInit {
   meta$:Observable<any>;
   uploadPercent$:Observable<number>;
   uploadTask: AngularFireUploadTask;
+  uploadState:Observable<string>;
   //------------
-
 
   formErrors = {
     'email': '',
@@ -288,9 +290,9 @@ export class SignupPage implements OnInit {
     const filePath = `users/${new Date().getTime()}_${file.name}`;
     const uploadTask = this.storage.upload(filePath,file);
     const ref = this.storage.ref(filePath);
-      
-    this.uploadPercent$ =uploadTask.percentageChanges()
   
+    this.uploadPercent$ =uploadTask.percentageChanges();
+    
     uploadTask.then().then(()=>{
       this.imgsrc$=ref.getDownloadURL();
       this.imgsrc$.subscribe(path=>{
