@@ -1,0 +1,20 @@
+<ion-card *ngFor="let detail of detailList; trackBy: trackyByIndex">
+  <ion-item [(ngModel)]="detail.id">
+    <ion-icon name="bookmarks" slot="start"></ion-icon>
+    <ion-label>行程</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-input type="file" accept="image/*"></ion-input>
+  </ion-item>
+  <ion-card-content>
+    <ion-item>
+      <ion-textarea placeholder="行程規劃"></ion-textarea>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<ion-button color="dark" (click)="addRow()">
+  添加內容<ion-icon name="add"></ion-icon>
+</ion-button>
+
+ 
