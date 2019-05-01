@@ -16,7 +16,8 @@ import { Observable } from 'rxjs';
 })
 
 export class SignupPage implements OnInit {
- 
+
+  show=false;
   user ={} as User;
   firstForm:any;
   secondForm:any;
