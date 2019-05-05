@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PackagePage } from './package.page';
 import { PackagesComponent } from '../packages/packages.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PackagePage,PackagesComponent]
