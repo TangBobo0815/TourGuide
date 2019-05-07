@@ -90,8 +90,6 @@ export class AuthService {
   //-------------------------
 
   //---------------登入
-
-  
   emailLogin(user){
     return this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password)
       .then(()=>{

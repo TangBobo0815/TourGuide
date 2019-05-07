@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: 'home',loadChildren: './home/home.module#HomePageModule' },
   { path: 'list',loadChildren: './list/list.module#ListPageModule' }, 
   { path: 'package', loadChildren: './package/package.module#PackagePageModule' },
-  { path: 'package2', loadChildren: './package2/package2.module#Package2PageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
   //{ path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
