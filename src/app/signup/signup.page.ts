@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AngularFireStorage , AngularFireStorageReference , AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.page.html',
@@ -15,7 +16,8 @@ import { Observable } from 'rxjs';
 })
 
 export class SignupPage implements OnInit {
- 
+
+  show=false;
   user ={} as User;
   firstForm:any;
   secondForm:any;
@@ -23,6 +25,7 @@ export class SignupPage implements OnInit {
   touron:boolean;
   disabled:boolean=false;
   //-----------
+  progress=0;
   imgurl:string;
   fileRef:string;
   imgsrc$: Observable<string>;
@@ -30,8 +33,8 @@ export class SignupPage implements OnInit {
   meta$:Observable<any>;
   uploadPercent$:Observable<number>;
   uploadTask: AngularFireUploadTask;
+  uploadState:Observable<string>;
   //------------
-
 
   formErrors = {
     'email': '',
@@ -75,6 +78,9 @@ export class SignupPage implements OnInit {
      },
      'userid':{
       'required': '必填欄位',
+      'pattern':'第一個字母需大寫',
+      'minlength': '長度至少為10',
+      'maxlength': '長度最多為10'
      },
      'password': {
        'required': '必填欄位',
@@ -118,7 +124,6 @@ export class SignupPage implements OnInit {
       phone:form.phone,
       address:form.address,
     };
-    //this.imgsrc$.subscribe(path=> data.imgsrc=path);
     this.auth.signUp(data).then(()=>{
       //this.firstForm.reset();
     });
@@ -126,20 +131,24 @@ export class SignupPage implements OnInit {
 
   imgSignUp(user) {
     let form = this.secondForm.value;
+
     const data = {
       touron:form.touron,
       imgsrc:this.imgurl,
       fileRef:this.fileRef ,
-      userid:form.userImgInfo.userid,
+      userid:form.userImgInfoGroup.userid,
     };
     if (data.touron==false){
       data.imgsrc =null;
       data.fileRef = null;
       data.userid=null;
     }
+    else{
+      this.imgsrc$.subscribe(path=> data.imgsrc=path);
+    }
+    this.auth.imgsignUp(user,data);
     console.log(data);
-    this.imgsrc$.subscribe(path=> data.imgsrc=path);
-    this.auth.imgsignUp(user,data)
+    
   }
 
   buildForm() {
@@ -172,7 +181,8 @@ export class SignupPage implements OnInit {
       phone:['',
         [Validators.required,
         Validators.minLength(10),
-        Validators.maxLength(10)]
+        Validators.maxLength(10),
+        Validators.pattern('^([Z0-9]+)')]
       ],
       address:['',
         [Validators.required]
@@ -186,12 +196,15 @@ export class SignupPage implements OnInit {
       imgsrc:['',
         [Validators.required],
       ],
-      userImgInfo: new FormGroup({
+      userImgInfoGroup: new FormGroup({
         imgsrc: new FormControl('',
           [Validators.required]
         ),
         userid: new FormControl('',
-          [Validators.required]
+          [Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(10),
+            Validators.pattern('^([ZA-Z][Z0-9]+)$')]
         )
       })
     });
@@ -203,7 +216,7 @@ export class SignupPage implements OnInit {
   }
 
   private onValueChanged(data?: any) {
-    if (!this.firstForm) { return; }
+    if (!this.firstForm || !this.secondForm) { return; }
     const form1 = this.firstForm;
     const form2 = this.secondForm;
     for (const field in this.formErrors) {
@@ -259,23 +272,16 @@ export class SignupPage implements OnInit {
           }
           break;
         case 'userid':
-          var control = form2.get(field);
+          var group = form2.get('userImgInfoGroup');
+          var control = group.get(field);
+
           if (control && control.dirty && !control.valid) {
             const messages = this.validatorMessages[field];
             for (const key in control.errors) {
               this.formErrors[field] += messages[key] + ' ';
-            }
+            } 
           }
-          break;
-
-        // case 'touron':
-        //   var control = form.get(field);
-        //   if(this.touron==true){
-        //     const messages = this.validatorMessages[field];
-        //   }else{
-        //     const messages = this.validatorMessages[field];
-        //   }
-        //   break;      
+          break;   
       }    
     }
   }
@@ -285,9 +291,9 @@ export class SignupPage implements OnInit {
     const filePath = `users/${new Date().getTime()}_${file.name}`;
     const uploadTask = this.storage.upload(filePath,file);
     const ref = this.storage.ref(filePath);
-      
-    this.uploadPercent$ =uploadTask.percentageChanges()
   
+    this.uploadPercent$ =uploadTask.percentageChanges();
+    
     uploadTask.then().then(()=>{
       this.imgsrc$=ref.getDownloadURL();
       this.imgsrc$.subscribe(path=>{
