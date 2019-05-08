@@ -12,11 +12,9 @@
 <ion-content>
   <ion-list>
     <form [formGroup]="packageForm" (ngSubmit)="packageUp()">
-      <ion-item>
-        <ion-label position="stacked">
-          <ion-icon name="create"></ion-icon>行程名稱
-        </ion-label>
-        <ion-input formControlName="title"></ion-input>
+      <ion-item> 
+          <ion-label position="stacked"><ion-icon name="create"></ion-icon>行程名稱</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
       </ion-item>
         <!-- <ion-item *ngIf="formErrors.title">
           <ion-text color="danger">
@@ -24,41 +22,46 @@
           </ion-text>
         </ion-item>
    -->
-      <ion-item>
-        <ion-label>
-          <ion-icon name="pin"></ion-icon>行程地區
+   <ion-grid>
+     <ion-row>
+   <ion-col>
+          <ion-item>
+        <ion-label position="stacked">
+          <ion-icon name="pin"></ion-icon>地區
         </ion-label>
-        <ion-select value="基隆市" okText="確定" cancelText="取消" formControlName="place">
-          <ion-select-option value="01">基隆市</ion-select-option>
-          <ion-select-option value="02">臺北市</ion-select-option>
-          <ion-select-option value="03">新北市</ion-select-option>
-          <ion-select-option value="04">桃園市</ion-select-option>
-          <ion-select-option value="05">新竹市</ion-select-option>
-          <ion-select-option value="06">新竹縣</ion-select-option>
-          <ion-select-option value="07">苗栗縣</ion-select-option>
-          <ion-select-option value="08">臺中市</ion-select-option>
-          <ion-select-option value="09">彰化縣</ion-select-option>
-          <ion-select-option value="10">南投縣</ion-select-option>
-          <ion-select-option value="11">雲林縣</ion-select-option>
-          <ion-select-option value="12">嘉義市</ion-select-option>
-          <ion-select-option value="13">嘉義縣</ion-select-option>
-          <ion-select-option value="14">臺南市</ion-select-option>
-          <ion-select-option value="15">高雄市</ion-select-option>
-          <ion-select-option value="16">屏東縣</ion-select-option>
-          <ion-select-option value="17">臺東縣</ion-select-option>
-          <ion-select-option value="18">花蓮縣</ion-select-option>
-          <ion-select-option value="19">宜蘭縣</ion-select-option>
-          <ion-select-option value="20">澎湖縣</ion-select-option>
-          <ion-select-option value="21">金門縣</ion-select-option>
-          <ion-select-option value="22">連江縣</ion-select-option>
+        <ion-select okText="確定" cancelText="取消" formControlName="place" placeholder="select one" >
+          <ion-select-option>基隆市</ion-select-option>
+          <ion-select-option>臺北市</ion-select-option>
+          <ion-select-option>新北市</ion-select-option>
+          <ion-select-option>桃園市</ion-select-option>
+          <ion-select-option>新竹市</ion-select-option>
+          <ion-select-option>新竹縣</ion-select-option>
+          <ion-select-option>苗栗縣</ion-select-option>
+          <ion-select-option>臺中市</ion-select-option>
+          <ion-select-option>彰化縣</ion-select-option>
+          <ion-select-option>南投縣</ion-select-option>
+          <ion-select-option>雲林縣</ion-select-option>
+          <ion-select-option>嘉義市</ion-select-option>
+          <ion-select-option>嘉義縣</ion-select-option>
+          <ion-select-option>臺南市</ion-select-option>
+          <ion-select-option>高雄市</ion-select-option>
+          <ion-select-option>屏東縣</ion-select-option>
+          <ion-select-option>臺東縣</ion-select-option>
+          <ion-select-option>花蓮縣</ion-select-option>
+          <ion-select-option>宜蘭縣</ion-select-option>
+          <ion-select-option>澎湖縣</ion-select-option>
+          <ion-select-option>金門縣</ion-select-option>
+          <ion-select-option>連江縣</ion-select-option>
         </ion-select>
-      </ion-item>
-        
-      <ion-item>
-        <ion-label>
-          <ion-icon name="calendar"></ion-icon>適合月份
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+        <ion-label position="stacked">
+          <ion-icon name="calendar"></ion-icon>月份
         </ion-label>
-        <ion-select value="1" okText="確定" cancelText="取消" formControlName="month">
+        <ion-select name="monthid" okText="確定" cancelText="取消" formControlName="month">
           <ion-select-option value="1">一月</ion-select-option>
           <ion-select-option value="2">二月</ion-select-option>
           <ion-select-option value="3">三月</ion-select-option>
@@ -73,12 +76,15 @@
           <ion-select-option value="12">十二月</ion-select-option>
         </ion-select>
       </ion-item>
-  
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
       <ion-item>
-        <ion-label>
-          <ion-icon name="paper"></ion-icon>適用天數
+        <ion-label position="stacked">
+          <ion-icon name="paper"></ion-icon>天數
         </ion-label>
-        <ion-select value="1" name="dateid" okText="確定" cancelText="取消" formControlName="days">
+        <ion-select name="dateid" okText="確定" cancelText="取消" formControlName="days">
           <ion-select-option value="1">1日</ion-select-option>
           <ion-select-option value="2">2日</ion-select-option>
           <ion-select-option value="3">3日</ion-select-option>
@@ -88,10 +94,10 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">價格</ion-label>
+        <ion-label position="stacked"><ion-icon name="pricetag"></ion-icon>價格</ion-label>
         <ion-input type="number" placeholder="NT$"  min=0 formControlName="price"></ion-input>
       </ion-item>
-        
+    
         <!-- <app-packages></app-packages> -->
 
       <ion-button color="dark" type="button" (click)="addDetailsButtonClick()">
@@ -102,19 +108,17 @@
         <div [formGroupName]="i">
           <!--<ion-card *ngFor="let detail of detailList; trackBy: trackyByIndex">-->
           <ion-card>
-            <ion-row>
-              <ion-col>
                 <ion-item>
-                  <ion-icon name="bookmarks" slot="start"></ion-icon>
+                  <ion-icon name="bookmarks" slot="start" color="dark"></ion-icon>
                   <ion-label>行程</ion-label>
                 </ion-item>
-              </ion-col>
+           
               <div *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)">
                 <ion-button type="button" color="danger">
                   <ion-icon name="close"></ion-icon>
                 </ion-button>
               </div>
-            </ion-row>
+            
             <ion-item>
               <ion-input type="file" accept="image/*" formControlName="image" (change)="chooseFiles($event)"></ion-input>
             </ion-item>
