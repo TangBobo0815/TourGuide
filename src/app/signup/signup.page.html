@@ -158,7 +158,7 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="myStepper2">
-        <form [formGroup]="secondForm" *ngIf="user.uid && !user.touron && !user.imgsrc && !user.userid" (ngSubmit)="imgSignUp(user)">
+        <form [formGroup]="secondForm"  (ngSubmit)="imgSignUp(user)">
           <ng-template matStepLabel>第二步</ng-template>
           <div class="font">
             <p>夥伴，請問你是否想開啟響導功能呢?</p>
@@ -167,9 +167,9 @@
             <p class="size">開啟響導功能會需要提供您的身分證照</p>
             <ion-item>
               <ion-label text-center>你是否開啟響導功能?</ion-label>
-              <ion-toggle [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
+              <ion-toggle (click)="show=!show" [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
             </ion-item>
-            <div formGroupName="userImgInfoGroup">
+            <div formGroupName="userImgInfoGroup" *ngIf="show">
               <ion-item>
                 <ion-grid>
                   <ion-row>
@@ -216,7 +216,7 @@
           <p class="font">夥伴，你已註冊成功囉!</p>
         </div>
         <div>
-          <button mat-flat-button matStepperNext  type="button" >完成</button>
+          <button mat-flat-button matStepperNext  type="button" routerLink="/login">完成</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
