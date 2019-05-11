@@ -13,45 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  showSplash = true;
-  public appPages = [
-    {
-      title: '首頁',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: '我的足跡',
-      url: '/map',
-      icon: 'map'
-    },
-    {
-      title: '上傳行程',
-      url: '/package',
-      icon: 'clipboard'
-    },
-    {
-      title: '行事曆',
-      url: '/calendar',
-      icon: 'calendar'
-    },
-    {
-      title: '推廣通知',
-      url: '/notifications',
-      icon: 'notifications'
-    },
-    {
-      title: 'login',
-      url: '/login',
-      icon: 'log-in'
-    },
-    {
-      title: 'setting',
-      url: '/setting',
-      icon: 'settings'
-    }
-
-  ];
+  
 
   constructor(public popoverController: PopoverController , 
               private platform: Platform,
@@ -67,6 +29,7 @@ export class HomePage {
                 });
               }
 
+              
   async popovers(ev: any) {
     const popover = await this.popoverController.create({
         component: PopoverComponent,
@@ -85,6 +48,4 @@ export class HomePage {
       event.target.complete();
     }, 2000);
   }
-
-  
 }
