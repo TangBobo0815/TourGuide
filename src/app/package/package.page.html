@@ -80,8 +80,9 @@
             </ion-item>
           </ion-col>
         </ion-row>
-      </ion-grid>
-
+      
+        <ion-row>
+            <ion-col>
       <ion-item>
         <ion-label position="stacked">
           <ion-icon name="paper"></ion-icon>天數
@@ -95,13 +96,17 @@
           <ion-select-option value="6">5日以上</ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+      <ion-col>
       <ion-item>
         <ion-label position="stacked">
           <ion-icon name="pricetag"></ion-icon>價格
         </ion-label>
         <ion-input type="number" placeholder="NT$" min=0 formControlName="price"></ion-input>
       </ion-item>
-
+    </ion-col>
+    </ion-row>
+    </ion-grid>
       <!-- <app-packages></app-packages> -->
 
       <ion-button color="dark" type="button" (click)="addDetailsButtonClick()">
