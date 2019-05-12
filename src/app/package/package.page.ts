@@ -9,6 +9,7 @@ import { Observable} from 'rxjs';
 import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
 import { CONTEXT } from '@angular/core/src/render3/interfaces/view';
 
+
 @Component({
   selector: 'package',
   templateUrl: './package.page.html',
@@ -208,3 +209,4 @@ export class PackagePage implements OnInit {
 
 
 }
+
