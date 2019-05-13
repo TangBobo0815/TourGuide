@@ -1,9 +1,52 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        個人檔案
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+   <ion-card>
+     <!-- <ion-img src="https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_640.jpg"></ion-img> -->
+     <div class="bar bar-header">
+    
+        <ion-button size="small" class="button" shape="round" color="primary" fill="outline" routerLink="/signup">修改資料</ion-button>
+    
+    </div>
+
+<div class="img"center>
+      <ion-img src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png"></ion-img>
+</div>
+
+<ion-card-content>
+<ion-card-title text-center>
+  APPLE
+</ion-card-title>
+<ion-card-content text-center>
+    1999/05/10
+    <div></div>
+    aaaa@yahoo.com.tw
+</ion-card-content>
+</ion-card-content>
+<ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/list">
+        <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-
+</ion-card>
+<ion-item>
+    <ion-label text-center>你是否開啟響導功能?</ion-label>
+    <ion-toggle (click)="show=!show"  color="dark"></ion-toggle>
+  </ion-item>
+  <div *ngIf="show">
+                <ion-label>身分證號碼</ion-label>
+              </div>
 </ion-content>
+ 
