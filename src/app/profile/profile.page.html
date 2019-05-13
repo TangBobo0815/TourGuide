@@ -41,12 +41,27 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-card>
-<ion-item>
-    <ion-label text-center>你是否開啟響導功能?</ion-label>
+<ion-label *ngIf="show" text-center>已開啟嚮導功能</ion-label>
+    <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
     <ion-toggle (click)="show=!show"  color="dark"></ion-toggle>
   </ion-item>
   <div *ngIf="show">
-                <ion-label>身分證號碼</ion-label>
-              </div>
+          <ion-toolbar>
+    <ion-button class="button" shape="circle" color="dark" fill="outline">
+      <ion-icon name="calendar"></ion-icon>行事曆</ion-button> 
+              <ion-buttons slot="primary">
+                <ion-button routerLink="/list">
+                  <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+  </div>
+  <div *ngIf="!show">
+         <ion-text> <div>開啟嚮導功能</div> 
+                  <div>將可以成為嚮導身份 </div>
+         <div>上傳自己的行程內容 帶領外地人認識</div></ion-text>
+  </div>
+  
+  
 </ion-content>
  
