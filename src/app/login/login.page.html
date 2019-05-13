@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="secondary">
     <ion-title>
       登入
     </ion-title>
@@ -13,7 +13,7 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="person" color="dark"></ion-icon>&nbsp;
+              <ion-icon name="person" color="secondary"></ion-icon>&nbsp;
               <ion-input type="email" placeholder="請輸入帳號" formControlName="email" class="form-control"></ion-input>
             </ion-item>
           </ion-col>
@@ -21,20 +21,20 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="lock" color="dark"></ion-icon>&nbsp;
+              <ion-icon name="lock" color="secondary"></ion-icon>&nbsp;
               <ion-input input type="password" placeholder="請輸入密碼" formControlName="password" class="form-control">
               </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
         <div padding text-center >
-          <ion-button type="submit" color="dark" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
+          <ion-button type="submit" color="secondary" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
           </ion-button>
           <ion-button routerLink="/signup" fill="clear">
-            <ion-icon name="person-add" color="dark">
+            <ion-icon name="person-add" color="secondary">
             </ion-icon>
           </ion-button>
-          <ion-button routerLink="/getpasswd" fill="clear" color="dark">忘記密碼?</ion-button>
+          <ion-button routerLink="/getpasswd" fill="clear" color="secondary">忘記密碼?</ion-button>
         </div>
       </ion-grid>
     </ion-list>
