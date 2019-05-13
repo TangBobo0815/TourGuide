@@ -1,49 +1,53 @@
 <ion-header>
-  <ion-item color="dark">
-      <ion-menu-button></ion-menu-button>
-    <ion-searchbar animated color="dark"></ion-searchbar>
-    <ion-button size="small" shape="round" color="medium" (click)="popovers()">
-      <ion-icon name="options"></ion-icon>
-      <ion-badge color="dark" slot="end"></ion-badge>
-    </ion-button>
-  </ion-item>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" >
+      <ion-menu-button ></ion-menu-button>
+    </ion-buttons>
+      <ion-item color="dark"> 
+        <ion-searchbar animated color="dark"></ion-searchbar>
+        <ion-button size="small" shape="round" color="medium" (click)="popovers()">
+          <ion-icon name="options"></ion-icon>
+          <ion-badge color="dark" slot="end"></ion-badge>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar> 
 </ion-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content>
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-card class="welcome-card">
+    <ion-refresher  slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content>
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-card class="welcome-card">
     <ion-card-header color="dark">
-      <ion-card-subtitle>熱門景點 </ion-card-subtitle>
+        <ion-card-subtitle>熱門景點 </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
-  <ion-card class="welcome-card">
-    <ion-card-header color="dark">
-      <ion-card-subtitle>嚮導推薦</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
-  <ion-card class="welcome-card">
-    <ion-card-header color="dark">
-      <ion-card-subtitle>人氣行程</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
-  <ion-card class="welcome-card">
-    <ion-chip>
-      <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-      </ion-avatar>
-      <ion-label>會員名稱</ion-label>
-    </ion-chip>
-    <ion-img src="/assets/shapes.svg"></ion-img>
-    <ion-card-header>
-      <ion-card-title>套裝標題</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>套裝內容</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="welcome-card">
+      <ion-card-header color="dark">
+          <ion-card-subtitle>嚮導推薦</ion-card-subtitle>
+      </ion-card-header>
+      </ion-card>
+    <ion-card class="welcome-card">
+     <ion-card-header color="dark">
+          <ion-card-subtitle>人氣行程</ion-card-subtitle>
+      </ion-card-header>
+      </ion-card>
+      <ion-card class="welcome-card" >
+        <ion-chip >
+            <ion-avatar > 
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+            <ion-label>會員名稱</ion-label>
+          </ion-chip>
+      <ion-img src="/assets/shapes.svg"></ion-img>
+      <ion-card-header>
+        <ion-card-title>套裝標題</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>套裝內容</p>
+      </ion-card-content>
+    </ion-card>
 
 </ion-content>
 

@@ -9,8 +9,6 @@ import { PackagePage } from './package.page';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 const routes: Routes = [
   {
     path: '',
