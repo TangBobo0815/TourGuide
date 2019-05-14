@@ -113,7 +113,7 @@ export class SignupPage implements OnInit {
     this.disabled=!this.disabled
   }
 
-  infosignUp() {
+  infoSignUp() {
     let form = this.firstForm.value;
     const data = {
       email: form.email,
@@ -190,7 +190,7 @@ export class SignupPage implements OnInit {
     });
 
     this.secondForm = this.builder.group({
-      touron:['',
+      touron:[false,
         [Validators.required]
       ],
       imgsrc:['',

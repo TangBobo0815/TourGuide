@@ -12,10 +12,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
 
 import { User } from "../../models/user";
-import { defineBase } from '@angular/core/src/render3';
-import { firestore } from 'firebase';
-import { forEach } from '@angular/router/src/utils/collection';
-import { createRouterScroller } from '@angular/router/src/router_module';
+import { stringify } from 'querystring';
+
 
 @Component({
   selector: 'package',
@@ -71,37 +69,29 @@ export class PackagePage implements OnInit {
   packageUp(){
     let form = this.packageForm.value;
     var array = [];
-    var g=[];
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
-    let data = {
+    // for(let i=0;i<=(this.detailsArray.length)-1;i++){
+    //   var obj=[];
+    //   let detail=form.detailsGroup;
+
+    //   this.imgsrc$.subscribe(path=>detail[i]['image']=path);
+    //   console.log(detail[i]['image']);
+    //   detail[i]['fileRef']=this.fileRef;
+    //   console.log(detail[i]['fileRef'])
+    //   array.push(detail[i].controls);
+    // }
+    // console.log(array); 
+    // console.log(this.detailsArray.length);
+
+    const data={
       title:form.title,
       place:form.place,
       month:form.month,
       days:form.days,
       price:form.price,
-      detailsArray:form.detailsGroup,
-      // image:this.imgurl || null,
-      // fileRef:this.fileRef
-    };
-  
-    
-    // for(let i=0;i<=(this.detailsArray.length)-1;i++){
-    //   this.imgsrc$.subscribe(path=>data.detailsArray[i]['image']=path);
-    //   console.log(data.detailsArray[i]['image'])
-    //   data.detailsArray[i]['fileRef']=this.fileRef;
-    // }
-    
-    for(let i=0;i<=(this.detailsArray.length)-1;i++){
-      this.imgsrc$.subscribe(path=>data.detailsArray[i]['image']=path);
-      console.log(data.detailsArray[i]['image'])
-      data.detailsArray[i]['fileRef']=this.fileRef;
-      console.log(data.detailsArray[i]['fileRef'])
-      array.push(data.detailsArray[i]);
+      detailsArray:form.detailsGroup
     }
-    console.log(array);
-    console.log(this.detailsArray.length);
-    
     this.db.collection('packages').add(data);
     console.log(data);
     
@@ -123,7 +113,7 @@ export class PackagePage implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(15)]
       ],
-      place:['01',
+      place:['基隆市',
         [Validators.required]
       ],
       month:['1',
@@ -145,7 +135,7 @@ export class PackagePage implements OnInit {
   }
 
   addDetailsFormGroup(){
-    const a= this.builder.group({
+    return this.builder.group({
       image:new FormControl(this.imgurl || null),
       context:new FormControl('',
       [Validators.required,
@@ -154,7 +144,6 @@ export class PackagePage implements OnInit {
       ]),
       fileRef:new FormControl('')
     })
-    return a;
   }
 
   addDetailsButtonClick(): void{
@@ -166,7 +155,7 @@ export class PackagePage implements OnInit {
   }
 
   get detailsArray():FormArray{
-   return <FormArray> this.packageForm.get('detailsGroup');
+    return <FormArray> this.packageForm.get('detailsGroup');
   }
 
   async Sucess(){
@@ -208,7 +197,8 @@ export class PackagePage implements OnInit {
     }
   }
 
-  chooseFiles(event){
+  chooseFiles(i,event){
+    const controlArray = <FormArray> this.packageForm.get('detailsGroup');
     const file:File=event.target.files[0];
     const filePath = `packages/${new Date().getTime()}_${file.name}`;
     const uploadTask = this.storage.upload(filePath,file);
@@ -224,6 +214,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
+        controlArray.controls[i].get('image').patchValue({image:this.imgurl});
+        controlArray.controls[i].get('fileRef').patchValue({fileRef:this.fileRef});
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
@@ -233,7 +225,6 @@ export class PackagePage implements OnInit {
     });
         //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
-
 
 }
 
