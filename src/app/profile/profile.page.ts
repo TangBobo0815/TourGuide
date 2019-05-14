@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
   show=false;
-
+  birthday:string="1999/05/10"
+  email:string="aaa@yahoo.com.tw";
 
   constructor() { }
 

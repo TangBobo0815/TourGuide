@@ -29,15 +29,16 @@
         APPLE
       </ion-card-title>
       <ion-card-content text-center>
-        1999/05/10
+        {{birthday}}
         <div></div>
-        aaaa@yahoo.com.tw
+        {{email}}
       </ion-card-content>
     </ion-card-content>
     <ion-toolbar>
       <ion-buttons slot="primary">
         <ion-button routerLink="/list">
           <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+          <ion-label>訂單管理</ion-label>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
