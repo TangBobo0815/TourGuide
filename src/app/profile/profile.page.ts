@@ -1,6 +1,7 @@
   
 import { Component, OnInit } from '@angular/core';
 
+import { user, UserDateService } from '../services/user-date.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -11,9 +12,14 @@ export class ProfilePage implements OnInit {
   birthday:string="1999/05/10"
   email:string="aaa@yahoo.com.tw";
 
-  constructor() { }
+  users: user[];
+
+  constructor(private userDareService:UserDateService) { }
 
   ngOnInit() {
+    this.userDareService.getusers().subscribe(res =>{
+      this.users=res;
+    })
   }
   
 }

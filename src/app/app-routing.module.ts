@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
   //{ path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
   { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },
+  { path: 'profile/:id', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
 ];
 
