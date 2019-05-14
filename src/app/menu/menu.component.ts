@@ -15,6 +15,11 @@ export class MenuComponent implements OnInit {
       icon: 'home'
     },
     {
+      title: '個人資訊',
+      url: '/profile',
+      icon: 'contact'
+    },
+    {
       title: '我的足跡',
       url: '/map',
       icon: 'map'
@@ -25,24 +30,19 @@ export class MenuComponent implements OnInit {
       icon: 'clipboard'
     },
     {
-      title: '行事曆',
-      url: '/calendar',
-      icon: 'calendar'
-    },
-    {
-      title: '推廣通知',
+      title: '自助規劃',
       url: '/notifications',
-      icon: 'notifications'
+      icon: 'today'
     },
     {
-      title: 'login',
-      url: '/login',
-      icon: 'log-in'
+      title: '備忘錄',
+      url: '/notifications',
+      icon: 'checkmark-circle-outline'
     },
     {
-      title: 'setting',
+      title: '使用說明',
       url: '/setting',
-      icon: 'settings'
+      icon: 'information-circle-outline'
     }
 
   ];
