@@ -1,11 +1,11 @@
-<ion-header>
-  <ion-item color="dark">
+<ion-header class="header">
+  <ion-item>
       <ion-menu-button></ion-menu-button>
     <ion-searchbar animated color="light"></ion-searchbar>
-    <ion-button size="small" shape="round" color="medium" (click)="popovers()">
-      <ion-icon name="options"></ion-icon>
-      <ion-badge color="dark" slot="end"></ion-badge>
-    </ion-button>
+    <ion-icon name="options" (click)="popovers()">
+    </ion-icon>
+      <!--<ion-badge slot="end"></ion-badge>-->
+    
   </ion-item>
 </ion-header>
 
@@ -15,17 +15,17 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-card class="welcome-card">
-    <ion-card-header color="dark">
+    <ion-card-header color="light">
       <ion-card-subtitle>熱門景點 </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
   <ion-card class="welcome-card">
-    <ion-card-header color="dark">
+    <ion-card-header color="light">
       <ion-card-subtitle>嚮導推薦</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
   <ion-card class="welcome-card">
-    <ion-card-header color="dark">
+    <ion-card-header color="light">
       <ion-card-subtitle>人氣行程</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
