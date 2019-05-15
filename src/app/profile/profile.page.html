@@ -24,16 +24,19 @@
       <ion-img src="../assets/icon/tgicon123.png"></ion-img>
     </div>
 
+    <div *ngIf="auth.user | async as user">
     <ion-card-content>
       <ion-card-title text-center>
-        APPLE
+        {{user.Name}}
       </ion-card-title>
       <ion-card-content text-center>
-        {{birthday}}
+        {{user.date}}
         <div></div>
-        {{email}}
-      </ion-card-content>
+        {{user.email}}
+      </ion-card-content>  
     </ion-card-content>
+    </div>
+
     <ion-toolbar>
       <ion-buttons slot="primary">
         <ion-button routerLink="/list">
