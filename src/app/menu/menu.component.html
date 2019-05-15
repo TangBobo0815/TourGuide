@@ -8,16 +8,16 @@
 
 <ion-menu side="start" menuId="custom" class="my-custom-menu">
   <ion-header>
-    <ion-toolbar color="dark">
+    <ion-toolbar color="dark" *ngIf="auth.user | async as user">
           <ion-grid>
               <ion-row>
                 <ion-col>
                     <img class="img" src="../assets/icon/tgicon123.png">
                 </ion-col>
                 <ion-col size="9"><br>
-                    {{username}}
+                  {{user.Name}}
                     <br>
-                    {{location}}
+                    {{user.address}}
                 </ion-col>
               </ion-row>
             </ion-grid>

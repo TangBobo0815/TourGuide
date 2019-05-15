@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDateService } from '../services/user-date.service'; 
 
 @Component({
   selector: 'app-menu',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+
+  constructor(private auth:UserDateService) {
+
+  }
   
   showSplash = true;
   public appPages = [
