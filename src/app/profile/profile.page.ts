@@ -1,25 +1,20 @@
-  
 import { Component, OnInit } from '@angular/core';
+import { UserDateService } from '../services/user-date.service';
+import { CanActivate } from '@angular/router/src/utils/preactivation';
 
-import { user, UserDateService } from '../services/user-date.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
-  show=false;
-  birthday:string="1999/05/10"
-  email:string="aaa@yahoo.com.tw";
+export class ProfilePage implements OnInit{
+  
+  constructor(private auth:UserDateService) {
 
-  users: user[];
-
-  constructor(private userDareService:UserDateService) { }
+  }
 
   ngOnInit() {
-    this.userDareService.getusers().subscribe(res =>{
-      this.users=res;
-    })
   }
   
 }
