@@ -5,6 +5,7 @@ import { PopoverComponent } from '../popover/popover.component';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserDateService } from '../services/user-date.service';
 
 
 @Component({
@@ -14,11 +15,54 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class HomePage {
   
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
 
+  showSplash = true;
+  public appPages = [
+    {
+      title: '首頁',
+      url: '/home',
+      icon: 'home'
+    },
+    {
+      title: '個人資訊',
+      url: '/profile',
+      icon: 'contact'
+    },
+    {
+      title: '我的足跡',
+      url: '/map',
+      icon: 'map'
+    },
+    {
+      title: '上傳行程',
+      url: '/package',
+      icon: 'clipboard'
+    },
+    {
+      title: '自助規劃',
+      url: '/notifications',
+      icon: 'today'
+    },
+    {
+      title: '備忘錄',
+      url: '/notifications',
+      icon: 'checkmark-circle-outline'
+    },
+    {
+      title: '使用說明',
+      url: '/setting',
+      icon: 'information-circle-outline'
+    }
+
+  ];
   constructor(public popoverController: PopoverController , 
               private platform: Platform,
               private splashScreen: SplashScreen,
-              private statusBar: StatusBar) {
+              private statusBar: StatusBar,
+              private auth:UserDateService) {
                 this.initializeApp();
               }
             

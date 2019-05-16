@@ -14,10 +14,8 @@
   <ion-card>
     <!-- <ion-img src="https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_640.jpg"></ion-img> -->
     <div class="bar bar-header">
-
       <ion-button size="small" class="button" shape="round" color="primary" fill="outline" routerLink="/signup">修改資料
       </ion-button>
-
     </div>
 
     <div class="img" center>
@@ -25,54 +23,64 @@
     </div>
 
     <div *ngIf="auth.user | async as user">
-    <ion-card-content>
-      <ion-card-title text-center>
-        {{user.Name}}
-      </ion-card-title>
-      <ion-card-content text-center>
-        {{user.date}}
-        <div></div>
-        {{user.email}}
-      </ion-card-content>  
-    </ion-card-content>
+      <ion-card-content>
+        <ion-card-title text-center>
+          {{user.Name}}
+        </ion-card-title>
+        <ion-card-content text-center>
+          {{user.date}}
+          <div></div>
+          {{user.email}}
+        </ion-card-content>
+      </ion-card-content>
     </div>
 
     <ion-toolbar>
       <ion-buttons slot="primary">
         <ion-button routerLink="/list">
           <ion-icon slot="icon-only" name="clipboard"></ion-icon>
-          <ion-label>訂單管理</ion-label>
+          <ion-label>訂購紀錄</ion-label>
         </ion-button>
       </ion-buttons>
+      <ion-item>
+        <ion-toggle (click)="show=!show" color="dark"></ion-toggle>
+        <ion-label *ngIf="show" text-center>已開啟嚮導功能</ion-label>
+        <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
+      </ion-item>
     </ion-toolbar>
   </ion-card>
-  <ion-item>
-    <ion-label *ngIf="show" text-center>已開啟嚮導功能</ion-label>
-    <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
-    <ion-toggle (click)="show=!show" color="dark"></ion-toggle>
-  </ion-item>
-  <div> 
+  <div>
     <span [ngSwitch]="show">
       <div *ngSwitchCase="true">
         <div>
           <ion-toolbar>
-            <ion-button class="button" shape="circle" color="dark" fill="outline">
-              <ion-icon name="calendar"></ion-icon>行事曆
-            </ion-button>
-            <ion-buttons slot="primary">
-              <ion-button routerLink="/list">
-                <ion-icon slot="icon-only" name="clipboard"></ion-icon>
-              </ion-button>
-            </ion-buttons>
+            <ion-row>
+              <ion-col>
+                <ion-segment-button>
+                  <ion-label>行事曆</ion-label>
+                  <ion-icon name="calendar" color="danger"></ion-icon>
+                </ion-segment-button>
+              </ion-col>
+              <ion-col>
+                <ion-segment-button>
+                  <ion-label>建立行程</ion-label>
+                  <ion-icon name="add-circle-outline" color="tertiary"></ion-icon>
+                </ion-segment-button>
+              </ion-col>
+              <ion-col>
+                <ion-segment-button>
+                  <ion-label>訂單管理</ion-label>
+                  <ion-icon name="clipboard" color="dark"></ion-icon>
+                </ion-segment-button>
+              </ion-col>
+            </ion-row>
           </ion-toolbar>
         </div>
       </div>
-      <div *ngSwitchCase="false">
-        <div>
-          想當響導嗎？<br>
-          請開啟嚮導功能，補足基本資料，即可開啟。
-        </div>
-      </div>
+      <p *ngSwitchDefault text-center>
+        想當響導嗎？<br>
+        補足基本資料，即可開啟。
+      </p>
     </span>
   </div>
 
