@@ -33,14 +33,17 @@ export class LoginPage {
       password:form.password
     };
     this.auth.emailLogin(data).then(i=>{
-      if(i==-9){
-        this.loginFail();
+      if(i==0){
+        this.router.navigate(['/home']);
+      }
+      else if(i==-9){
+        this.loginFail(); //not signup
         this.loginForm.reset();
       }else if(i==-8){
-        this.pwdFail();
+        this.pwdFail(); //email or pwd worng
         this.loginForm.reset();
       }else{
-        this.Fail();
+        this.Fail(); //fail
         this.loginForm.reset();
       }
     });
@@ -91,7 +94,7 @@ export class LoginPage {
   async Fail(){
     const alert = await this.alertCtrl.create({
       header: '登入失敗!',
-      subHeader: '請確定你的帳號密碼是否正確',
+      subHeader: '錯誤',
       buttons: ['OK']
     });
     await alert.present();

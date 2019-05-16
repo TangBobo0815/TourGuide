@@ -3,6 +3,9 @@ import { User } from "../../models/user";
 
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-getpasswd',
@@ -14,7 +17,9 @@ export class GetpasswdPage implements OnInit {
   getpassedForm:any;
 
   constructor(private auth: AuthService,
-              private builder: FormBuilder)
+              private builder: FormBuilder,
+              private router: Router,
+              public alertCtrl: AlertController)
   {}
 
   ngOnInit() {
@@ -26,7 +31,12 @@ export class GetpasswdPage implements OnInit {
     const data={
       email:form.email
     }
-    this.auth.resetPassword(data).then(()=>{
+    this.auth.resetPassword(data).then((i)=>{
+      if(i==0){
+        this.resetemailSucess();
+      }else{
+        this.resetemailFail();
+      }
     })
   }
 
@@ -36,5 +46,31 @@ export class GetpasswdPage implements OnInit {
         [Validators.required, Validators.email]
       ]
       })
+  }
+
+  //---------------郵件傳送dialog
+  async resetemailSucess(){
+    const alert = await this.alertCtrl.create({
+      header: '傳送成功!',
+      message: '請至您的信箱確認',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/login']);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async resetemailFail(){
+    const alert = await this.alertCtrl.create({
+      header: '傳送失敗!',
+      message: '請確認你是否確實有帳號',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

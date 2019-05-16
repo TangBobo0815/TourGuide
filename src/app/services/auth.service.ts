@@ -8,9 +8,6 @@ import { Observable, of } from 'rxjs';
 import { User } from "../../models/user";
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
-import { SignupPage } from '../signup/signup.page';
-import { callLifecycleHooksChildrenFirst } from '@angular/core/src/view/provider';
-import { PackagePage } from '../package/package.page';
 //-----------------
 
 @Injectable({
@@ -93,7 +90,7 @@ export class AuthService {
     let result;
     return this.db.doc(`users/${user.uid}`).update(data)
       .then(()=>{
-        result=0;
+        result=0; //sucess
         return result;
       });  
    }
@@ -106,9 +103,9 @@ export class AuthService {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password)
       .then(()=>{
         console.log("success")
-        this.router.navigate(['/home']);
+        return result=0;
       })
-      .catch((error)=>{
+      .catch(error=>{
         const errorCode = error.code;
         if(errorCode==='auth/user-not-found'){ //嚴格相等
           //not signup
@@ -119,49 +116,32 @@ export class AuthService {
           console.log('密碼錯誤'); 
           result=-8;
         }else{
+          //fail
           result=-7;
         }
         console.log("登入失敗: ",error)
         return result;
-      });
+      })
   }
 
   //---------------忘記密碼
   async resetPassword(user){
+    let result;
     return await this.afAuth.auth.sendPasswordResetEmail(String(user.email))
       .then(()=>{
         console.log('email sent success')
-        this.resetemailSucess();
+        return result=0;
       })
       .catch((error)=>{
         console.log(error)
-        this.resetemailFail();
+        return result=-9;
       })
   }
 
-  //---------------登出(?)
+  //---------------登出
   signOut(){
     return this.afAuth.auth.signOut().then(()=>{
       this.router.navigate(['/']);
     });
-  }
-
-  //---------------郵件傳送dialog
-  async resetemailSucess(){
-    const alert = await this.alertCtrl.create({
-      header: '傳送成功!',
-      message: '請至您的信箱確認',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async resetemailFail(){
-    const alert = await this.alertCtrl.create({
-      header: '傳送失敗!',
-      message: '請確認你是否確實有帳號',
-      buttons: ['OK']
-    });
-    await alert.present();
   }
 }
