@@ -22,7 +22,7 @@
       <ion-img src="../assets/icon/tgicon123.png"></ion-img>
     </div>
 
-    <div *ngIf="auth.user | async as user">
+    <div *ngIf="authData.user | async as user">
       <ion-card-content>
         <ion-card-title text-center>
           {{user.Name}}

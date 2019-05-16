@@ -13,9 +13,8 @@ import { AngularFireStorage } from 'angularfire2/storage';
 export class ProfilePage implements OnInit{
 
   constructor(
-    private auth:UserDateService,
+    private authData:UserDateService,
     private storage:AngularFireStorage) {
-
   }
 
   ngOnInit() {
