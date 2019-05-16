@@ -78,7 +78,7 @@
 
 <ion-menu side="start">
   <ion-header>
-    <ion-toolbar class="a" color="dark" *ngIf="auth.user | async as user">
+    <ion-toolbar class="a" color="dark" *ngIf="authData.user | async as user">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -107,7 +107,7 @@
   </ion-content>
   <ion-footer>
     <ion-toolbar color="dark">
-      <ion-button color="dark">
+      <ion-button color="dark" (click)="signOut()">
         <ion-icon name="log-out"></ion-icon>登出
       </ion-button>
     </ion-toolbar>

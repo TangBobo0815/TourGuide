@@ -54,8 +54,7 @@ export class LoginPage {
     const data={
       email:form.email
     }
-    this.auth.resetPassword(data).then(()=>{
-    })
+    this.auth.resetPassword(data);
   }
 
   buildForm() {

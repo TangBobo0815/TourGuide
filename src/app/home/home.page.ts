@@ -6,6 +6,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserDateService } from '../services/user-date.service';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -62,7 +63,8 @@ export class HomePage {
               private platform: Platform,
               private splashScreen: SplashScreen,
               private statusBar: StatusBar,
-              private auth:UserDateService) {
+              private authData:UserDateService,
+              private auth: AuthService,) {
                 this.initializeApp();
               }
             
@@ -91,5 +93,9 @@ export class HomePage {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+  signOut(){
+    this.auth.signOut();
   }
 }
