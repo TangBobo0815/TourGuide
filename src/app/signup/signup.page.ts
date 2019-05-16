@@ -7,6 +7,8 @@ import { PasswordValidator } from '../../_validators/password.validator';
 import { Router } from '@angular/router';
 import { AngularFireStorage , AngularFireStorageReference , AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
+import { AlertController , ToastController } from '@ionic/angular';
+import { resetCompiledComponents } from '@angular/core/src/render3/jit/module';
 
 
 @Component({
@@ -100,7 +102,9 @@ export class SignupPage implements OnInit {
               private auth: AuthService,
               private router : Router,
               //----------
-              private storage: AngularFireStorage
+              private storage: AngularFireStorage,
+              private toast: ToastController,
+              private alertCtrl:AlertController
               )
   { }
 
@@ -124,8 +128,18 @@ export class SignupPage implements OnInit {
       phone:form.phone,
       address:form.address,
     };
-    this.auth.signUp(data).then(()=>{
-      //this.firstForm.reset();
+    this.auth.signUp(data).then(data=>{
+      if(data== 0){
+        this.register1Sucess();
+      }else if (data==-9){
+        this.alreadyFail();
+      }else if (data==-8){
+        this.useremailFail();
+        this.firstForm.reset();
+      }else{
+        this.Fail();
+        this.firstForm.reset();
+      }
     });
   }
 
@@ -146,9 +160,12 @@ export class SignupPage implements OnInit {
     else{
       this.imgsrc$.subscribe(path=> data.imgsrc=path);
     }
-    this.auth.imgsignUp(user,data);
+    this.auth.imgsignUp(user,data).then(data=>{
+      if(data== 0){
+        this.register2Sucess();
+      }
+    });
     console.log(data);
-    
   }
 
   buildForm() {
@@ -312,10 +329,75 @@ export class SignupPage implements OnInit {
     });
     //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
-
-  
   //------------------------------------
+  //---------------註冊成功toast
 
+  async register1Sucess(){
+    const toast = await this.toast.create({
+      message: '第一階段註冊成功',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async register2Sucess(){
+    const toast = await this.toast.create({
+      message: '第二階段註冊成功',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  //---------------註冊失敗alert
+
+  async alreadyFail(){
+    const alert = await this.alertCtrl.create({
+      header: '郵件地址已存在',
+      message: '請使用帳號密碼登入',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/login']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async useremailFail(){
+    const alert = await this.alertCtrl.create({
+      header: '郵件輸入有誤',
+      message: '請回到上一步再試一次',
+      buttons: [
+        {
+          text: '確定'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async Fail(){
+    const alert = await this.alertCtrl.create({
+      header: '錯誤',
+      message: '請回到上一步再試一次',
+      buttons: [
+        {
+          text: '確定'
+        }
+      ]
+    });
+    
+    await alert.present();
+  }
 }
 
 

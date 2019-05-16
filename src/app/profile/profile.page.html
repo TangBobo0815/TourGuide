@@ -25,16 +25,16 @@
     </div>
 
     <div *ngIf="auth.user | async as user">
-    <ion-card-content>
-      <ion-card-title text-center>
-        {{user.Name}}
-      </ion-card-title>
-      <ion-card-content text-center>
-        {{user.date}}
-        <div></div>
-        {{user.email}}
-      </ion-card-content>  
-    </ion-card-content>
+      <ion-card-content>
+        <ion-card-title text-center>
+          {{user.Name}}
+        </ion-card-title>
+        <ion-card-content text-center>
+          {{user.date}}
+          <div></div>
+          {{user.email}}
+        </ion-card-content>  
+      </ion-card-content>
     </div>
 
     <ion-toolbar>

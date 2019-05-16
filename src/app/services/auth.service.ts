@@ -8,6 +8,9 @@ import { Observable, of } from 'rxjs';
 import { User } from "../../models/user";
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
+import { SignupPage } from '../signup/signup.page';
+import { callLifecycleHooksChildrenFirst } from '@angular/core/src/view/provider';
+import { PackagePage } from '../package/package.page';
 //-----------------
 
 @Injectable({
@@ -37,6 +40,7 @@ export class AuthService {
 
   //---------------註冊
   signUp(user){
+    let result;
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password)
     .then(credential=>{
       this.infosignUp(
@@ -48,9 +52,10 @@ export class AuthService {
         user.address
       );
       console.log('第一階段註冊成功');
-      this.register1Sucess();
       this.afAuth.auth.currentUser.sendEmailVerification();
       //this.router.navigate(['/login']);
+      result=0;
+      return result;
     })
     .catch(error=>{
       console.log("註冊失敗:",error)
@@ -58,13 +63,15 @@ export class AuthService {
 
       if(errorCode==='auth/email-already-in-use'){ //嚴格相等
         console.log('這個email已註冊');
-        this.alreadyFail();
-        return
+        result=-9
+      }else if(errorCode === 'auth/invalid-email'){
+        console.log('郵件輸入有誤');
+        result=-8
+      }else{
+        console.log('錯誤');
+        result=-7
       }
-      if(errorCode === 'auth/invalid-email'){
-        this.useremailFail();
-        return
-      }
+      return result;
     });
   }
 
@@ -83,22 +90,39 @@ export class AuthService {
   }
 
    imgsignUp(user:User,data:any){
-     this.register2Sucess();
-     return this.db.doc(`users/${user.uid}`).update(data);
+    let result;
+    return this.db.doc(`users/${user.uid}`).update(data)
+      .then(()=>{
+        result=0;
+        return result;
+      });  
    }
 
   //-------------------------
 
   //---------------登入
   emailLogin(user){
+    let result;
     return this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password)
       .then(()=>{
         console.log("success")
         this.router.navigate(['/home']);
       })
       .catch((error)=>{
+        const errorCode = error.code;
+        if(errorCode==='auth/user-not-found'){ //嚴格相等
+          //not signup
+          console.log('未註冊');
+          result=-9; 
+        }else if (errorCode==='auth/wrong-password'){
+          //pwd wrong
+          console.log('密碼錯誤'); 
+          result=-8;
+        }else{
+          result=-7;
+        }
         console.log("登入失敗: ",error)
-        this.loginFail();
+        return result;
       });
   }
 
@@ -113,67 +137,13 @@ export class AuthService {
         console.log(error)
         this.resetemailFail();
       })
-    }
+  }
 
   //---------------登出(?)
   signOut(){
     return this.afAuth.auth.signOut().then(()=>{
       this.router.navigate(['/']);
     });
-  }
-  
-  //---------------註冊成功alert
-
-  async register1Sucess(){
-    const toast = await this.toast.create({
-      message: '第一階段註冊成功',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
-  }
-  
-  async register2Sucess(){
-    const toast = await this.toast.create({
-      message: '第二階段註冊成功',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
-  }
-
-  //---------------註冊失敗toast
-  
-  async alreadyFail(){
-    const toast = await this.toast.create({
-      message: '這個郵件地址已存在，請使用帳號密碼登入',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
-  }
-
-  async useremailFail(){
-    const toast = await this.toast.create({
-      message: '郵件輸入有誤',
-      showCloseButton: true,
-      position: 'top',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
-  }
-
-  //---------------登入失敗dialog
-  async loginFail() {
-    const alert = await this.alertCtrl.create({
-        header: '登入失敗!',
-        subHeader: '請確定你的帳號密碼是否正確',
-        buttons: ['OK']
-    });
-    await alert.present();
   }
 
   //---------------郵件傳送dialog
