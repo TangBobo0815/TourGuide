@@ -18,8 +18,8 @@
       </ion-button>
     </div>
 
-    <div class="img" center>
-      <ion-img src="../assets/icon/tgicon123.png"></ion-img>
+    <div class="img" *ngIf="authData.user | async as user" center>
+      <ion-img [src]="user.imgsrc"></ion-img>
     </div>
 
     <div *ngIf="authData.user | async as user">

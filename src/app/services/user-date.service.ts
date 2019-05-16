@@ -9,6 +9,8 @@ import { Observable, of, ReplaySubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
 import { AngularFireStorage } from 'angularfire2/storage';
+import { Reference } from '@angular/fire/storage/interfaces';
+import { Url } from 'url';
 
 export interface User {
    uid:string;
@@ -18,7 +20,7 @@ export interface User {
    email?:string;
    gender?:string;
    phone?:string;
-   imgsrc:string;
+   imgsrc?:string;
 }
 @Injectable({
   providedIn: 'root'
