@@ -2,16 +2,19 @@
   max-height: 35vh;
   overflow: hidden;
 }
-.welcome-card ion-card-header{
-  color: #82ccdd;
+
+ion-toolbar .a {
+  height: 140px;
 }
-.header ion-searchbar{
-  color: #60a3bc;
+
+.img{
+  width: 60px;
+border-radius: 50%;
 
 }
-.header ion-item{
-  color: #60a3bc;
+
+ion-grid{
+  padding-top: 14%;
+  padding-left:10%;
 }
-.header ion-icon{
-  color: #60a3bc;
-}
+

@@ -2,18 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore, DocumentReference, AngularFirestoreCollection  } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference  } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Observable,of} from 'rxjs';
 
-import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
+import { AngularFireStorage , AngularFireUploadTask, AngularFireStorageReference } from 'angularfire2/storage';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
-
-import { User } from "../../models/user";
-import { stringify } from 'querystring';
-
 
 @Component({
   selector: 'package',
@@ -30,9 +26,7 @@ export class PackagePage implements OnInit {
   snapshot:Observable<any>;
   uploadPercent$:Observable<number>;
   uploadTask: AngularFireUploadTask;
-
-  user: Observable<User>;
-
+  userRef:DocumentReference;
 
   constructor(private builder: FormBuilder,
     private router: Router,
@@ -42,6 +36,7 @@ export class PackagePage implements OnInit {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth,)
   {
+    
   }
 
   formErrors = {
@@ -68,7 +63,7 @@ export class PackagePage implements OnInit {
 
   packageUp(){
     let form = this.packageForm.value;
-    var array = [];
+    
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
     // for(let i=0;i<=(this.detailsArray.length)-1;i++){
@@ -90,7 +85,8 @@ export class PackagePage implements OnInit {
       month:form.month,
       days:form.days,
       price:form.price,
-      detailsArray:form.detailsGroup
+      detailsArray:form.detailsGroup,
+      userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
     this.db.collection('packages').add(data);
     console.log(data);
@@ -162,7 +158,8 @@ export class PackagePage implements OnInit {
     const toast = await this.toast.create({
       message: '上傳成功',
       showCloseButton: true,
-      position: 'top',
+      duration: 3000,
+      position: 'bottom',
       closeButtonText: 'Ok'
     })
     toast.present();

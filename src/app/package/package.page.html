@@ -139,7 +139,7 @@
    
     
       <div padding text-center>
-        <ion-button type="submit" color="dark" block shape="round" expand="full">完成</ion-button>
+        <ion-button type="submit" color="dark" block shape="round" expand="full" [disabled]="!packageForm.valid">完成</ion-button>
       </div>
 
       <!--

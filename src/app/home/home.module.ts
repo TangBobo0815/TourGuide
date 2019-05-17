@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 
 import { HomePage } from './home.page';
-import { MenuComponent } from '../menu/menu.component';
+
 
 @NgModule({
   imports: [
@@ -20,6 +20,6 @@ import { MenuComponent } from '../menu/menu.component';
       }
     ])
   ],
-  declarations: [HomePage,MenuComponent]
+  declarations: [HomePage]
 })
 export class HomePageModule {}
