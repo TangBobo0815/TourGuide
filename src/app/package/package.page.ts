@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore  } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference  } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable} from 'rxjs';
+import { Observable,of} from 'rxjs';
 
-import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
-import { CONTEXT } from '@angular/core/src/render3/interfaces/view';
+import { AngularFireStorage , AngularFireUploadTask, AngularFireStorageReference } from 'angularfire2/storage';
+import { AuthService } from '../services/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'package',
@@ -24,14 +26,18 @@ export class PackagePage implements OnInit {
   snapshot:Observable<any>;
   uploadPercent$:Observable<number>;
   uploadTask: AngularFireUploadTask;
+  userRef:DocumentReference;
 
   constructor(private builder: FormBuilder,
     private router: Router,
     private db : AngularFirestore,
     private alertCtrl: AlertController,
     private toast: ToastController,
-    private storage: AngularFireStorage)
-  { }
+    private storage: AngularFireStorage,
+    private afAuth:AngularFireAuth,)
+  {
+    
+  }
 
   formErrors = {
     'title': '',
@@ -55,39 +61,46 @@ export class PackagePage implements OnInit {
     this.buildForm();
   }
 
-  get context():FormArray{
-    return this.packageForm.get('detailsGroup') as FormArray;
-  }
-
   packageUp(){
     let form = this.packageForm.value;
+    
+    //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
-    console.log(this.packageForm.value)
-    const data = {
+    // for(let i=0;i<=(this.detailsArray.length)-1;i++){
+    //   var obj=[];
+    //   let detail=form.detailsGroup;
+
+    //   this.imgsrc$.subscribe(path=>detail[i]['image']=path);
+    //   console.log(detail[i]['image']);
+    //   detail[i]['fileRef']=this.fileRef;
+    //   console.log(detail[i]['fileRef'])
+    //   array.push(detail[i].controls);
+    // }
+    // console.log(array); 
+    // console.log(this.detailsArray.length);
+
+    const data={
       title:form.title,
       place:form.place,
       month:form.month,
       days:form.days,
       price:form.price,
-      details:form.detailsGroup,
-      // image:this.imgurl || null,
-      // fileRef:this.fileRef
-    };
-
-    console.log(data.details);
-
-    if(data.details.image!=null){
-      this.imgsrc$.subscribe(path=> data.details.image=path);
-      console.log(data.details.image)
-    }else{
-      data.details.fileRef=null;
+      detailsArray:form.detailsGroup,
+      userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
-
-    //console.log("data.imgsrc: " + data.imgsrc);
-    console.log(data);
     this.db.collection('packages').add(data);
+    console.log(data);
+    
     this.Sucess();
+
   }
+
+  // public setFormArrayValue() {
+  //   const controlArray = <FormArray> this.packageForm.get('detailsGroup');
+  //   controlArray.controls[0].get('image').setValue(this.imgsrc$.subscribe(path=> imgsrc=path));
+  //   controlArray.controls[0].get('role').setValue(2);
+  // }
+
 
   buildForm() {
     this.packageForm = this.builder.group({
@@ -96,7 +109,7 @@ export class PackagePage implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(15)]
       ],
-      place:['01',
+      place:['基隆市',
         [Validators.required]
       ],
       month:['1',
@@ -111,7 +124,7 @@ export class PackagePage implements OnInit {
       detailsGroup:this.builder.array([
         this.addDetailsFormGroup()
       ])
-    })
+    })  
     this.packageForm.valueChanges.subscribe(data => this.onValueChanged(data));
      // reset messages
     this.onValueChanged();
@@ -119,16 +132,16 @@ export class PackagePage implements OnInit {
 
   addDetailsFormGroup(){
     return this.builder.group({
-      image:new FormControl(this.imgurl),
+      image:new FormControl(this.imgurl || null),
       context:new FormControl('',
       [Validators.required,
-      Validators.minLength(20),
+      Validators.minLength(20), 
       Validators.maxLength(500),
       ]),
-      fileRef:this.fileRef
+      fileRef:new FormControl('')
     })
   }
-  
+
   addDetailsButtonClick(): void{
     (<FormArray>this.packageForm.get('detailsGroup')).push(this.addDetailsFormGroup()) 
   }
@@ -138,14 +151,15 @@ export class PackagePage implements OnInit {
   }
 
   get detailsArray():FormArray{
-    return this.packageForm.get('detailsGroup') as FormArray
+    return <FormArray> this.packageForm.get('detailsGroup');
   }
 
   async Sucess(){
     const toast = await this.toast.create({
       message: '上傳成功',
       showCloseButton: true,
-      position: 'top',
+      duration: 3000,
+      position: 'bottom',
       closeButtonText: 'Ok'
     })
     toast.present();
@@ -180,7 +194,8 @@ export class PackagePage implements OnInit {
     }
   }
 
-  chooseFiles(event){
+  chooseFiles(i,event){
+    const controlArray = <FormArray> this.packageForm.get('detailsGroup');
     const file:File=event.target.files[0];
     const filePath = `packages/${new Date().getTime()}_${file.name}`;
     const uploadTask = this.storage.upload(filePath,file);
@@ -196,6 +211,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
+        controlArray.controls[i].get('image').patchValue({image:this.imgurl});
+        controlArray.controls[i].get('fileRef').patchValue({fileRef:this.fileRef});
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
@@ -206,5 +223,5 @@ export class PackagePage implements OnInit {
         //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
 
-
 }
+

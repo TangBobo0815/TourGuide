@@ -5,6 +5,8 @@ import { PopoverComponent } from '../popover/popover.component';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserDateService } from '../services/user-date.service';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -13,12 +15,22 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
   showSplash = true;
   public appPages = [
     {
       title: '首頁',
       url: '/home',
       icon: 'home'
+    },
+    {
+      title: '個人資訊',
+      url: '/profile',
+      icon: 'contact'
     },
     {
       title: '我的足跡',
@@ -31,32 +43,28 @@ export class HomePage {
       icon: 'clipboard'
     },
     {
-      title: '行事曆',
-      url: '/calendar',
-      icon: 'calendar'
-    },
-    {
-      title: '推廣通知',
+      title: '自助規劃',
       url: '/notifications',
-      icon: 'notifications'
+      icon: 'today'
     },
     {
-      title: 'login',
-      url: '/login',
-      icon: 'log-in'
+      title: '備忘錄',
+      url: '/notifications',
+      icon: 'checkmark-circle-outline'
     },
     {
-      title: 'setting',
+      title: '使用說明',
       url: '/setting',
-      icon: 'settings'
+      icon: 'information-circle-outline'
     }
 
   ];
-
   constructor(public popoverController: PopoverController , 
               private platform: Platform,
               private splashScreen: SplashScreen,
-              private statusBar: StatusBar) {
+              private statusBar: StatusBar,
+              private authData:UserDateService,
+              private auth: AuthService,) {
                 this.initializeApp();
               }
             
@@ -67,6 +75,7 @@ export class HomePage {
                 });
               }
 
+              
   async popovers(ev: any) {
     const popover = await this.popoverController.create({
         component: PopoverComponent,
@@ -86,5 +95,7 @@ export class HomePage {
     }, 2000);
   }
 
-  
+  signOut(){
+    this.auth.signOut();
+  }
 }

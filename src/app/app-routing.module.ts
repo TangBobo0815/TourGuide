@@ -9,13 +9,15 @@ const routes: Routes = [
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'home',loadChildren: './home/home.module#HomePageModule' },
+  { path: 'home/:uid',loadChildren: './home/home.module#HomePageModule' },
   { path: 'list',loadChildren: './list/list.module#ListPageModule' }, 
   { path: 'package', loadChildren: './package/package.module#PackagePageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
   //{ path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
-  { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },  { path: 'memo', loadChildren: './memo/memo.module#MemoPageModule' },
-
+  { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },
+  { path: 'profile/:uid', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
 ];
 
 @NgModule({

@@ -32,8 +32,20 @@ export class LoginPage {
       email:form.email,
       password:form.password
     };
-    this.auth.emailLogin(data).then(()=>{
-      this.loginForm.reset();
+    this.auth.emailLogin(data).then(i=>{
+      if(i==0){
+        this.router.navigate(['/home']);
+      }
+      else if(i==-9){
+        this.loginFail(); //not signup
+        this.loginForm.reset();
+      }else if(i==-8){
+        this.pwdFail(); //email or pwd worng
+        this.loginForm.reset();
+      }else{
+        this.Fail(); //fail
+        this.loginForm.reset();
+      }
     });
   }
 
@@ -42,8 +54,7 @@ export class LoginPage {
     const data={
       email:form.email
     }
-    this.auth.resetPassword(data).then(()=>{
-    })
+    this.auth.resetPassword(data);
   }
 
   buildForm() {
@@ -58,4 +69,33 @@ export class LoginPage {
       })
   }
 
+  //-------------------------------
+
+  //---------------登入失敗dialog
+  async loginFail() {
+      const alert = await this.alertCtrl.create({
+        header: '登入失敗!',
+        subHeader: '還沒有註冊哦，快去註冊吧!',
+        buttons: ['OK']
+      });
+      await alert.present();
+  }
+
+  async pwdFail(){
+    const alert = await this.alertCtrl.create({
+      header: '登入失敗!',
+      subHeader: '請確定你的帳號密碼是否正確',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async Fail(){
+    const alert = await this.alertCtrl.create({
+      header: '登入失敗!',
+      subHeader: '錯誤',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 }
