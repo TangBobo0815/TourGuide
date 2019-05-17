@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
   //{ path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
-  { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },
+  { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },  { path: 'memo', loadChildren: './memo/memo.module#MemoPageModule' },
+
 ];
 
 @NgModule({
