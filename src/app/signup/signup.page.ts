@@ -336,7 +336,8 @@ export class SignupPage implements OnInit {
     const toast = await this.toast.create({
       message: '第一階段註冊成功',
       showCloseButton: true,
-      position: 'top',
+      duration: 3000,
+      position: 'bottom',
       closeButtonText: 'Ok'
     })
     toast.present();
@@ -346,7 +347,8 @@ export class SignupPage implements OnInit {
     const toast = await this.toast.create({
       message: '第二階段註冊成功',
       showCloseButton: true,
-      position: 'top',
+      duration: 3000,
+      position: 'bottom',
       closeButtonText: 'Ok'
     })
     toast.present();

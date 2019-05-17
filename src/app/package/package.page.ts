@@ -158,7 +158,8 @@ export class PackagePage implements OnInit {
     const toast = await this.toast.create({
       message: '上傳成功',
       showCloseButton: true,
-      position: 'top',
+      duration: 3000,
+      position: 'bottom',
       closeButtonText: 'Ok'
     })
     toast.present();

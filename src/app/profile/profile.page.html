@@ -18,37 +18,40 @@
       </ion-button>
     </div>
 
-    <div class="img" *ngIf="authData.user | async as user" center>
-      <ion-img [src]="user.imgsrc"></ion-img>
-    </div>
-
     <div *ngIf="authData.user | async as user">
-      <ion-card-content>
-        <ion-card-title text-center>
-          {{user.Name}}
-        </ion-card-title>
-        <ion-card-content text-center>
-          {{user.date}}
-          <div></div>
-          {{user.email}}
-        </ion-card-content>
-      </ion-card-content>
-    </div>
+      <div class="img" center>
+        <ion-img [src]="user.imgsrc"></ion-img>
+      </div>
 
-    <ion-toolbar>
-      <ion-buttons slot="primary">
-        <ion-button routerLink="/list">
-          <ion-icon slot="icon-only" name="clipboard"></ion-icon>
-          <ion-label>訂購紀錄</ion-label>
-        </ion-button>
-      </ion-buttons>
-      <ion-item>
-        <ion-toggle (click)="show=!show" color="dark"></ion-toggle>
-        <ion-label *ngIf="show" text-center>已開啟嚮導功能</ion-label>
-        <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
-      </ion-item>
-    </ion-toolbar>
+      <div>
+        <ion-card-content>
+          <ion-card-title text-center>
+            {{user.Name}}
+          </ion-card-title>
+          <ion-card-content text-center>
+            {{user.date}}
+            <div></div>
+            {{user.email}}
+          </ion-card-content>
+        </ion-card-content>
+      </div>
+
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button routerLink="/list">
+            <ion-icon slot="icon-only" name="clipboard"></ion-icon>
+            <ion-label>訂購紀錄</ion-label>
+          </ion-button>
+        </ion-buttons>
+        <ion-item>
+          <ion-toggle (click)="show=!show" color="dark"></ion-toggle>
+          <ion-label *ngIf="show" text-center >已開啟嚮導功能</ion-label>
+          <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
+        </ion-item>
+      </ion-toolbar>
+    </div>
   </ion-card>
+
   <div>
     <span [ngSwitch]="show">
       <div *ngSwitchCase="true">
