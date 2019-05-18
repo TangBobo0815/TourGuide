@@ -4,11 +4,13 @@ import { NavController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { PasswordValidator } from '../../_validators/password.validator';
+import { IdValidator } from '../../_validators/id.validator';
 import { Router } from '@angular/router';
 import { AngularFireStorage , AngularFireStorageReference , AngularFireUploadTask } from 'angularfire2/storage';
 import { Observable } from 'rxjs';
 import { AlertController , ToastController } from '@ionic/angular';
 import { resetCompiledComponents } from '@angular/core/src/render3/jit/module';
+import { identifierModuleUrl } from '@angular/compiler';
 
 
 @Component({
@@ -48,8 +50,7 @@ export class SignupPage implements OnInit {
     'date':'',
     'phone':'',
     'address':'',
-    // 'touron':'',
-    // 'imgsrc':'',
+    'userid':''
   };
 
   validatorMessages = {
@@ -82,7 +83,7 @@ export class SignupPage implements OnInit {
       'required': '必填欄位',
       'pattern':'第一個字母需大寫',
       'minlength': '長度至少為10',
-      'maxlength': '長度最多為10'
+      'maxlength': '長度最多為10',
      },
      'password': {
        'required': '必填欄位',
@@ -221,9 +222,12 @@ export class SignupPage implements OnInit {
           [Validators.required,
             Validators.minLength(10),
             Validators.maxLength(10),
-            Validators.pattern('^([ZA-Z][Z0-9]+)$')]
+            Validators.pattern('^([ZA-Z][Z1-2][Z0-9]+)$')
+          ]
         )
-      })
+      },
+      )
+     
     });
     
     this.firstForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -291,14 +295,13 @@ export class SignupPage implements OnInit {
         case 'userid':
           var group = form2.get('userImgInfoGroup');
           var control = group.get(field);
-
-          if (control && control.dirty && !control.valid) {
+          
+          if (control && control.dirty && !control.valid) {            
             const messages = this.validatorMessages[field];
             for (const key in control.errors) {
               this.formErrors[field] += messages[key] + ' ';
             } 
           }
-          break;   
       }    
     }
   }
@@ -329,6 +332,8 @@ export class SignupPage implements OnInit {
     });
     //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
+
+  
   //------------------------------------
   //---------------註冊成功toast
 

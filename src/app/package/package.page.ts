@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference  } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable,of} from 'rxjs';
+import { Observable} from 'rxjs';
 
-import { AngularFireStorage , AngularFireUploadTask, AngularFireStorageReference } from 'angularfire2/storage';
+import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'package',
@@ -65,19 +64,6 @@ export class PackagePage implements OnInit {
     let form = this.packageForm.value;
     
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
-
-    // for(let i=0;i<=(this.detailsArray.length)-1;i++){
-    //   var obj=[];
-    //   let detail=form.detailsGroup;
-
-    //   this.imgsrc$.subscribe(path=>detail[i]['image']=path);
-    //   console.log(detail[i]['image']);
-    //   detail[i]['fileRef']=this.fileRef;
-    //   console.log(detail[i]['fileRef'])
-    //   array.push(detail[i].controls);
-    // }
-    // console.log(array); 
-    // console.log(this.detailsArray.length);
 
     const data={
       title:form.title,
@@ -154,17 +140,6 @@ export class PackagePage implements OnInit {
     return <FormArray> this.packageForm.get('detailsGroup');
   }
 
-  async Sucess(){
-    const toast = await this.toast.create({
-      message: '上傳成功',
-      showCloseButton: true,
-      duration: 3000,
-      position: 'bottom',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
-  }
-
   private onValueChanged(data?: any) {
     if (!this.packageForm) { return; }
     const form = this.packageForm;
@@ -221,6 +196,17 @@ export class PackagePage implements OnInit {
       console.log(err);
     });
         //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
+  }
+
+  async Sucess(){
+    const toast = await this.toast.create({
+      message: '上傳成功',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
   }
 
 }
