@@ -61,8 +61,8 @@ export class SignupPage implements OnInit {
      },
      'Name': {
        'required': '必填欄位',
-       'minlength': '長度至少為3',
-       'maxlength': '長度最多為32'
+       'minlength': '長度至少為2',
+       'maxlength': '長度最多為10'
      },
      'gender':{
        'required': '必填欄位',
@@ -188,7 +188,7 @@ export class SignupPage implements OnInit {
       { validators: PasswordValidator.MatchPassword }
       ),
       Name: ['',
-        [Validators.required,Validators.minLength(3), Validators.maxLength(32)]
+        [Validators.required,Validators.minLength(2), Validators.maxLength(10)]
       ],
       gender:['',
         [Validators.required]
