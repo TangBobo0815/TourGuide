@@ -20,6 +20,7 @@ export interface User {
    email?:string;
    gender?:string;
    phone?:string;
+   touron:boolean;
    imgsrc?:string;
 }
 @Injectable({
@@ -28,6 +29,7 @@ export interface User {
 
 export class UserDateService {
   user: Observable<User>;
+  
   
   constructor(
     private db: AngularFirestore,

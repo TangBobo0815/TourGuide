@@ -113,7 +113,7 @@
         添加內容<ion-icon name="add"></ion-icon>
       </ion-button>
 
-      <ion-slides formArrayName="detailsGroup"  	pager="true">
+      <ion-slides formArrayName="detailsGroup" pager="true">
           <ion-slide [formGroupName]="i"  *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">             
                   <ion-card >
                     <ion-item>
