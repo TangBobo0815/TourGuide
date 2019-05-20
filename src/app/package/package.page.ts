@@ -4,11 +4,18 @@ import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { AngularFirestore, DocumentReference } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable} from 'rxjs';
+import { Observable , of } from 'rxjs';
 
 import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { switchMap } from 'rxjs/operators';
+
+export interface User {
+  uid:string;
+  Name:string;
+  touron:boolean;
+}
 
 @Component({
   selector: 'package',
@@ -16,7 +23,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./package.page.scss'],
 })
 export class PackagePage implements OnInit {
-  
+  user: Observable<User>;
+
   packageForm:FormGroup;
   imgurl$:Observable<string>;
   imgurl:string;
@@ -35,7 +43,15 @@ export class PackagePage implements OnInit {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth,)
   {
-    
+    this.user = this.afAuth.authState.pipe(
+        switchMap(user => {
+          if(user) {
+            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      ); 
   }
 
   formErrors = {
@@ -74,6 +90,7 @@ export class PackagePage implements OnInit {
       detailsArray:form.detailsGroup,
       userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
+
     this.db.collection('packages').add(data);
     console.log(data);
     
