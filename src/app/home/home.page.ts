@@ -44,7 +44,7 @@ export class HomePage {
     },
     {
       title: '自助規劃',
-      url: '/notifications',
+      url: '/userpack',
       icon: 'today'
     },
     {

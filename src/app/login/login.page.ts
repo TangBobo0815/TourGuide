@@ -5,6 +5,8 @@ import { User } from "../../models/user";
 import { Router } from '@angular/router';
 import { AuthService } from '.././services/auth.service';
 import * as firebase from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
@@ -20,7 +22,8 @@ export class LoginPage {
   constructor(private auth: AuthService,
               private builder: FormBuilder,
               private router: Router,
-              public alertCtrl: AlertController) {}
+              public alertCtrl: AlertController,
+              public afAuth: AngularFireAuth) {}
 
   ngOnInit() {
     this.buildForm();
@@ -47,6 +50,18 @@ export class LoginPage {
         this.loginForm.reset();
       }
     });
+  }
+
+  googleLogin(){
+    let result;
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then(()=>{
+      this.router.navigate(['/home']);
+    })
+  }
+
+  googleSignUp(){
+    this.auth.googleLogin();
   }
 
   resetPassword(){

@@ -28,11 +28,16 @@
           </ion-col>
         </ion-row>
         <div padding text-center >
+          <ion-button color="dark" block shape="round" expand="full" (click)="googleLogin()" center>google登入
+          </ion-button>
           <ion-button type="submit" color="dark" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
           </ion-button>
           <ion-button routerLink="/signup" fill="clear">
             <ion-icon name="person-add" color="dark">
             </ion-icon>
+          </ion-button>
+          <ion-button (click)="googleSingUp()" fill="clear">
+            <ion-icon name="logo-google" color="dark"></ion-icon>
           </ion-button>
           <ion-button routerLink="/getpasswd" fill="clear" color="dark">忘記密碼?</ion-button>
         </div>

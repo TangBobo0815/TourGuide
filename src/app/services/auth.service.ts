@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 //--------------
 
 import { Observable, of } from 'rxjs';
@@ -122,6 +123,37 @@ export class AuthService {
         console.log("登入失敗: ",error)
         return result;
       })
+  }
+  //------------------------
+  //---------------google註冊
+
+  googleLogin(){
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider)
+  }
+
+  private oAuthLogin(provider){
+    return this.afAuth.auth.signInWithPopup(provider)
+    .then((credential)=>{
+      this.googleUser(
+        credential.user,
+      );
+    })
+  }
+
+  private googleUser(user){
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
+    const data : User = {
+      uid:user.uid,
+      email:user.email,
+      Name:user.displayName,
+      //date:user.birth,
+      // gender:user.gender,
+      //phone:user.phone,
+      //address:user.address,
+      imgsrc:user.photoURL
+    }
+    return userRef.set(data,{merge:true});
   }
 
   //---------------忘記密碼
