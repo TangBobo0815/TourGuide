@@ -30,7 +30,6 @@ export interface User {
 export class UserDateService {
   user: Observable<User>;
   
-  
   constructor(
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,

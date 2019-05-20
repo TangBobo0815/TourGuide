@@ -5,16 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PackagePage } from './package.page';
-
+import { UserpackPage } from './userpack.page';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
 
 const routes: Routes = [
   {
     path: '',
-    component: PackagePage
+    component: UserpackPage
   }
 ];
 
@@ -26,6 +23,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PackagePage]
+  declarations: [UserpackPage]
 })
-export class PackagePageModule {}
+export class UserpackPageModule {}
