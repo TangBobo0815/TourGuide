@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { User } from "../../models/user";
 import { Router } from '@angular/router';
 import { AuthService } from '.././services/auth.service';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 
 @Component({
   selector: 'app-login',
@@ -16,14 +19,18 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
   styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-  user = {} as User;
+  user :Observable<firebase.User>;
   loginForm:any;
 
   constructor(private auth: AuthService,
               private builder: FormBuilder,
               private router: Router,
               public alertCtrl: AlertController,
-              public afAuth: AngularFireAuth) {}
+              public afAuth: AngularFireAuth,
+              public platform:Platform,
+              public gplus:GooglePlus) {
+                this.user=this.afAuth.authState;
+              }
 
   ngOnInit() {
     this.buildForm();
@@ -53,6 +60,33 @@ export class LoginPage {
   }
 
   googleLogin(){
+    if(this.platform.is('cordova')){
+      this.nativeGoogleLogin();
+    }else{
+      this.webGoogleLogin();
+    }
+  }
+
+  async nativeGoogleLogin():Promise<void>{
+    try{
+      const gplusUser = await this.gplus.login({
+        'webClientId':'693255000376-omgan83jj2tnl7bgh2annah1n94l8466.apps.googleusercontent.com',
+        'offline':true,
+        'scopes':'profie email'
+      }).then(()=>{
+        this.router.navigate(['/home']);
+        return this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken))
+      })
+
+      // return await this.afAuth.auth.signInWithCredential(
+      //   firebase.auth.GoogleAuthProvider.credential(gplusUser.si)
+      // )
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  webGoogleLogin(){
     let result;
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
     .then(()=>{
