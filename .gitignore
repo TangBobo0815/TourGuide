@@ -6,8 +6,6 @@
 *.log
 *.tmp
 *.tmp.*
-*.keystore
-*.keystore.*
 log.txt
 *.sublime-project
 *.sublime-workspace
@@ -30,6 +28,7 @@ plugins/
 plugins/android.json
 plugins/ios.json
 environments/
+key/
 $RECYCLE.BIN/
 
 .DS_Store

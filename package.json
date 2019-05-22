@@ -35,7 +35,7 @@
     "angularfire2": "^5.1.2",
     "cordova-android": "7.1.4",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-googleplus": "7.0.1",
+    "cordova-plugin-googleplus": "^5.2.1",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^3.1.2",
     "cordova-plugin-pedometer": "0.4.1",
@@ -92,8 +92,7 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "YOUR_REVERSE_CLIENT_ID",
-        "PLAY_SERVICES_VERSION": "11.8.0"
+        "REVERSED_CLIENT_ID": "693255000376-omgan83jj2tnl7bgh2annah1n94l8466.apps.googleusercontent.com"
       }
     },
     "platforms": [

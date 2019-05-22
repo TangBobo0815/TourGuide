@@ -73,14 +73,16 @@ export class LoginPage {
         'webClientId':'693255000376-omgan83jj2tnl7bgh2annah1n94l8466.apps.googleusercontent.com',
         'offline':true,
         'scopes':'profie email'
-      }).then(()=>{
+      }).then((res)=>{
         this.router.navigate(['/home']);
-        return this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken))
-      })
+        const googleCredential = firebase.auth.GoogleAuthProvider
+                  .credential(res.idToken);
 
-      // return await this.afAuth.auth.signInWithCredential(
-      //   firebase.auth.GoogleAuthProvider.credential(gplusUser.si)
-      // )
+              firebase.auth().signInWithCredential(googleCredential)
+            .then( response => {
+                console.log("Firebase success: " + JSON.stringify(response));
+            });
+      })
     }catch(err){
       console.log(err);
     }

@@ -8,17 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:693255000376:android:764d2cb7da3280eb",
+        "mobilesdk_app_id": "1:693255000376:android:2247e455a81aae6e",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "io.ionic.tourguide"
         }
       },
       "oauth_client": [
         {
-          "client_id": "693255000376-avpvqd0a65casvbvsroak9b8ae0l2bfd.apps.googleusercontent.com",
+          "client_id": "693255000376-lula2kmes39rm9viumcuqe6bhsbtjfvb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "io.ionic.starter",
+            "package_name": "io.ionic.tourguide",
+            "certificate_hash": "1374f8c7120e3754da30480cbbe8447822947c54"
+          }
+        },
+        {
+          "client_id": "693255000376-q9jfd66s0u871b271jg8qq8hc50sppjr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.tourguide",
             "certificate_hash": "120d595c6e5c9762e5dd4166644f8125df46b733"
           }
         },
