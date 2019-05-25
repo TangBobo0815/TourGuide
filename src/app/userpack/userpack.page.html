@@ -18,12 +18,12 @@
         </ion-label>
         <ion-input type="text" formControlName="title"></ion-input>
       </ion-item>
-      <!-- <ion-item *ngIf="formErrors.title">
+      <ion-item *ngIf="formErrors.title">
           <ion-text color="danger">
             <p>{{ formErrors.title }}</p>
           </ion-text>
         </ion-item>
-   -->
+
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -82,28 +82,28 @@
         </ion-row>
       
         <ion-row>
-            <ion-col>
-      <!-- <ion-item>
-        <ion-label position="stacked">
-          <ion-icon name="paper"></ion-icon>天數
-        </ion-label>
-        <ion-select name="dateid" okText="確定" cancelText="取消" formControlName="days">
-          <ion-select-option value="1">1日</ion-select-option>
-          <ion-select-option value="2">2日</ion-select-option>
-          <ion-select-option value="3">3日</ion-select-option>
-          <ion-select-option value="4">4日</ion-select-option>
-          <ion-select-option value="5">5日</ion-select-option>
-          <ion-select-option value="6">5日以上</ion-select-option>
-        </ion-select>
-      </ion-item> -->
-    </ion-col>
-      <ion-col>
-      <!-- <ion-item>
+          <ion-col>
+          <ion-item>
+            <ion-label position="stacked">
+                <ion-icon name="paper"></ion-icon>天數
+            </ion-label>
+            <ion-select name="dateid" okText="確定" cancelText="取消" formControlName="days">
+              <ion-select-option value="1">1日</ion-select-option>
+              <ion-select-option value="2">2日</ion-select-option>
+              <ion-select-option value="3">3日</ion-select-option>
+              <ion-select-option value="4">4日</ion-select-option>
+              <ion-select-option value="5">5日</ion-select-option>
+              <ion-select-option value="6">5日以上</ion-select-option>
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+        <ion-col>
+       <!-- <ion-item>
         <ion-label position="stacked">
           <ion-icon name="pricetag"></ion-icon>價格
         </ion-label>
         <ion-input type="number" placeholder="NT$" min=0 formControlName="price"></ion-input>
-      </ion-item> -->
+      </ion-item>  -->
       <ion-item>
         <ion-label>開始日期</ion-label>
         <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
@@ -119,7 +119,7 @@
     </ion-col>
     </ion-row>
     </ion-grid>
-      <!-- <app-packages></app-packages> -->
+       <!-- <app-packages></app-packages>  -->
 
       <ion-button color="dark" type="button" (click)="addDetailsButtonClick()">
         添加內容<ion-icon name="add"></ion-icon>
@@ -154,11 +154,11 @@
         <ion-button type="submit" color="dark" block shape="round" expand="full" [disabled]="!packageForm.valid">完成</ion-button>
       </div>
 
-      <!--
-        <div *ngIf="selectedItem" padding>
+      
+        <!-- <div *ngIf="selectedItem" padding>
           You navigated here from <b>{{selectedItem.title }}</b>
-        </div>
-      -->
+        </div> -->
+    
       
     </form>
   </ion-list>

@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'profile/:uid', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'userpack', loadChildren: './userpack/userpack.module#UserpackPageModule' },
-
+  { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },
 ];
 
 @NgModule({
