@@ -38,11 +38,6 @@ export class HomePage {
       icon: 'map'
     },
     {
-      title: '上傳行程',
-      url: '/package',
-      icon: 'clipboard'
-    },
-    {
       title: '自助規劃',
       url: '/userpack',
       icon: 'today'
