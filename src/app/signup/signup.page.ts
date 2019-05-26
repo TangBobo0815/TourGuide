@@ -79,6 +79,9 @@ export class SignupPage implements OnInit {
      'address': {
       'required': '必填欄位',
      },
+     'userImg': {
+      'required': '必填欄位',
+     },
      'userid':{
       'required': '必填欄位',
       'pattern':'第一個字母需大寫',
@@ -128,10 +131,14 @@ export class SignupPage implements OnInit {
       date:form.date,
       phone:form.phone,
       address:form.address,
+      userImg:form.userImg,
+      userImgRef:this.fileRef
     };
+    this.imgsrc$.subscribe(path=> data.userImg=path);
     this.auth.signUp(data).then(data=>{
       if(data== 0){
         this.register1Sucess();
+        console.log(data.userImg);
       }else if (data==-9){
         this.alreadyFail();
       }else if (data==-8){
@@ -203,6 +210,9 @@ export class SignupPage implements OnInit {
         Validators.pattern('^([Z0-9]+)')]
       ],
       address:['',
+        [Validators.required]
+      ],
+      userImg:['',
         [Validators.required]
       ]
     });
@@ -304,6 +314,33 @@ export class SignupPage implements OnInit {
           }
       }    
     }
+  }
+
+  chooseuserImg(event){
+    const file:File=event.target.files[0];
+    const filePath = `profileImg/_${file.name}`;
+    const uploadTask = this.storage.upload(filePath,file);
+    const ref = this.storage.ref(filePath);
+  
+    this.uploadPercent$ =uploadTask.percentageChanges();
+    
+    uploadTask.then().then(()=>{
+      this.imgsrc$=ref.getDownloadURL();
+      this.imgsrc$.subscribe(path=>{
+        this.imgurl=path;
+        console.log("this.imgurl-1: " + this.imgurl);
+        console.log("filePath: " + filePath);
+        this.fileRef=filePath;
+        console.log(this.fileRef)
+      })
+      console.log("this.imgurl-2: " + this.imgurl);
+      this.meta$=ref.updateMetatdata({customMetadata:{cool:'very cool'}});
+      console.log('all file upload sucess');
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+    //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
 
   chooseFiles(event){
