@@ -47,7 +47,9 @@ export class AuthService {
         user.gender,
         user.date,
         user.phone,
-        user.address
+        user.address,
+        user.userImg,
+        user.userImgRef
       );
       console.log('第一階段註冊成功');
       this.afAuth.auth.currentUser.sendEmailVerification();
@@ -73,7 +75,7 @@ export class AuthService {
     });
   }
 
-  private infosignUp(user,Name,gender,date,phone,address){
+  private infosignUp(user,Name,gender,date,phone,address,userImg,userImgRef){
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
     const data:User = {
       uid:user.uid,
@@ -82,7 +84,9 @@ export class AuthService {
       date:date,
       gender:gender,
       phone:phone,
-      address:address
+      address:address,
+      userImg:userImg,
+      userImgRef:userImgRef
     }
     return userRef.set(data);
   }
