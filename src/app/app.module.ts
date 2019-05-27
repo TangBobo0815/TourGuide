@@ -23,7 +23,6 @@ import { MatButtonModule } from '@angular/material';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 //import { IonicStepperModule } from 'ionic-stepper';
-import { GooglePlus } from '@ionic-native/google-plus/ngx'
 
 //----------------------------
 @NgModule({
@@ -43,7 +42,6 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx'
     AngularFireAuthModule
   ],
   providers: [
-    GooglePlus,
     StatusBar,
     SplashScreen,
     AngularFireAuth,

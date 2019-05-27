@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { User } from "../../models/user";
 import { Router } from '@angular/router';
 import { AuthService } from '.././services/auth.service';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
 
 @Component({
   selector: 'app-login',
@@ -19,18 +16,14 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-  user :Observable<firebase.User>;
+  user = {} as User;
   loginForm:any;
 
   constructor(private auth: AuthService,
               private builder: FormBuilder,
               private router: Router,
               public alertCtrl: AlertController,
-              public afAuth: AngularFireAuth,
-              public platform:Platform,
-              public gplus:GooglePlus) {
-                this.user=this.afAuth.authState;
-              }
+              public afAuth: AngularFireAuth) {}
 
   ngOnInit() {
     this.buildForm();
@@ -60,35 +53,6 @@ export class LoginPage {
   }
 
   googleLogin(){
-    if(this.platform.is('cordova')){
-      this.nativeGoogleLogin();
-    }else{
-      this.webGoogleLogin();
-    }
-  }
-
-  async nativeGoogleLogin():Promise<void>{
-    try{
-      const gplusUser = await this.gplus.login({
-        'webClientId':'693255000376-omgan83jj2tnl7bgh2annah1n94l8466.apps.googleusercontent.com',
-        'offline':true,
-        'scopes':'profie email'
-      }).then((res)=>{
-        this.router.navigate(['/home']);
-        const googleCredential = firebase.auth.GoogleAuthProvider
-                  .credential(res.idToken);
-
-              firebase.auth().signInWithCredential(googleCredential)
-            .then( response => {
-                console.log("Firebase success: " + JSON.stringify(response));
-            });
-      })
-    }catch(err){
-      console.log(err);
-    }
-  }
-
-  webGoogleLogin(){
     let result;
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
     .then(()=>{
