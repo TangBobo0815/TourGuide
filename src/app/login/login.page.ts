@@ -10,7 +10,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 
 
 @Component({
@@ -28,7 +28,7 @@ export class LoginPage {
               public alertCtrl: AlertController,
               public afAuth: AngularFireAuth,
               public platform:Platform,
-              public gplus:GooglePlus) {
+) {
                 this.user=this.afAuth.authState;
               }
 
@@ -59,7 +59,7 @@ export class LoginPage {
     });
   }
 
-  googleLogin(){
+ /* googleLogin(){
     if(this.platform.is('cordova')){
       this.nativeGoogleLogin();
     }else{
@@ -95,10 +95,10 @@ export class LoginPage {
       this.router.navigate(['/home']);
     })
   }
-
+  
   googleSignUp(){
     this.auth.googleLogin();
-  }
+  }*/
 
   resetPassword(){
     let form = this.loginForm.value;

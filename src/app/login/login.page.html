@@ -4,7 +4,7 @@
       登入
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header >
 
 <ion-content>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -12,7 +12,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-item>
+            <ion-item >
               <ion-icon name="person" color="dark"></ion-icon>&nbsp;
               <ion-input type="email" placeholder="請輸入帳號" formControlName="email" class="form-control"></ion-input>
             </ion-item>
@@ -38,7 +38,7 @@
           </ion-button>
           <!-- <ion-button (click)="googleSignUp()" fill="clear">
             <ion-icon name="logo-google" color="dark"></ion-icon>
-          </ion-button> -->
+          </ion-button>  -->
           <ion-button routerLink="/getpasswd" fill="clear" color="dark">忘記密碼?</ion-button>
         </div>
       </ion-grid>
