@@ -182,7 +182,7 @@
               <ion-label text-center>你是否開啟響導功能?</ion-label>
               <ion-toggle (click)="show=!show" [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
             </ion-item>
-            <div formGroupName="userImgInfoGroup" *ngIf="show">
+            <!-- <div formGroupName="userImgInfoGroup" *ngIf="show">
               <ion-item>
                 <ion-grid>
                   <ion-row>
@@ -195,8 +195,10 @@
                         {{uploadPercent$ | async}}
                         <ion-input type="file" style="display: none" (change)="chooseFiles($event)"></ion-input>
                       </ion-item>
-                      <!--<ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
-                        [value]="pct"max="100"></ion-progress-bar></div>-->
+
+                      <ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
+                        [value]="pct"max="100"></ion-progress-bar></div>
+
                       <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
                     </ion-col>
                   </ion-row>
@@ -217,7 +219,7 @@
                   </ion-row> 
                 </ion-grid>
               </ion-item>
-            </div>
+            </div> -->
           </div>
           <div>
             <button mat-flat-button matStepperNext color="dark">下一步</button>

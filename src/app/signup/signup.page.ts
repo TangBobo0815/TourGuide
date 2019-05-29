@@ -156,8 +156,10 @@ export class SignupPage implements OnInit {
 
     const data = {
       touron:form.touron,
-      imgsrc:this.imgurl,
-      fileRef:this.fileRef ,
+      // imgsrc:this.imgurl,
+      // fileRef:this.fileRef ,
+      imgsrc:null,
+      fileRef:null,
       userid:form.userImgInfoGroup.userid,
     };
     if (data.touron==false){
