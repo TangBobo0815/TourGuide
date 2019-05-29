@@ -5,7 +5,9 @@ export class User {
     gender?:string;
     date?:Date;
     phone?:string;
-    address?:string
+    address?:string;
+    userImg?:string;
+    userImgRef?:string;
     //-----------
     touron?:boolean;
     imgsrc?:string;

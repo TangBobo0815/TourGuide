@@ -149,6 +149,19 @@
                   </ion-text>
                 </ion-item>
 
+                <ion-item>
+                  <input id="file" type="file"  accept="image/*" (change)="chooseuserImg($event)" 
+                    style="display: none"  formControlName="userImg"/>
+                  <ion-button type="button" onclick="file.click()"  color="dark">
+                    個人照上傳
+                  </ion-button>
+                  {{uploadPercent$ | async}}
+                  <ion-input type="file"  style="display: none" (change)="chooseuserImg($event)"></ion-input>
+                </ion-item>
+                      <!--<ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
+                        [value]="pct"max="100"></ion-progress-bar></div>-->
+                <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
+
                 <div>
                   <button mat-flat-button matStepperNext >下一步</button>
                 </div>
@@ -169,21 +182,23 @@
               <ion-label text-center>你是否開啟響導功能?</ion-label>
               <ion-toggle (click)="show=!show" [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
             </ion-item>
-            <div formGroupName="userImgInfoGroup" *ngIf="show">
+            <!-- <div formGroupName="userImgInfoGroup" *ngIf="show">
               <ion-item>
                 <ion-grid>
                   <ion-row>
                     <ion-col>
                       <ion-item>
-                        <input id="file" type="file" (change)="chooseFiles($event)" 
+                        <input id="fileId" type="file"  accept="image/*" (change)="chooseFiles($event)" 
                           style="display: none"  formControlName="imgsrc"/>
-                        <ion-button type="button" [disabled]="!disabled" onclick="file.click()"  color="dark">身分證照上傳
+                        <ion-button type="button" [disabled]="!disabled" onclick="fileId.click()"  color="dark">身分證照上傳
                         </ion-button>
                         {{uploadPercent$ | async}}
                         <ion-input type="file" style="display: none" (change)="chooseFiles($event)"></ion-input>
                       </ion-item>
-                      <!--<ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
-                        [value]="pct"max="100"></ion-progress-bar></div>-->
+
+                      <ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
+                        [value]="pct"max="100"></ion-progress-bar></div>
+
                       <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
                     </ion-col>
                   </ion-row>
@@ -204,7 +219,7 @@
                   </ion-row> 
                 </ion-grid>
               </ion-item>
-            </div>
+            </div> -->
           </div>
           <div>
             <button mat-flat-button matStepperNext color="dark">下一步</button>
