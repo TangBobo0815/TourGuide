@@ -33,7 +33,7 @@
             <ion-col>
               <ion-item>
                 <ion-label>性別</ion-label>
-                <ion-text>{{user.gender}}</ion-text>
+                <ion-input [(ngModel)]="user.gender"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -41,7 +41,7 @@
             <ion-col>
               <ion-item>
                 <ion-label>信箱</ion-label>
-                <ion-text>{{user.email}}</ion-text>
+                <ion-input [(ngModel)]="user.email"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -55,7 +55,7 @@
             <ion-col>
               <ion-item>
                 <ion-label>出生日期</ion-label>
-                <ion-text>{{user.date}}</ion-text>
+                <ion-input [(ngModel)]="user.date"></ion-input>
                 <!-- <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
                       formControlName="date">
                     </ion-datetime> -->
@@ -73,7 +73,7 @@
             <ion-col>
               <ion-item>
                 <ion-label>手機</ion-label>
-                <ion-text>{{user.phone}}</ion-text>
+                <ion-input [(ngModel)]="user.phone"></ion-input>
                 <!-- <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input> -->
               </ion-item>
             </ion-col>
@@ -89,7 +89,7 @@
             <ion-col>
               <ion-item>
                 <ion-label>住址</ion-label>
-                <ion-text>{{user.address}}</ion-text>
+                <ion-input [(ngModel)]="user.address"></ion-input>
                 <!-- <ion-input type="text" placeholder="輸入住址" formControlName="address"></ion-input> -->
               </ion-item>
             </ion-col>
