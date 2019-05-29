@@ -95,7 +95,7 @@ export class LoginPage {
       this.router.navigate(['/home']);
     })
   }
-
+  
   googleSignUp(){
     this.auth.googleLogin();
   }*/
