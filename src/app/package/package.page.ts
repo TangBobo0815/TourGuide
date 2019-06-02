@@ -203,8 +203,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
-        controlArray.controls[i].get('image').patchValue({image:this.imgurl});
-        controlArray.controls[i].get('fileRef').patchValue({fileRef:this.fileRef});
+        controlArray.controls[i].get('image').patchValue(this.imgurl);
+        controlArray.controls[i].get('fileRef').patchValue(this.fileRef);
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
