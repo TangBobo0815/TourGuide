@@ -27,36 +27,40 @@
       </ion-col>
     </ion-row>
   </div>
-  <ion-card class="welcome-card" *ngIf="authData.user | async as user">
-    <ion-chip>
-      <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-      </ion-avatar>
-      <ion-label>會員名稱</ion-label>
-    </ion-chip>
-    <ion-img src="/assets/shapes.svg"></ion-img>
-    <ion-card-header>
-      <ion-card-title>套裝標題</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>套裝內容</p>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-chip>
-      <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-      </ion-avatar>
-      <ion-label>會員名稱</ion-label>
-    </ion-chip>
-    <ion-img src="/assets/shapes.svg"></ion-img>
-    <ion-card-header>
-      <ion-card-title>套裝標題</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>套裝內容</p>
-    </ion-card-content>
-  </ion-card>
+  <div>
+    <div *ngFor="let package of packages">
+    <ion-card class="welcome-card">
+      <ion-chip>
+        <ion-avatar>
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>{{package.userRef}}</ion-label>
+      </ion-chip>
+      <ion-img [src]="package.detailsArray[0].image"></ion-img>
+      <ion-card-header>
+        <ion-card-title>{{package.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{package.detailsArray[0].context}}</p>
+      </ion-card-content>
+    </ion-card>
+    <!--<ion-card>
+      <ion-chip>
+        <ion-avatar>
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>會員名稱</ion-label>
+      </ion-chip>
+      <ion-img src="/assets/shapes.svg"></ion-img>
+      <ion-card-header>
+        <ion-card-title>套裝標題</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>套裝內容</p>
+      </ion-card-content>
+    </ion-card>-->
+  </div>
+</div>
 
 </ion-content>
 

@@ -44,16 +44,17 @@
           </ion-button>
         </ion-buttons>
         <ion-item>
-          <ion-toggle  (click)="show=!show" color="dark"></ion-toggle>
-          <ion-label *ngIf="show" text-center >已開啟嚮導功能</ion-label>
-          <ion-label *ngIf="!show" text-center>未開啟嚮導功能</ion-label>
+            <ion-toggle [(ngModel)] ="user.touron" color="dark"></ion-toggle>
+          <!-- <ion-toggle  (click)="show=!show" color="dark"></ion-toggle> -->
+          <ion-label *ngIf="user.touron" text-center >已開啟嚮導功能</ion-label>
+          <ion-label *ngIf="!user.touron" text-center>未開啟嚮導功能</ion-label>
         </ion-item>
       </ion-toolbar>
     
   </ion-card>
 
   <div>
-    <span [ngSwitch]="show">
+    <span [ngSwitch]="user.touron">
       <div *ngSwitchCase="true">
         <div>
           <ion-toolbar>
@@ -86,10 +87,10 @@
           </ion-toolbar>
         </div>
       </div>
-      <p *ngSwitchDefault text-center>
+      <!--<p *ngSwitchDefault text-center>
         想當響導嗎？<br>
         補足基本資料，即可開啟。
-      </p>
+      </p>-->
     </span>
   </div>
 </div>

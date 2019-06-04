@@ -91,9 +91,12 @@ export class PackagePage implements OnInit {
       userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
 
-    this.db.collection('packages').add(data);
+    this.db.collection('packages').add(data)
+      .then(
+        this.Sucess
+        )
     console.log(data);
-    
+
     this.Sucess();
 
   }
@@ -203,8 +206,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
-        controlArray.controls[i].get('image').patchValue({image:this.imgurl});
-        controlArray.controls[i].get('fileRef').patchValue({fileRef:this.fileRef});
+        controlArray.controls[i].get('image').patchValue(this.imgurl);
+        controlArray.controls[i].get('fileRef').patchValue(this.fileRef);
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
@@ -216,14 +219,19 @@ export class PackagePage implements OnInit {
   }
 
   async Sucess(){
-    const toast = await this.toast.create({
-      message: '上傳成功',
-      showCloseButton: true,
-      duration: 3000,
-      position: 'bottom',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
+    const alert = await this.alertCtrl.create({
+      header: '上傳成功',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

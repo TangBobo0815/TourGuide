@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { PopoverController} from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
 
@@ -6,16 +6,19 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserDateService } from '../services/user-date.service';
+import { PackageService } from '../services/package.service';
 import { AuthService } from '../services/auth.service';
 
+import { Package } from '../../models/package'
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  
+export class HomePage implements OnInit{
+  packages:Package[];
+
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
@@ -59,6 +62,7 @@ export class HomePage {
               private splashScreen: SplashScreen,
               private statusBar: StatusBar,
               private authData:UserDateService,
+              private packDetail:PackageService,
               private auth: AuthService,) {
                 this.initializeApp();
               }
@@ -69,7 +73,6 @@ export class HomePage {
                   this.splashScreen.hide();
                 });
               }
-
               
   async popovers(ev: any) {
     const popover = await this.popoverController.create({
@@ -92,5 +95,12 @@ export class HomePage {
 
   signOut(){
     this.auth.signOut();
+  }
+
+  ngOnInit(){
+    this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
+      this.packages=packages;
+    })
   }
 }
