@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 import { AlertController , ToastController } from '@ionic/angular';
 import { resetCompiledComponents } from '@angular/core/src/render3/jit/module';
 import { identifierModuleUrl } from '@angular/compiler';
-
+import * as firebase from 'firebase';
+import { WindowService } from '../window.service';
 
 @Component({
   selector: 'app-signup',
@@ -39,6 +40,8 @@ export class SignupPage implements OnInit {
   uploadTask: AngularFireUploadTask;
   uploadState:Observable<string>;
   //------------
+  windowRef:any;
+  verificationCode:string;
 
   formErrors = {
     'email': '',
@@ -108,7 +111,8 @@ export class SignupPage implements OnInit {
               //----------
               private storage: AngularFireStorage,
               private toast: ToastController,
-              private alertCtrl:AlertController
+              private alertCtrl:AlertController,
+              private win:WindowService
               )
   { }
 
@@ -158,17 +162,17 @@ export class SignupPage implements OnInit {
       touron:form.touron,
       // imgsrc:this.imgurl,
       // fileRef:this.fileRef ,
-      imgsrc:null,
-      fileRef:null,
-      userid:form.userImgInfoGroup.userid,
+      // imgsrc:null,
+      // fileRef:null,
+      // userid:form.userImgInfoGroup.userid,
     };
     if (data.touron==false){
-      data.imgsrc =null;
-      data.fileRef = null;
-      data.userid=null;
+      // data.imgsrc =null;
+      // data.fileRef = null;
+      // data.userid=null;
     }
     else{
-      this.imgsrc$.subscribe(path=> data.imgsrc=path);
+      //this.imgsrc$.subscribe(path=> data.imgsrc=path);
     }
     this.auth.imgsignUp(user,data).then(data=>{
       if(data== 0){
@@ -220,7 +224,7 @@ export class SignupPage implements OnInit {
     });
 
     this.secondForm = this.builder.group({
-      touron:[false,
+      touron:['',
         [Validators.required]
       ],
       imgsrc:['',

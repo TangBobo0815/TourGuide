@@ -3,9 +3,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { WindowService } from '../window.service';
 //--------------
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { User } from "../../models/user";
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
@@ -17,6 +18,10 @@ import { AlertController , ToastController } from '@ionic/angular';
 
 export class AuthService {
   user: Observable<User>;
+  //------------
+  windowRef:any;
+  verificationCode:string;
+  phoneNumber = new User()
   //----------------------
   constructor(
     private afAuth: AngularFireAuth,
@@ -24,6 +29,8 @@ export class AuthService {
     private router: Router,
     public alertCtrl :AlertController,
     private toast: ToastController,
+
+
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {

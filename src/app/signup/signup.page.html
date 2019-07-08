@@ -174,13 +174,27 @@
         <form [formGroup]="secondForm"  (ngSubmit)="imgSignUp(user)">
           <ng-template matStepLabel>第二步</ng-template>
           <div class="font">
-            <p>夥伴，請問你是否想開啟響導功能呢?</p>
+            <!-- <p>夥伴，請問你是否想開啟響導功能呢?</p>
             <p>何謂響導?</p>
             <p class="size">除了有會員的功能之外<br>還能上傳自己的行程來提供給其他會員選擇</p>
             <p class="size">開啟響導功能會需要提供您的身分證照</p>
             <ion-item>
               <ion-label text-center>你是否開啟響導功能?</ion-label>
               <ion-toggle (click)="show=!show" [checked]="disabled" (ionChange)="notify()" formControlName="touron" color="dark"></ion-toggle>
+            </ion-item> -->
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>手機</ion-label>
+                  <ion-input type="text" placeholder="輸入手機" formControlName="touron"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-item *ngIf="formErrors.phone">
+              <ion-text color="danger">
+                <p>{{ formErrors.touron }}</p>
+              </ion-text>
             </ion-item>
             <!-- <div formGroupName="userImgInfoGroup" *ngIf="show">
               <ion-item>
