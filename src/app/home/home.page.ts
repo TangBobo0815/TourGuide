@@ -36,26 +36,25 @@ export class HomePage implements OnInit{
       icon: 'contact'
     },
     {
-      title: '我的足跡',
-      url: '/map',
-      icon: 'map'
+      title: '開團',
+      url: '/package',
+      icon: 'contacts'
     },
     {
-      title: '自助規劃',
-      url: '/userpack',
-      icon: 'today'
-    },
-    {
-      title: '備忘錄',
-      url: '/notifications',
-      icon: 'checkmark-circle-outline'
+      title: '訂單管理',
+      url: '/order',
+      icon: 'clipboard'
     },
     {
       title: '使用說明',
       url: '/setting',
       icon: 'information-circle-outline'
+    },
+    {
+      title: '升級VIP',
+      url: '/vip',
+      icon: 'star-outline'
     }
-
   ];
   constructor(public popoverController: PopoverController , 
               private platform: Platform,

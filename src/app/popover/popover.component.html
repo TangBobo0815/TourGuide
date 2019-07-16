@@ -3,20 +3,71 @@
    <ion-list-header color="dark">
    <ion-label class="fw700">篩選條件</ion-label>
 </ion-list-header>
+<ion-row>
+    <ion-col>
+        <ion-item>
+            <ion-label>開始日期</ion-label>
+            <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    <ion-col>
+        <ion-item>
+             <ion-label>返回日期</ion-label>
+             <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select"></ion-datetime>
+        </ion-item>
+      </ion-col>
+</ion-row>
 <ion-item>
+    <ion-label position="stacked">
+      <ion-icon name="pin"></ion-icon>地區
+    </ion-label>
+    <ion-select okText="確定" cancelText="取消" formControlName="place" placeholder="select one">
+      <ion-select-option>基隆市</ion-select-option>
+      <ion-select-option>臺北市</ion-select-option>
+      <ion-select-option>新北市</ion-select-option>
+      <ion-select-option>桃園市</ion-select-option>
+      <ion-select-option>新竹市</ion-select-option>
+      <ion-select-option>新竹縣</ion-select-option>
+      <ion-select-option>苗栗縣</ion-select-option>
+      <ion-select-option>臺中市</ion-select-option>
+      <ion-select-option>彰化縣</ion-select-option>
+      <ion-select-option>南投縣</ion-select-option>
+      <ion-select-option>雲林縣</ion-select-option>
+      <ion-select-option>嘉義市</ion-select-option>
+      <ion-select-option>嘉義縣</ion-select-option>
+      <ion-select-option>臺南市</ion-select-option>
+      <ion-select-option>高雄市</ion-select-option>
+      <ion-select-option>屏東縣</ion-select-option>
+      <ion-select-option>臺東縣</ion-select-option>
+      <ion-select-option>花蓮縣</ion-select-option>
+      <ion-select-option>宜蘭縣</ion-select-option>
+      <ion-select-option>澎湖縣</ion-select-option>
+      <ion-select-option>金門縣</ion-select-option>
+      <ion-select-option>連江縣</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label><ion-icon name="pricetag"></ion-icon>預算</ion-label>
+      <ion-select okText="確定" cancelText="取消">
+        <ion-select-option value="01">1000以下</ion-select-option>
+                <ion-select-option value="02">1000~2000</ion-select-option>
+                <ion-select-option value="03">2000~4000</ion-select-option>
+                <ion-select-option value="04">4000~6000</ion-select-option>
+                <ion-select-option value="05">6000以上</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
 
-  <ion-label><ion-icon name="pricetag"></ion-icon>價格範圍</ion-label>
-  <ion-select value="1000以下" okText="確定" cancelText="取消">
-    <ion-select-option value="01">1000以下</ion-select-option>
-            <ion-select-option value="02">1000~2000</ion-select-option>
-            <ion-select-option value="03">2000~3000</ion-select-option>
-            <ion-select-option value="04">3000~5000</ion-select-option>
-            <ion-select-option value="05">5000以上</ion-select-option>
-  </ion-select>
-</ion-item>
-<ion-item>
-
-  <ion-label position="stacked">
+        <ion-label><ion-icon name="pricetag"></ion-icon>人數</ion-label>
+        <ion-select okText="確定" cancelText="取消">
+          <ion-select-option value="01">2</ion-select-option>
+                  <ion-select-option value="02">3~5</ion-select-option>
+                  <ion-select-option value="03">5~8</ion-select-option>
+                  <ion-select-option value="04">8以上</ion-select-option>
+        </ion-select>
+      </ion-item>
+<!----<ion-item>
+<ion-label position="stacked">
     <ion-icon name="paper"></ion-icon>天數
   </ion-label>
   <ion-select name="dateid" okText="確定" cancelText="取消" formControlName="days">
@@ -46,11 +97,8 @@
     <ion-select-option value="11">十一月</ion-select-option>
     <ion-select-option value="12">十二月</ion-select-option>
   </ion-select>
-</ion-item>
-<ion-item>
-    <ion-label>返回日期</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select"></ion-datetime>
-</ion-item>
+</ion-item>-->
+
 <div padding text-center class="c">
     <ion-button routerLink="/home" color="dark" block >搜尋</ion-button> 
   </div> 
