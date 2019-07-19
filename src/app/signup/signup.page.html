@@ -119,7 +119,7 @@
                   </ion-text>
                 </ion-item>
 
-                <ion-row>
+                <!-- <ion-row>
                   <ion-col>
                     <ion-item>
                       <ion-label>手機</ion-label>
@@ -132,7 +132,7 @@
                   <ion-text color="danger">
                     <p>{{ formErrors.phone }}</p>
                   </ion-text>
-                </ion-item>
+                </ion-item> -->
 
                 <ion-row>
                   <ion-col>
@@ -171,7 +171,7 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="myStepper2">
-        <form [formGroup]="secondForm"  (ngSubmit)="imgSignUp(user)">
+        <form [formGroup]="secondForm"  (ngSubmit)="imgSignUp(user)" novalidate>
           <ng-template matStepLabel>第二步</ng-template>
           <div class="font">
             <!-- <p>夥伴，請問你是否想開啟響導功能呢?</p>
@@ -185,17 +185,44 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label>手機</ion-label>
-                  <ion-input type="text" placeholder="輸入手機" formControlName="touron"></ion-input>
+                  <ion-label>輸入手機</ion-label>
+                  <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-item *ngIf="formErrors.phone">
               <ion-text color="danger">
-                <p>{{ formErrors.touron }}</p>
+                <p>{{ formErrors.phone }}</p>
               </ion-text>
             </ion-item>
+          
+            <!-- <div id ="recaptcha-container"></div>
+            <ion-button (click)="sendCode()">sms send code</ion-button>
+            
+            <div *ngIf="windowRef.confirmationResult">
+              <label for="code">enter your code</label><br>
+              <ion-input type="text" name="code" [(ngModel)]="verificationCode" class="input"></ion-input>
+
+              <ion-button (click)="verifyCode()">Verify</ion-button>
+            </div> -->
+            <!-- <p *ngIf="secondForm.invalid && secondForm.touched">
+              That's not a valid phone number
+            </p> -->
+                <!--<ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>手機</ion-label>
+                      <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-item *ngIf="formErrors.phone">
+                  <ion-text color="danger">
+                    <p>{{ formErrors.phone }}</p>
+                  </ion-text>
+                </ion-item>-->
             <!-- <div formGroupName="userImgInfoGroup" *ngIf="show">
               <ion-item>
                 <ion-grid>

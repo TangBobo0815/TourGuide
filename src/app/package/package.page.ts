@@ -84,11 +84,16 @@ export class PackagePage implements OnInit {
     const data={
       title:form.title,
       place:form.place,
-      month:form.month,
-      days:form.days,
-      price:form.price,
+      startDate:form.startDate,
+      startTime:form.startTime,
+      endDate:form.endDate,
+      endTime:form.endTime,
+      person:form.population,
+      money:form.price,
+      other:form.note,
       detailsArray:form.detailsGroup,
-      userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      //userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
 
     this.db.collection('packages').add(data)
@@ -112,21 +117,27 @@ export class PackagePage implements OnInit {
     this.packageForm = this.builder.group({
       title: ['',
         [Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(3),
         Validators.maxLength(15)]
       ],
       place:['基隆市',
         [Validators.required]
       ],
-      month:['1',
+      startDate:[
         [Validators.required]
       ],
-      days:['1',
+      startTime:[null],
+      endDate:[
         [Validators.required]
       ],
+      endTime:[null],
       price:['',
        [Validators.required,Validators.pattern('^([Z0-9]+)')]
       ],
+      population:['',
+        [Validators.required]
+      ],
+      note:[''],
       detailsGroup:this.builder.array([
         this.addDetailsFormGroup()
       ])
@@ -138,13 +149,13 @@ export class PackagePage implements OnInit {
 
   addDetailsFormGroup(){
     return this.builder.group({
-      image:new FormControl(this.imgurl || null),
+      photo:new FormControl(this.imgurl || null),
       context:new FormControl('',
       [Validators.required,
       Validators.minLength(20), 
       Validators.maxLength(500),
       ]),
-      fileRef:new FormControl('')
+      photoRef:new FormControl('')
     })
   }
 
@@ -206,8 +217,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
-        controlArray.controls[i].get('image').patchValue(this.imgurl);
-        controlArray.controls[i].get('fileRef').patchValue(this.fileRef);
+        controlArray.controls[i].get('photo').patchValue(this.imgurl);
+        controlArray.controls[i].get('photoRef').patchValue(this.fileRef);
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');

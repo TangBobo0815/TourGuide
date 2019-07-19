@@ -53,7 +53,6 @@ export class AuthService {
         user.Name,
         user.gender,
         user.date,
-        user.phone,
         user.address,
         user.userImg,
         user.userImgRef
@@ -82,7 +81,7 @@ export class AuthService {
     });
   }
 
-  private infosignUp(user,Name,gender,date,phone,address,userImg,userImgRef){
+  private infosignUp(user,Name,gender,date,address,userImg,userImgRef){
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
     const data:User = {
       uid:user.uid,
@@ -90,7 +89,6 @@ export class AuthService {
       Name: Name,
       date:date,
       gender:gender,
-      phone:phone,
       address:address,
       userImg:userImg,
       userImgRef:userImgRef
