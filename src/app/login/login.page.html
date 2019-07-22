@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title>
-      登入
+  <ion-toolbar color="">
+    <ion-title  text-center>
+      <b>登入</b>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,11 +9,14 @@
 <ion-content>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <ion-list class="log-in1">
+      <div class="image" text-center>
+        <img src="https://i.imgur.com/CwUByFD.png">
+      </div>
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="person" color="secondary"></ion-icon>&nbsp;
+              <ion-icon name="person" color="dark"></ion-icon>&nbsp;
               <ion-input type="email" placeholder="請輸入帳號" formControlName="email" class="form-control"></ion-input>
             </ion-item>
           </ion-col>
@@ -21,20 +24,25 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-icon name="lock" color="secondary"></ion-icon>&nbsp;
+              <ion-icon name="lock" color="dark"></ion-icon>&nbsp;
               <ion-input input type="password" placeholder="請輸入密碼" formControlName="password" class="form-control">
               </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
-        <div padding text-center >
-          <ion-button type="submit" color="secondary" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
+        <div padding text-center>
+          <!-- <ion-button color="dark" block shape="round" expand="full" (click)="googleLogin()" center>google登入
+          </ion-button> -->
+          <ion-button type="submit" color="dark" [disabled]="!loginForm.valid" block shape="round" expand="full">登入
           </ion-button>
           <ion-button routerLink="/signup" fill="clear">
-            <ion-icon name="person-add" color="secondary">
+            <ion-icon name="person-add" color="dark">
             </ion-icon>
           </ion-button>
-          <ion-button routerLink="/getpasswd" fill="clear" color="secondary">忘記密碼?</ion-button>
+          <!-- <ion-button (click)="googleSignUp()" fill="clear">
+            <ion-icon name="logo-google" color="dark"></ion-icon>
+          </ion-button>  -->
+          <ion-button routerLink="/getpasswd" fill="clear" color="dark">忘記密碼?</ion-button>
         </div>
       </ion-grid>
     </ion-list>

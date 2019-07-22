@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      修改基本資料
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!--<form [formGroup]="user-dataForm" (ngSubmit)="submit()" >-->
+    <div *ngIf="authData.user | async as user">
+      <ion-list class="update-input">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>姓名:</ion-label>
+                <ion-input [(ngModel)]="user.Name"></ion-input>
+                <ion-item>
+                  <ion-button (Click)="change()" fill="outline" color="dark">
+                    <ion-icon name="create"></ion-icon>
+                  </ion-button>
+                  <ion-input *ngIf="editState" text-center></ion-input>
+                </ion-item>
+              </ion-item>
+
+
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>性別</ion-label>
+                <ion-input [(ngModel)]="user.gender"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>信箱</ion-label>
+                <ion-input [(ngModel)]="user.email"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-item *ngIf="formErrors.email">
+                <ion-text color="danger">
+                  <p>{{ formErrors.email }}</p>
+                </ion-text>
+              </ion-item> -->
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>出生日期</ion-label>
+                <ion-input [(ngModel)]="user.date"></ion-input>
+                <!-- <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
+                      formControlName="date">
+                    </ion-datetime> -->
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-item *ngIf="formErrors.date">
+                <ion-text color="danger">
+                  <p>{{ formErrors.date }}</p>
+                </ion-text>
+              </ion-item> -->
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>手機</ion-label>
+                <ion-input [(ngModel)]="user.phone"></ion-input>
+                <!-- <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input> -->
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-item *ngIf="formErrors.phone">
+                <ion-text color="danger">
+                  <p>{{ formErrors.phone }}</p>
+                </ion-text>
+              </ion-item> -->
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>住址</ion-label>
+                <ion-input [(ngModel)]="user.address"></ion-input>
+                <!-- <ion-input type="text" placeholder="輸入住址" formControlName="address"></ion-input> -->
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-item *ngIf="formErrors.address">
+                <ion-text color="danger">
+                  <p>{{ formErrors.address }}</p>
+                </ion-text>
+              </ion-item> -->
+
+          <div padding text-center>
+            <ion-button type="submit" color="dark" block shape="round" expand="full">完成</ion-button>
+          </div>
+        </ion-grid>
+      </ion-list>
+    </div>
+  </ion-list>
+</ion-content>

@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PackagePage } from './package.page';
-
-import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { UpdateUserdataPage } from './update-userdata.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PackagePage
+    component: UpdateUserdataPage
   }
 ];
 
@@ -26,6 +22,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PackagePage]
+  declarations: [UpdateUserdataPage]
 })
-export class PackagePageModule {}
+export class UpdateUserdataPageModule {}

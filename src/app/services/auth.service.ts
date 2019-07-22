@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
+import { WindowService } from '../window.service';
 //--------------
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { User } from "../../models/user";
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
@@ -16,6 +18,10 @@ import { AlertController , ToastController } from '@ionic/angular';
 
 export class AuthService {
   user: Observable<User>;
+  //------------
+  windowRef:any;
+  verificationCode:string;
+  phoneNumber = new User()
   //----------------------
   constructor(
     private afAuth: AngularFireAuth,
@@ -23,6 +29,8 @@ export class AuthService {
     private router: Router,
     public alertCtrl :AlertController,
     private toast: ToastController,
+
+
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -45,8 +53,9 @@ export class AuthService {
         user.Name,
         user.gender,
         user.date,
-        user.phone,
-        user.address
+        user.address,
+        user.userImg,
+        user.userImgRef
       );
       console.log('第一階段註冊成功');
       this.afAuth.auth.currentUser.sendEmailVerification();
@@ -72,7 +81,7 @@ export class AuthService {
     });
   }
 
-  private infosignUp(user,Name,gender,date,phone,address){
+  private infosignUp(user,Name,gender,date,address,userImg,userImgRef){
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
     const data:User = {
       uid:user.uid,
@@ -80,8 +89,9 @@ export class AuthService {
       Name: Name,
       date:date,
       gender:gender,
-      phone:phone,
-      address:address
+      address:address,
+      userImg:userImg,
+      userImgRef:userImgRef
     }
     return userRef.set(data);
   }
@@ -122,6 +132,37 @@ export class AuthService {
         console.log("登入失敗: ",error)
         return result;
       })
+  }
+  //------------------------
+  //---------------google註冊
+
+  googleLogin(){
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider)
+  }
+
+  private oAuthLogin(provider){
+    return this.afAuth.auth.signInWithPopup(provider)
+    .then((credential)=>{
+      this.googleUser(
+        credential.user,
+      );
+    })
+  }
+
+  private googleUser(user){
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
+    const data : User = {
+      uid:user.uid,
+      email:user.email,
+      Name:user.displayName,
+      //date:user.birth,
+      // gender:user.gender,
+      //phone:user.phone,
+      //address:user.address,
+      imgsrc:user.photoURL
+    }
+    return userRef.set(data,{merge:true});
   }
 
   //---------------忘記密碼

@@ -2,14 +2,20 @@ import { Component, OnInit } from '@angular/core';
 
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference  } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable,of} from 'rxjs';
+import { Observable , of } from 'rxjs';
 
-import { AngularFireStorage , AngularFireUploadTask, AngularFireStorageReference } from 'angularfire2/storage';
+import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
+
+export interface User {
+  uid:string;
+  Name:string;
+  touron:boolean;
+}
 
 @Component({
   selector: 'package',
@@ -17,7 +23,8 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./package.page.scss'],
 })
 export class PackagePage implements OnInit {
-  
+  user: Observable<User>;
+
   packageForm:FormGroup;
   imgurl$:Observable<string>;
   imgurl:string;
@@ -36,7 +43,15 @@ export class PackagePage implements OnInit {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth,)
   {
-    
+    this.user = this.afAuth.authState.pipe(
+        switchMap(user => {
+          if(user) {
+            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      ); 
   }
 
   formErrors = {
@@ -66,31 +81,27 @@ export class PackagePage implements OnInit {
     
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
-    // for(let i=0;i<=(this.detailsArray.length)-1;i++){
-    //   var obj=[];
-    //   let detail=form.detailsGroup;
-
-    //   this.imgsrc$.subscribe(path=>detail[i]['image']=path);
-    //   console.log(detail[i]['image']);
-    //   detail[i]['fileRef']=this.fileRef;
-    //   console.log(detail[i]['fileRef'])
-    //   array.push(detail[i].controls);
-    // }
-    // console.log(array); 
-    // console.log(this.detailsArray.length);
-
     const data={
       title:form.title,
       place:form.place,
-      month:form.month,
-      days:form.days,
-      price:form.price,
+      startDate:form.startDate,
+      startTime:form.startTime,
+      endDate:form.endDate,
+      endTime:form.endTime,
+      person:form.population,
+      money:form.price,
+      other:form.note,
       detailsArray:form.detailsGroup,
-      userRef:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      //userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
-    this.db.collection('packages').add(data);
+
+    this.db.collection('packages').add(data)
+      .then(
+        this.Sucess
+        )
     console.log(data);
-    
+
     this.Sucess();
 
   }
@@ -106,21 +117,27 @@ export class PackagePage implements OnInit {
     this.packageForm = this.builder.group({
       title: ['',
         [Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(3),
         Validators.maxLength(15)]
       ],
       place:['基隆市',
         [Validators.required]
       ],
-      month:['1',
+      startDate:[
         [Validators.required]
       ],
-      days:['1',
+      startTime:[null],
+      endDate:[
         [Validators.required]
       ],
+      endTime:[null],
       price:['',
        [Validators.required,Validators.pattern('^([Z0-9]+)')]
       ],
+      population:['',
+        [Validators.required]
+      ],
+      note:[''],
       detailsGroup:this.builder.array([
         this.addDetailsFormGroup()
       ])
@@ -132,13 +149,13 @@ export class PackagePage implements OnInit {
 
   addDetailsFormGroup(){
     return this.builder.group({
-      image:new FormControl(this.imgurl || null),
+      photo:new FormControl(this.imgurl || null),
       context:new FormControl('',
       [Validators.required,
       Validators.minLength(20), 
       Validators.maxLength(500),
       ]),
-      fileRef:new FormControl('')
+      photoRef:new FormControl('')
     })
   }
 
@@ -152,17 +169,6 @@ export class PackagePage implements OnInit {
 
   get detailsArray():FormArray{
     return <FormArray> this.packageForm.get('detailsGroup');
-  }
-
-  async Sucess(){
-    const toast = await this.toast.create({
-      message: '上傳成功',
-      showCloseButton: true,
-      duration: 3000,
-      position: 'bottom',
-      closeButtonText: 'Ok'
-    })
-    toast.present();
   }
 
   private onValueChanged(data?: any) {
@@ -211,8 +217,8 @@ export class PackagePage implements OnInit {
         console.log("filePath: " + filePath);
         this.fileRef=filePath;
         console.log(this.fileRef)
-        controlArray.controls[i].get('image').patchValue({image:this.imgurl});
-        controlArray.controls[i].get('fileRef').patchValue({fileRef:this.fileRef});
+        controlArray.controls[i].get('photo').patchValue(this.imgurl);
+        controlArray.controls[i].get('photoRef').patchValue(this.fileRef);
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
@@ -221,6 +227,22 @@ export class PackagePage implements OnInit {
       console.log(err);
     });
         //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
+  }
+
+  async Sucess(){
+    const alert = await this.alertCtrl.create({
+      header: '上傳成功',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

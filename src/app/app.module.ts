@@ -10,12 +10,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './popover/popover.component';
 
-
 //----------------------------
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FirestoreSettingsToken} from '@angular/fire/firestore';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
@@ -24,6 +24,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 //import { IonicStepperModule } from 'ionic-stepper';
+
 
 //----------------------------
 @NgModule({
@@ -40,7 +41,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
-    
+    AngularFireAuthModule
   ],
   providers: [
     StatusBar,
