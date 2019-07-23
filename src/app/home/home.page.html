@@ -1,67 +1,70 @@
 <ion-router-outlet main></ion-router-outlet>
 <ion-header>
-  <ion-item color="dark">
-    <ion-menu-button></ion-menu-button>
-    <ion-searchbar animated color="light"></ion-searchbar>
-    <ion-button size="small" shape="round" color="medium" (click)="popovers()">
-      <ion-icon name="options"></ion-icon>
-      <ion-badge color="dark" slot="end"></ion-badge>
-    </ion-button>
-  </ion-item>
+  <ion-toolbar color="">
+    <ion-item>
+      <ion-menu-button></ion-menu-button>
+      <ion-searchbar animated="true" color="light"></ion-searchbar>
+      <ion-button size="small" shape="round" color="medium" (click)="popovers()">
+        <ion-icon name="options"></ion-icon>
+        <ion-badge color="dark" slot="end"></ion-badge>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div>
-    <ion-row>
-      <ion-col>
-        <ion-card-subtitle text-center>
-          <ion-label>推薦行程</ion-label>
-          <ion-icon name="heart" color="danger"></ion-icon>
-        </ion-card-subtitle>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div>
-    <div *ngFor="let package of packages">
+  <ion-item>
+    <ion-label> 
+      <ion-row>
+        <ion-col>
+          <ion-segment-button>
+            <ion-label>最新揪團趣</ion-label>
+            <ion-icon name="heart" color="danger"></ion-icon>
+          </ion-segment-button>
+        </ion-col>
+        <ion-col>
+          <ion-segment-button>
+            <ion-label>推薦揪團趣</ion-label>
+            <ion-icon name="contacts" color="tertiary"></ion-icon>
+          </ion-segment-button>
+        </ion-col>
+      </ion-row>
+    </ion-label>
+  </ion-item>
+  <div *ngFor="let package of packages">
     <ion-card class="welcome-card">
-      <ion-chip>
-        <ion-avatar>
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-        <ion-label>{{package.userRef}}</ion-label>
-      </ion-chip>
+      <div class="local-size">
+        <ion-row>
+          <ion-col>
+            <ion-chip>
+              <ion-avatar>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar>
+              <ion-label>{{package.userRef}}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col text-right>
+           <b> 揪團地點 </b>
+          </ion-col>
+        </ion-row>
+      </div>
       <ion-img [src]="package.detailsArray[0].photo"></ion-img>
       <ion-card-header>
         <ion-card-title>{{package.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>{{package.detailsArray[0].context}}</p>
+          <ion-text>{{package.detailsArray[0].context}}</ion-text>
       </ion-card-content>
+      <div class="size" text-right>
+        po文時間&日期
+      </div>
     </ion-card>
-    <!--<ion-card>
-      <ion-chip>
-        <ion-avatar>
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-        <ion-label>會員名稱</ion-label>
-      </ion-chip>
-      <ion-img src="/assets/shapes.svg"></ion-img>
-      <ion-card-header>
-        <ion-card-title>套裝標題</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>套裝內容</p>
-      </ion-card-content>
-    </ion-card>-->
   </div>
-</div>
-
 </ion-content>
-
 
 <ion-menu side="start">
   <ion-header>
-    <ion-toolbar class="a" color="dark" *ngIf="authData.user | async as user">
+    <ion-toolbar class="menu" color="medium" *ngIf="authData.user | async as user">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -89,8 +92,8 @@
     </ion-list>
   </ion-content>
   <ion-footer>
-    <ion-toolbar color="dark">
-      <ion-button color="dark" (click)="signOut()">
+    <ion-toolbar color="medium">
+      <ion-button color="medium" (click)="signOut()">
         <ion-icon name="log-out"></ion-icon>登出
       </ion-button>
     </ion-toolbar>
