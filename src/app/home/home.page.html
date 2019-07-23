@@ -23,7 +23,7 @@
   </div>
   <div>
     <div *ngFor="let package of packages">
-    <ion-card class="welcome-card">
+    <ion-card class="welcome-card" (click)="get(package.id)">
       <ion-chip>
         <ion-avatar>
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
@@ -32,7 +32,7 @@
       </ion-chip>
       <ion-img [src]="package.detailsArray[0].photo"></ion-img>
       <ion-card-header>
-        <ion-card-title>{{package.title}}</ion-card-title>
+        <ion-card-title >{{package.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>{{package.detailsArray[0].context}}</p>

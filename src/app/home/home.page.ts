@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { PopoverController} from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
+import { Router } from '@angular/router';
+
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -9,7 +11,12 @@ import { UserDateService } from '../services/user-date.service';
 import { PackageService } from '../services/package.service';
 import { AuthService } from '../services/auth.service';
 
+import * as firebase from 'firebase';
+
 import { Package } from '../../models/package'
+import { getCurrentView } from '@angular/core/src/render3';
+import { identifierModuleUrl, unescapeIdentifier } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-home',
@@ -62,7 +69,8 @@ export class HomePage implements OnInit{
               private statusBar: StatusBar,
               private authData:UserDateService,
               private packDetail:PackageService,
-              private auth: AuthService,) {
+              private auth: AuthService,
+              private router: Router) {
                 this.initializeApp();
               }
             
@@ -101,5 +109,19 @@ export class HomePage implements OnInit{
       console.log(packages);
       this.packages=packages;
     })
+  }
+
+  get(id){
+    var db= firebase.firestore();   
+    var ref = db.collection('packages')
+    // var ref = db.collection('packages').where("title","==","title");
+    console.log(id);
+    this.router.navigate(['/join']).then(i=>{
+      ref.where("id","==",id).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.log(doc.id, doc.data());
+      });
+    });
+  });
   }
 }
