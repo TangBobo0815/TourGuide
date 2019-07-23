@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>join</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <div  *ngIf="authData.user | async as user"></div>
+    <div>
+      <ion-card-content>
+        <ion-card-title text-center>
+          {{user.Name}}
+        </ion-card-title>
+        <ion-card-content text-center>
+          {{user.date}}
+          <div></div>
+          {{user.phone}}
+          <div></div>
+          {{user.email}}
+        </ion-card-content>
+      </ion-card-content>
+    </div>
+    <ion-button size="small" class="button" shape="round" color="primary" fill="outline">加入
+    </ion-button>
+  </ion-card>
+</ion-content>
