@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { PackageService } from '../services/package.service';
+import { JoinService } from '../services/join.service';
 import * as firebase from 'firebase';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
@@ -24,6 +25,7 @@ export class JoinPage implements OnInit {
   packages:Package[];
   array:[];
   //---------------
+  packageId:string;
   title:string;
   startDate:string;
   endDate:string;
@@ -37,6 +39,7 @@ export class JoinPage implements OnInit {
     private router: Router,
     public alertCtrl :AlertController,
     public packDetail:PackageService,
+    public joinService:JoinService,
     private toast: ToastController,
     private builder: FormBuilder,
   ) { }
@@ -52,6 +55,7 @@ export class JoinPage implements OnInit {
       console.log(element);
       // this.packages=element;
       // console.log(this.packages);
+      this.packageId=element.packageId;
       this.title=element.title;
       this.startDate=element.startDate;
       this.endDate=element.endDate;
@@ -60,9 +64,7 @@ export class JoinPage implements OnInit {
     
   }
 
-  // buildForm() {
-  //   this.joinForm = this.builder.group({
-      
-  //   })
-  // }
+  join(){
+    this.joinService.joinOrder(this.packageId)
+  }
 }

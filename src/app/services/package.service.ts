@@ -47,7 +47,7 @@ export class PackageService {
   
     collection.doc(this.id).get().then(doc => {
       console.log(doc.id, doc.data());
-      this.test.push(doc.data());
+      this.test.push(doc.id,doc.data());
     })
     console.log(this.test);
     return this.test;
