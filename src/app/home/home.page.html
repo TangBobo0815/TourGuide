@@ -32,7 +32,7 @@
     </ion-label>
   </ion-item>
   <div *ngFor="let package of packages">
-    <ion-card class="welcome-card">
+    <ion-card class="welcome-card" (click)="get(package.packageId)">
       <div class="local-size">
         <ion-row>
           <ion-col>

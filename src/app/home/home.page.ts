@@ -25,6 +25,7 @@ import { identifierModuleUrl, unescapeIdentifier } from '@angular/compiler';
 })
 export class HomePage implements OnInit{
   packages:Package[];
+  test=[];
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
@@ -70,7 +71,8 @@ export class HomePage implements OnInit{
               private authData:UserDateService,
               private packDetail:PackageService,
               private auth: AuthService,
-              private router: Router) {
+              private router: Router,
+              ) {
                 this.initializeApp();
               }
             
@@ -113,15 +115,17 @@ export class HomePage implements OnInit{
 
   get(id){
     var db= firebase.firestore();   
-    var ref = db.collection('packages')
+    var collection = db.collection('packages')
+    
     // var ref = db.collection('packages').where("title","==","title");
-    console.log(id);
-    this.router.navigate(['/join']).then(i=>{
-      ref.where("id","==",id).get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        console.log(doc.id, doc.data());
-      });
-    });
-  });
+    
+  
+    collection.doc(id).get().then(doc => {
+      console.log(doc.id, doc.data());
+      //this.test.push(doc.data());
+      this.packDetail.getPackagesData(doc.id);
+    }).then(i=>this.router.navigate(['/join']))
+    
+
   }
 }

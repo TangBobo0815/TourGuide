@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 
 
 import { HomePage } from './home.page';
-
+import { JoinPage } from '../join/join.page';
+import { JoinPageModule } from '../join/join.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { HomePage } from './home.page';
       {
         path: '',
         component: HomePage
-      }
+      },
     ])
   ],
   declarations: [HomePage]

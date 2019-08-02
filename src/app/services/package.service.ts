@@ -9,8 +9,7 @@ import { Observable, of, ReplaySubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AlertController , ToastController } from '@ionic/angular';
 import { AngularFireStorage } from 'angularfire2/storage';
-import { Reference } from '@angular/fire/storage/interfaces';
-import { Url } from 'url';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +18,9 @@ export class PackageService {
   packagesCollection: AngularFirestoreCollection<Package>;
   user: Observable<User>;
   packages:Observable<Package[]>;
+  packagesData:string;
+  test=[];
+  id:string;
 
   constructor(
     private db: AngularFirestore,
@@ -31,10 +33,32 @@ export class PackageService {
   getPackages(){
     return this.packages;
   }
+
+  getPackagesData(id){
+    this.id=id;
+  }
+
+  getData(){
+    //return this.db.collection('packages').doc(id);
+    var db= firebase.firestore();   
+    var collection = db.collection('packages')
+    
+    // var ref = db.collection('packages').where("title","==","title");
+  
+    collection.doc(this.id).get().then(doc => {
+      console.log(doc.id, doc.data());
+      this.test.push(doc.data());
+    })
+    console.log(this.test);
+    return this.test;
+    
+  }
 }
 
 export interface Package {
   title?:string;
+  startDate?:string;
+  endDate?:string,
   detailsArray?:Array<true>,
   userRef?:string,
 }
