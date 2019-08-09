@@ -9,22 +9,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
   <div  *ngIf="authData.user | async as user">
   <ion-card>
-    <!-- <ion-img src="https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_640.jpg"></ion-img> -->
-    <div class="bar bar-header">
-      <ion-button size="small" class="button" shape="round" color="primary" fill="outline" routerLink="/update-userdata">修改資料
-      </ion-button>
-    </div>
-
-    
-      <div  center>
+      <div center>
+          <ion-img class="back" src="https://ppt.cc/fTuZ7x@.png"></ion-img> 
+        </div>
+      <div center>
         <img class="img" [src]="user.userImg">
       </div>
-
       <div>
         <ion-card-content>
+            <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
           <ion-card-title text-center>
             {{user.Name}}
           </ion-card-title>
@@ -52,9 +48,13 @@
           <ion-label *ngIf="!user.touron" text-center>未開啟嚮導功能</ion-label>
         </ion-item>
       </ion-toolbar> -->
-    
+      <div class="bar bar-header">
+          <ion-button expand="block" size="small" class="button" shape="round" color="dark" fill="outline" routerLink="/update-userdata">修改資料
+          </ion-button>
+        </div>
   </ion-card>
-
+  
+  
   <!-- <div>
     <span [ngSwitch]="user.touron">
       <div *ngSwitchCase="true">
@@ -97,4 +97,5 @@
   </div> -->
 </div>
 
+     
 </ion-content>
