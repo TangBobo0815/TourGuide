@@ -78,7 +78,7 @@ export class PackagePage implements OnInit {
 
   packageUp(){
     let form = this.packageForm.value;
-    
+    let id = this.db.createId();
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
     const data={
@@ -92,11 +92,12 @@ export class PackagePage implements OnInit {
       money:form.price,
       other:form.note,
       detailsArray:form.detailsGroup,
+      packageId:id,
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
-      //userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      // userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
 
-    this.db.collection('packages').add(data)
+    this.db.collection('packages').doc(id).set(data)
       .then(
         this.Sucess
         )
