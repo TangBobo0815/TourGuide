@@ -1,18 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>join</ion-title>
+  <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+      <ion-title *ngIf="title">
+        {{title}}
+        </ion-title>
   </ion-toolbar>
 </ion-header>
-
 
   <ion-content padding>
     <ion-card>
       <div></div>
       <div>
         <ion-card-content >
-          <ion-card-title text-center *ngIf="title">
-          {{title}}
-          </ion-card-title>
+            <!-- <div *ngFor="let package of packages">
+          <ion-img [src]="package.detailsArray[0].photo"></ion-img> -->
           <ion-card-content text-center>
             {{startDate}}
             <div></div>
@@ -22,9 +25,10 @@
             <div></div>
             <!-- {{packageId}} -->
           </ion-card-content> 
+      
         </ion-card-content>
       </div> 
-      <ion-button size="small" class="button" shape="round" color="primary" fill="outline" (click)="join()">加入
+      <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入
       </ion-button>
     </ion-card>
   </ion-content>

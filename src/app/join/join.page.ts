@@ -24,12 +24,14 @@ export class JoinPage implements OnInit {
   test=[];
   packages:Package[];
   array:[];
+
   //---------------
   packageId:string;
   title:string;
   startDate:string;
   endDate:string;
   place:string;
+ 
   //---------------
   joinForm:any;
 
@@ -60,6 +62,7 @@ export class JoinPage implements OnInit {
       this.startDate=element.startDate;
       this.endDate=element.endDate;
       this.place=element.place;
+    
     })
     
   }

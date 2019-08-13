@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -116,7 +116,7 @@
       </ion-item>
       <!-- <app-packages></app-packages> -->
 
-      <ion-button color="dark" type="button" (click)="addDetailsButtonClick()">
+      <ion-button color="dark" type="button" fill="outline" (click)="addDetailsButtonClick()">
         添加內容<ion-icon name="add"></ion-icon>
       </ion-button>
 
@@ -146,7 +146,7 @@
    
     
       <div padding text-center>
-        <ion-button type="submit" color="dark" block shape="round" expand="full" [disabled]="!packageForm.valid">完成</ion-button>
+        <ion-button type="submit" color="dark" block shape="round" fill="outline" expand="full" [disabled]="!packageForm.valid">完成</ion-button>
       </div>
 
       <!--
