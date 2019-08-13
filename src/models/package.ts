@@ -3,4 +3,5 @@ export interface Package {
     detailsArray?:Array<true>,
     context?:string,
     userRef?:string,
+    place?:string;
   }
