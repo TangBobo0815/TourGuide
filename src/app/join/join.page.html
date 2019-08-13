@@ -4,24 +4,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
-    <!-- <div *ngFor="let packages"></div>
-    <div>
-      <ion-card-content>
-        <ion-card-title text-center>
-          
-        </ion-card-title>
-         <ion-card-content text-center>
-          {{packages.}}
-          <div></div>
-          {{user.phone}}
-          <div></div>
-          {{user.email}}
-        </ion-card-content> 
-      </ion-card-content>
-    </div>  -->
-    <ion-button size="small" class="button" shape="round" color="primary" fill="outline" (click)="data()">加入
-    </ion-button>
-  </ion-card>
-</ion-content>
+
+  <ion-content padding>
+    <ion-card>
+      <div></div>
+      <div>
+        <ion-card-content >
+          <ion-card-title text-center *ngIf="title">
+          {{title}}
+          </ion-card-title>
+          <ion-card-content text-center>
+            {{startDate}}
+            <div></div>
+            {{endDate}}
+            <div></div>
+            {{place}}
+            <div></div>
+            <!-- {{packageId}} -->
+          </ion-card-content> 
+        </ion-card-content>
+      </div> 
+      <ion-button size="small" class="button" shape="round" color="primary" fill="outline" (click)="join()">加入
+      </ion-button>
+    </ion-card>
+  </ion-content>

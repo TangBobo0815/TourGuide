@@ -22,7 +22,9 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { JoinPage } from './join/join.page';
+import { JoinPageModule } from './join/join.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 //import { IonicStepperModule } from 'ionic-stepper';
 
 
@@ -41,7 +43,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   providers: [
     StatusBar,

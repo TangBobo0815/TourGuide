@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { PreloadAllModules, Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -19,12 +19,13 @@ const routes: Routes = [
   { path: 'profile/:uid', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'userpack', loadChildren: './userpack/userpack.module#UserpackPageModule' },
-  { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },  { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
-
+  { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },
+  { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
+  { path: '', loadChildren: './order/order.module#OrderPageModule' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
