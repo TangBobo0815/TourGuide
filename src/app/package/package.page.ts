@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
 export interface User {
   uid:string;
   Name:string;
-  touron:boolean;
+
 }
 
 @Component({
