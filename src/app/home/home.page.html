@@ -4,7 +4,7 @@
     <ion-item>
       <ion-menu-button></ion-menu-button>
       <ion-searchbar animated="true" color="light"></ion-searchbar>
-      <ion-button size="small" shape="round" color="medium" (click)="popovers()">
+      <ion-button size="small" shape="round" color="dark" (click)="popovers()">
         <ion-icon name="options"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
       </ion-button>
@@ -64,7 +64,7 @@
 
 <ion-menu side="start">
   <ion-header>
-    <ion-toolbar class="menu" color="medium" *ngIf="authData.user | async as user">
+    <ion-toolbar class="menu" color="" *ngIf="authData.user | async as user">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -92,8 +92,8 @@
     </ion-list>
   </ion-content>
   <ion-footer>
-    <ion-toolbar color="medium">
-      <ion-button color="medium" (click)="signOut()">
+    <ion-toolbar color="">
+      <ion-button color="dark" (click)="signOut()">
         <ion-icon name="log-out"></ion-icon>登出
       </ion-button>
     </ion-toolbar>
