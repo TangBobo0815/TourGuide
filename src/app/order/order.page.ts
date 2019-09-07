@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { OrderService } from '../services/order.service';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,12 +25,15 @@ export interface Order {
   status:string;
   userId:string;
 }
+=======
+>>>>>>> origin/jeff
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.page.html',
   styleUrls: ['./order.page.scss'],
 })
+<<<<<<< HEAD
 
 export class OrderPage implements OnInit {
 
@@ -86,4 +90,13 @@ export class OrderPage implements OnInit {
 
 
 
+=======
+export class OrderPage implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+>>>>>>> origin/jeff
 }
