@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'userpack', loadChildren: './userpack/userpack.module#UserpackPageModule' },
   { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },
-  { path: 'join', loadChildren: './join/join.module#JoinPageModule' },  { path: 'order', loadChildren: './order/order.module#OrderPageModule' },
+  { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
+  { path: '', loadChildren: './order/order.module#OrderPageModule' },
 
 
 ];
