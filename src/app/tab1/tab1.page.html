@@ -5,12 +5,13 @@
 </ion-header>
 
 <ion-content padding>
-    <div>
+    <div *ngFor="let order of orders">
         <ion-card class="welcome-card">
           <ion-img></ion-img>
           <ion-card-header>
-            <ion-card-title >{{package.title}}</ion-card-title>
+            <ion-card-title >{{order.name}}</ion-card-title>
           </ion-card-header>
+          <ion-label>{{order.OrderTime}}</ion-label>
         </ion-card>
         </div>
 </ion-content>

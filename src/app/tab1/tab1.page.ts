@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../services/order.service';
+import { element } from '@angular/core/src/render3';
+import { TouchSequence } from 'selenium-webdriver';
+import { Order} from '../../models/order';
 
 
 @Component({
@@ -8,9 +12,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Tab1Page implements OnInit {
 
-  constructor() { }
+  UID:string;
+  name:string;
+  orderTime:string;
+
+  orders:Order[];
+
+  constructor(private orderService: OrderService) { }
 
   ngOnInit() {
+    this.orderService.selectAll().forEach(element=>{
+      console.log(element);
+      this.orders=element; 
+    })
   }
   
 }

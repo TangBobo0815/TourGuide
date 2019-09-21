@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore, DocumentReference } from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Observable , of, BehaviorSubject } from 'rxjs';
 
@@ -31,7 +31,6 @@ export interface Order {
   templateUrl: './order.page.html',
   styleUrls: ['./order.page.scss'],
 })
-
 
 export class OrderPage implements OnInit {
 
@@ -63,22 +62,24 @@ export class OrderPage implements OnInit {
    }
 
   ngOnInit() {
-    var db= firebase.firestore();   
-    var collection = db.collection('order').where('userId', '==', 'users/LjVImDcCpTZkR2ExgiB7TzA548D3')
+    // var db= firebase.firestore();   
+    // var collection = db.collection('order').where('userId', '==', 'users/LjVImDcCpTZkR2ExgiB7TzA548D3')
     
-    // var ref = db.collection('packages').where("title","==","title");
+    // // var ref = db.collection('packages').where("title","==","title");
   
-    collection.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-      });
-    })
-    .catch(function(error) {
-      console.log("Error getting documents: ", error);
-    });
+    // collection.get().then(function(querySnapshot) {
+    //   querySnapshot.forEach(function(doc) {
+    //       // doc.data() is never undefined for query doc snapshots
+    //       console.log(doc.id, " => ", doc.data());
+    //   });
+    // })
+    // .catch(function(error) {
+    //   console.log("Error getting documents: ", error);
+    // });
 
-    console.log(this.test);
-    return this.test;
+    // console.log(this.test);
+    // return this.test;
   }
+
+  
 }
