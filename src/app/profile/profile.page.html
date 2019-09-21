@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -21,37 +21,58 @@
       <div>
         <ion-card-content>
             <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
-          <ion-card-title text-center>
-            {{user.Name}}
-          </ion-card-title>
-          <ion-card-content text-center>
-            {{user.date}}
-            <div></div>
-            {{user.phone}}
-            <div></div>
-            {{user.email}}
-          </ion-card-content>
         </ion-card-content>
-      </div>
-
-      <!---<ion-toolbar>
-        <ion-buttons slot="primary">
-          <ion-button routerLink="/list">
-            <ion-icon slot="icon-only" name="clipboard"></ion-icon>
-            <ion-label>訂購紀錄</ion-label>
-          </ion-button>
-        </ion-buttons>
-        <ion-item>
-            <ion-toggle [(ngModel)] ="user.touron" color="dark"></ion-toggle>
-          <ion-toggle  (click)="show=!show" color="dark"></ion-toggle> 
-          <ion-label *ngIf="user.touron" text-center >已開啟嚮導功能</ion-label>
-          <ion-label *ngIf="!user.touron" text-center>未開啟嚮導功能</ion-label>
-        </ion-item>
-      </ion-toolbar> -->
-      <div class="bar bar-header">
-          <ion-button expand="block" size="small" class="button" shape="round" color="dark" fill="outline" routerLink="/update-userdata">修改資料
+        
+        
+        <div center padding="10px" font-size="12px" >
+        <ion-grid>
+          <ion-row>
+              <ion-col>
+                  <ion-item>
+                      <ion-label >姓名:</ion-label>
+                      <ion-label>{{user.Name}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                      <ion-label>性別:</ion-label>
+                      <ion-label>{{user.gender}}</ion-label>
+                  </ion-item>
+                </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col>
+              <ion-item>
+                信箱:
+                <ion-label left>{{user.email}}</ion-label>
+              </ion-item> 
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                <ion-item>
+                  手機:
+                  <ion-label left>{{user.phone}}</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+              <ion-col>
+                <ion-item>
+                  住址:
+                  <ion-label left>{{user.address}}</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div padding text-center>
+          <ion-button type="submit" color="dark" id="touron"  block shape="round" expand="full">編輯
           </ion-button>
         </div>
+
+     
+      </div> 
+    </div>
   </ion-card>
   
   
