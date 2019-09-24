@@ -10,6 +10,7 @@ import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser' ;
 
 export interface User {
   uid:string;
@@ -24,7 +25,7 @@ export interface User {
 })
 export class PackagePage implements OnInit {
   user: Observable<User>;
-
+  imgUrl;
   packageForm:FormGroup;
   imgurl$:Observable<string>;
   imgurl:string;
@@ -41,7 +42,8 @@ export class PackagePage implements OnInit {
     private alertCtrl: AlertController,
     private toast: ToastController,
     private storage: AngularFireStorage,
-    private afAuth:AngularFireAuth,)
+    private afAuth:AngularFireAuth,
+    private sanitizer: DomSanitizer)
   {
     this.user = this.afAuth.authState.pipe(
         switchMap(user => {
@@ -138,6 +140,11 @@ export class PackagePage implements OnInit {
       population:['',
         [Validators.required]
       ],
+      context:['',
+        [Validators.required,
+          Validators.minLength(20), 
+          Validators.maxLength(500)]
+      ],
       note:[''],
       detailsGroup:this.builder.array([
         this.addDetailsFormGroup()
@@ -151,11 +158,11 @@ export class PackagePage implements OnInit {
   addDetailsFormGroup(){
     return this.builder.group({
       photo:new FormControl(this.imgurl || null),
-      context:new FormControl('',
+      /*context:new FormControl('',
       [Validators.required,
       Validators.minLength(20), 
       Validators.maxLength(500),
-      ]),
+      ]),*/
       photoRef:new FormControl('')
     })
   }
@@ -188,7 +195,7 @@ export class PackagePage implements OnInit {
             }
           }
       break;
-      case 'context':
+    /*  case 'context':
         var control = form.get(field);
         if (control && control.dirty && !control.valid) {
           const messages = this.validatorMessages[field];
@@ -196,7 +203,7 @@ export class PackagePage implements OnInit {
             this.formErrors[field] += messages[key] + ' ';
           }
         }
-        break;
+        break;*/
       }
     }
   }
@@ -210,6 +217,12 @@ export class PackagePage implements OnInit {
   
     this.uploadPercent$ =uploadTask.percentageChanges();
     
+    //預覽照片始
+    let imgUrl = window.URL.createObjectURL(file);
+    let sanitizerUrl = this.sanitizer.bypassSecurityTrustUrl(imgUrl); 
+    this.imgUrl = sanitizerUrl;
+    //預覽照片末
+
     uploadTask.then().then(()=>{
       this.imgsrc$=ref.getDownloadURL();
       this.imgsrc$.subscribe(path=>{
@@ -223,12 +236,14 @@ export class PackagePage implements OnInit {
       })
       console.log("this.imgurl-2: " + this.imgurl);
       console.log('all file upload sucess');
+     
     })
     .catch((err)=>{
       console.log(err);
     });
         //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
+
 
   async Sucess(){
     const alert = await this.alertCtrl.create({
