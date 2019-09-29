@@ -15,20 +15,10 @@
 <ion-content>
   <ion-item>
     <ion-label> 
-      <ion-row>
-        <ion-col>
-          <ion-segment-button>
+          <ion-segment>
             <ion-label>最新揪團趣</ion-label>
             <ion-icon name="heart" color="danger"></ion-icon>
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button>
-            <ion-label>推薦揪團趣</ion-label>
-            <ion-icon name="contacts" color="tertiary"></ion-icon>
-          </ion-segment-button>
-        </ion-col>
-      </ion-row>
+          </ion-segment>
     </ion-label>
   </ion-item>
   <div *ngFor="let package of packages">
@@ -55,12 +45,16 @@
       <ion-card-content>
           <ion-text>{{package.detailsArray[0].context}}</ion-text>
       </ion-card-content>
-      <div class="size" text-right>
-        po文時間&日期
-      </div>
     </ion-card>
   </div>
 </ion-content>
+<ion-footer>
+    <ion-toolbar translucent="true">
+        <div   text-center>
+            <img class="image" src="https://ppt.cc/fJ1ILx@.png">
+          </div>
+    </ion-toolbar>
+  </ion-footer>
 
 <ion-menu side="start">
   <ion-header>
