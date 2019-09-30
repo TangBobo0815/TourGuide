@@ -5,19 +5,6 @@
 </ion-header>
 
 <ion-content padding>
-<<<<<<< HEAD
-    <div *ngFor="let order of orders">
-        <ion-card class="welcome-card">
-          <ion-img></ion-img>
-          <ion-card-header>
-            <ion-card-title >{{order.name}}</ion-card-title>
-          </ion-card-header>
-          <ion-label>{{order.title}}</ion-label>
-          <ion-label>{{order.OrderTime}}</ion-label>
-        </ion-card>
-        </div>
-</ion-content>
-=======
   <!--<div *ngFor="let order of orders">
     <ion-card class="welcome-card">
       <ion-img></ion-img>
@@ -28,7 +15,7 @@
     </ion-card>
   </div>-->
 
-  <div class="panel panel-warning">
+  <div class="panel panel-warning" *ngFor="let order of orders">
     <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -42,7 +29,7 @@
                 開團名稱
               </ion-col>
               <ion-col size="2" right>
-                時間
+                {{order.OrderTime}}
               </ion-col>
               <ion-col size="1">
                 <div class="div">
@@ -94,4 +81,3 @@
 
 
 </ion-content>
->>>>>>> origin/jeff
