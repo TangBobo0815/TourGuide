@@ -15,6 +15,7 @@ export class Tab1Page implements OnInit {
   UID:string;
   name:string;
   orderTime:string;
+  title:string;
 
   orders:Order[];
 
@@ -25,6 +26,11 @@ export class Tab1Page implements OnInit {
       console.log(element);
       this.orders=element; 
     })
+
+    // this.orderService.getPackTitle().forEach(value=>{
+    //   this.title=value.title;
+    //   console.log('title:'+this.title)
+    // });
   }
   
 }

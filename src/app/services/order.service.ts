@@ -13,6 +13,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { stringify } from '@angular/core/src/render3/util';
+import { Title } from '@angular/platform-browser';
+import { element } from '@angular/core/src/render3';
 
 export interface User {
   uid:string;
@@ -32,6 +34,12 @@ export interface Show {
   status:string;
 }
 
+export interface Pack {
+  title:string;
+  userId:string;
+  packageId:string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,10 +47,14 @@ export class OrderService {
   user: Observable<User>;
   userId$: BehaviorSubject<String>;
   uid:string;
+  title:string;
   array=[];
 
   orderCollection:AngularFirestoreCollection<Order>;
   orderItem:Observable<Order[]>;
+  packCollectionRef:AngularFirestoreCollection<Pack>;
+  packItem:any;
+
 
   constructor(
     private orderService: OrderService,
@@ -66,31 +78,25 @@ export class OrderService {
     this.collectionInitialization();
    }
 
-  collectionInitialization(){
-    this.orderCollection = this.db.collection('order');
-    this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{
-      return changes.map( change => {
-        const data = change.payload.doc.data();
-        const packageId = data.packageId;
-        const orderTime = data.orderTime;
-        const status=data.status;
-        const userId=data.userId;
-          console.log('userID'+userId);
-          return this.db.doc(userId).valueChanges().pipe(map( (SignupData: User) => {
-            return Object.assign(
-              {UID:userId, name: SignupData.Name, OrderTime:orderTime}); }
-        
-          ));
-      });
-    }), flatMap(shows => combineLatest(shows)));
+   setPackTitle(packageId){
+    var db= firebase.firestore();   
+    var collection = db.collection('packages');
+    
+    collection.doc(packageId).get().then(doc=>{
+      console.log(doc.data());
+      this.array.push(doc.data());
+    })
 
-    this.orderItem.forEach(value => {
-      console.log(value);
-    });
+    this.array.forEach(element=>{
+      this.title=element.title;
+    })
+
+    return this.title;
   }
 
-  getPackTitle(){
+  collectionInitialization(){
     this.orderCollection = this.db.collection('order');
+
     this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{
       return changes.map( change => {
         const data = change.payload.doc.data();
@@ -98,15 +104,19 @@ export class OrderService {
         const orderTime = data.orderTime;
         const status=data.status;
         const userId=data.userId;
-          console.log('userID'+userId);
+
+        const title = this.setPackTitle(packageId);
+
+        console.log('userID'+userId);
           return this.db.doc(userId).valueChanges().pipe(map( (SignupData: User) => {
             return Object.assign(
-              {UID:userId, name: SignupData.Name, OrderTime:orderTime}); }
-        
+              {UID:userId, name: SignupData.Name, packageId:packageId,status:status, OrderTime:orderTime, title:this.title});
+          }
           ));
       });
-    }), flatMap(shows => combineLatest(shows)));
-
+    }),
+    flatMap(shows => combineLatest(shows)));
+    
     this.orderItem.forEach(value => {
       console.log(value);
     });
