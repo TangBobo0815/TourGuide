@@ -11,8 +11,8 @@ import { User } from "../../models/user";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
-
+import { Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +24,7 @@ export class ProfilePage implements OnInit {
   updataForm: any;
   user: Observable<User>;
   test:string = 'false';
+  show:string = 'false';
   
   constructor(
     private builder: FormBuilder,
@@ -32,6 +33,8 @@ export class ProfilePage implements OnInit {
     private db: AngularFirestore,
     private auth: AuthService,
     private afAuth: AngularFireAuth,
+    private router: Router,
+    private alertCtrl: AlertController,
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -121,10 +124,32 @@ export class ProfilePage implements OnInit {
       address: form.address,
       date: form.date,
     };
-    this.authData.updataUser(user,data);
+    this.authData.updataUser(user,data)
+    .then(
+      this.Sucess
+    );
     console.log(data);
+
+    this.Sucess();
   }
 
    
+  async Sucess(){
+    var self = this;
+    const alert = await self.alertCtrl.create({
+      header: '修改成功',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/profile']);
+            this.show = 'false';
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 }
