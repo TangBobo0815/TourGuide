@@ -3,19 +3,23 @@
   <ion-toolbar color="">
     <ion-item>
       <ion-menu-button></ion-menu-button>
-      <ion-searchbar 
-          animated="true" 
-          color="light"
-          ></ion-searchbar>
+    <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>
       <ion-button size="small" shape="round" color="dark" (click)="popovers()">
         <ion-icon name="options"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
       </ion-button>
     </ion-item>
+
+    <ion-list *ngIf="searchInput !== ''" >
+      <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
+        {{ item.title }}
+      </ion-item>
+  </ion-list>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+<ion-content *ngIf="searchInput == ''" >
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -54,7 +58,7 @@
     </ion-card>
   </div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="searchInput == ''">
     <ion-toolbar translucent="true">
         <div   text-center>
             <img class="image" src="..\..\assets\logo.png" >

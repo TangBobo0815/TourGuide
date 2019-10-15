@@ -16,6 +16,7 @@ import * as firebase from 'firebase';
 import { Package } from '../../models/package'
 import { getCurrentView } from '@angular/core/src/render3';
 import { identifierModuleUrl, unescapeIdentifier } from '@angular/compiler';
+import { FirestoreSettingsToken } from 'angularfire2/firestore';
 
 
 @Component({
@@ -26,11 +27,16 @@ import { identifierModuleUrl, unescapeIdentifier } from '@angular/compiler';
 export class HomePage implements OnInit{
   packages:Package[];
   test=[];
+  isItemAvailable = false; // initialize the items with false
+  unItemAvailable = true;
+  
+  public searchInput='';
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
 
+  
   showSplash = true;
   public appPages = [
     {
@@ -81,6 +87,8 @@ export class HomePage implements OnInit{
                   this.statusBar.styleDefault();
                   this.splashScreen.hide();
                 });
+
+
               }
               
   async popovers(ev: any) {
@@ -108,19 +116,10 @@ export class HomePage implements OnInit{
 
   ngOnInit(){
     this.packDetail.getPackages().subscribe(packages=>{
-      console.log(packages);
-      this.packages=packages;
-    })
-
-
-  }
-
-  ionViewWillEnter(){
-    this.packDetail.getPackages().subscribe(packages=>{
-      console.log(packages);
       this.packages=packages;
     })
   }
+
 
  getreload() {
   this.packDetail.getPackages().subscribe(packages=>{
@@ -172,4 +171,50 @@ getItem(Item)
     
 
   }
+
+getDetail(id){
+  var db= firebase.firestore();   
+  var collection = db.collection('packages')
+  
+  // var ref = db.collection('packages').where("title","==","title");
+  
+
+  collection.doc(id).get().then(doc => {
+    console.log(doc.id, doc.data());
+    //this.test.push(doc.data());
+    this.packDetail.getPackagesData(doc.id);
+  }).then(i=>this.router.navigateByUrl('/join'))
+
+}
+
+getItems(ev: any) {
+  // Reset items back to all of the items
+ this.packDetail.getPackages().subscribe(packages=>{
+    console.log(packages);
+    this.packages=packages;
+  })
+  // set val to the value of the searchbar
+  const val = ev.target.value.toLowerCase();
+  if (val && val.trim() != '') {
+    this.packages = this.packages.filter(pak => {
+      return ( pak=> pak.toLowerCase().indexOf(val) > -1);
+    })
+
+
+  }
+
+  /*const db = firebase.firestore();
+  db.settings({timestampsInSnapshots : true});
+  const col = db.collection('packages');
+  const query = col.where('title', '>=',ev);
+  
+  query.get().then(snapshot =>{
+    snapshot.docs.forEach(doc => {
+      console.log(doc.id,doc.data())
+    })
+  })*/
+
+}
+
+
 }
