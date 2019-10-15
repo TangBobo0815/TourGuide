@@ -84,6 +84,7 @@ export class PackagePage implements OnInit {
     //const budgets = this.detailsArray.map((obj)=> {return Object.assign({}, obj)});
 
     const data={
+      context:form.context,
       title:form.title,
       place:form.place,
       startDate:form.startDate,

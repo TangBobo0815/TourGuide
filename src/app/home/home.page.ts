@@ -35,32 +35,32 @@ export class HomePage implements OnInit{
   public appPages = [
     {
       title: '首頁',
-      url: '/home',
+      url: 'home',
       icon: 'home'
     },
     {
       title: '個人資訊',
-      url: '/profile',
+      url: 'profile', 
       icon: 'contact'
     },
     {
       title: '開團',
-      url: '/package',
+      url: 'package',
       icon: 'contacts'
     },
     {
       title: '訂單管理',
-      url: '/order',
+      url: 'order',
       icon: 'clipboard'
     },
     {
       title: '使用說明',
-      url: '/setting',
+      url: 'setting',
       icon: 'information-circle-outline'
     },
     {
       title: '升級VIP',
-      url: '/vip',
+      url: 'vip',
       icon: 'star-outline'
     }
   ];
@@ -97,7 +97,7 @@ export class HomePage implements OnInit{
     console.log('Begin async operation');
 
     setTimeout(() => {
-      console.log('Async operation has ended');
+      this.getreload();
       event.target.complete();
     }, 2000);
   }
@@ -111,7 +111,51 @@ export class HomePage implements OnInit{
       console.log(packages);
       this.packages=packages;
     })
+
+
   }
+
+  ionViewWillEnter(){
+    this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
+      this.packages=packages;
+    })
+  }
+
+ getreload() {
+  this.packDetail.getPackages().subscribe(packages=>{
+    console.log(packages);
+    this.packages=packages;})
+}
+
+getItem(Item)
+{
+  if(Item == "profile")
+  {
+    this.router.navigate(['/profile'])
+  }
+  else if (Item == "home") 
+  {
+    this.router.navigate(['/home'])
+  } 
+  else if(Item == "package")
+  {
+    this.router.navigate(['/package'])  
+  }
+  else if(Item == "order")
+  {
+    this.router.navigate(['/order'])  
+  }
+  else if(Item == "setting")
+  {
+    this.router.navigate(['/setting'])  
+  }
+  else if(Item == "vip")
+  {
+    this.router.navigate(['/vip'])  
+  }
+}
+
 
   get(id){
     var db= firebase.firestore();   
