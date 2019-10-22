@@ -47,10 +47,7 @@ export class UserDateService {
       
   }
 
-<<<<<<< HEAD
-   
- 
-=======
+
   /*updataUser(user){
     return this.db.doc<User>(`users/${user.uid}`).set(user).then(result=>{
       console.log(user);
@@ -62,6 +59,6 @@ export class UserDateService {
     return this.db.doc('users/' + user.uid).update(data);
 }
 
->>>>>>> origin/jeff
+
 }
 
