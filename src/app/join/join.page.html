@@ -9,13 +9,17 @@
   </ion-toolbar>
 </ion-header>
 
-  <ion-content padding>
+  <ion-content >
+      <div>
+          <ion-slides pager="true" >
+              <ion-slide *ngFor="let photos of detailsArray">
+                  <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
+              </ion-slide>
+            </ion-slides>
+      </div>
     <ion-card>
-      <div></div>
       <div>
         <ion-card-content >
-          <!-- <div *ngFor="let package of packages"> -->
-          <ion-img [src]="detailsArray[0].photo"></ion-img>
           <ion-card-content text-center>
             {{startDate}}
             <div></div>
@@ -23,6 +27,9 @@
             <div></div>
             {{place}}
             <div></div>
+            {{context}}
+            <div></div>
+            {{money}}
             <!-- {{packageId}} -->
           </ion-card-content> 
       

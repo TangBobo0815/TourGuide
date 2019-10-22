@@ -25,6 +25,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { JoinPage } from './join/join.page';
 import { JoinPageModule } from './join/join.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+
 //import { IonicStepperModule } from 'ionic-stepper';
 
 
@@ -44,13 +46,16 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     BrowserAnimationsModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFireAuth,
+    PhotoViewer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} }
+    { provide: FirestoreSettingsToken, useValue: {} },
   ],
   bootstrap: [AppComponent]
 })

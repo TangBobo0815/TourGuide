@@ -14,6 +14,8 @@ import { Observable, of, from } from 'rxjs';
 import { User } from "../../models/user";
 import { AlertController , ToastController } from '@ionic/angular';
 import { element } from '@angular/core/src/render3';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+
 //-----------------
 @Component({
   selector: 'app-join',
@@ -32,7 +34,8 @@ export class JoinPage implements OnInit {
   endDate:string;
   place:string;
   detailsArray:Array<string>;
- 
+  context:string;
+  money:string;
   //---------------
   joinForm:any;
 
@@ -45,6 +48,7 @@ export class JoinPage implements OnInit {
     public joinService:JoinService,
     private toast: ToastController,
     private builder: FormBuilder,
+    private photoViewer: PhotoViewer
   ) { }
 
   ngOnInit() {
@@ -64,6 +68,8 @@ export class JoinPage implements OnInit {
       this.endDate=element.endDate;
       this.place=element.place;
       this.detailsArray=element.detailsArray;
+      this.context=element.context;
+      this.money=element.money;
     })
     
   }
@@ -71,4 +77,11 @@ export class JoinPage implements OnInit {
   join(){
     this.joinService.joinOrder(this.packageId)
   }
+
+
+  zoomImage(img) {
+    console.log(img);
+    this.photoViewer.show(img,'圖片');
+}
+
 }
