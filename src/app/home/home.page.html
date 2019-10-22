@@ -3,16 +3,26 @@
   <ion-toolbar color="">
     <ion-item>
       <ion-menu-button></ion-menu-button>
-      <ion-searchbar animated="true" color="light"></ion-searchbar>
+    <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>
       <ion-button size="small" shape="round" color="dark" (click)="popovers()">
         <ion-icon name="options"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
       </ion-button>
     </ion-item>
+
+    <ion-list *ngIf="searchInput !== ''" >
+      <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
+        {{ item.title }}
+      </ion-item>
+  </ion-list>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+<ion-content *ngIf="searchInput == ''" >
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
   <ion-item>
     <ion-label> 
           <ion-segment>
@@ -21,7 +31,7 @@
           </ion-segment>
     </ion-label>
   </ion-item>
-  <div *ngFor="let package of packages">
+  <div *ngFor="let package of packages" disabled="false">
     <ion-card class="welcome-card" (click)="get(package.packageId)">
       <div class="local-size">
         <ion-row>
@@ -43,15 +53,15 @@
         <ion-card-title>{{package.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-          <ion-text>{{package.detailsArray[0].context}}</ion-text>
+          <ion-text>{{package.context}}</ion-text>
       </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="searchInput == ''">
     <ion-toolbar translucent="true">
         <div   text-center>
-            <img class="image" src="https://ppt.cc/fJ1ILx@.png">
+            <img class="image" src="..\..\assets\logo.png" >
           </div>
     </ion-toolbar>
   </ion-footer>
@@ -76,7 +86,8 @@
   <ion-content>
     <ion-list class="menu">
       <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+       <!-- <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">-->
+          <ion-item (click)="getItem(p.url)">
           <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
           <ion-label>
             {{p.title}}

@@ -44,9 +44,24 @@ export class UserDateService {
           }
         })
       );  
+      
   }
 
+<<<<<<< HEAD
    
  
+=======
+  /*updataUser(user){
+    return this.db.doc<User>(`users/${user.uid}`).set(user).then(result=>{
+      console.log(user);
+    });
+
+  }*/
+
+  updataUser(user: User,data:any){
+    return this.db.doc('users/' + user.uid).update(data);
+}
+
+>>>>>>> origin/jeff
 }
 
