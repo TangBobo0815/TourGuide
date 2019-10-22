@@ -30,6 +30,8 @@ export class HomePage implements OnInit{
   isItemAvailable = false; // initialize the items with false
   unItemAvailable = true;
   
+  i:number=0;
+
   public searchInput='';
 
   segmentChanged(ev: any) {
@@ -116,6 +118,7 @@ export class HomePage implements OnInit{
 
   ngOnInit(){
     this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
       this.packages=packages;
     })
   }
