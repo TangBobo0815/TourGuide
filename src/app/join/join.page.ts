@@ -31,6 +31,7 @@ export class JoinPage implements OnInit {
   startDate:string;
   endDate:string;
   place:string;
+  detailsArray:Array<string>;
  
   //---------------
   joinForm:any;
@@ -62,7 +63,7 @@ export class JoinPage implements OnInit {
       this.startDate=element.startDate;
       this.endDate=element.endDate;
       this.place=element.place;
-    
+      this.detailsArray=element.detailsArray;
     })
     
   }

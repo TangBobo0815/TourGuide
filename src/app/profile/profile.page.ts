@@ -25,6 +25,5 @@ export class ProfilePage implements OnInit{
   ngOnInit() {
   }
   
-  
 
 }

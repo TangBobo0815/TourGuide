@@ -26,6 +26,10 @@ export class Tab1Page implements OnInit {
       console.log(element);
       this.orders=element; 
     })
+    
+    // this.orders.push()
+    // this.title=this.orderService.setTitle()
+    // console.log('title:'+this.title);
 
     // this.orderService.getPackTitle().forEach(value=>{
     //   this.title=value.title;

@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { AngularFirestore, DocumentReference, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable , of, BehaviorSubject , combineLatest} from 'rxjs';
+import { Observable , of, BehaviorSubject , combineLatest, Timestamp} from 'rxjs';
 import {flatMap, map, toArray} from 'rxjs/operators';
 
 import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
@@ -15,6 +15,8 @@ import * as firebase from 'firebase';
 import { stringify } from '@angular/core/src/render3/util';
 import { Title } from '@angular/platform-browser';
 import { element } from '@angular/core/src/render3';
+import { toDate } from '@angular/common/src/i18n/format_date';
+import { DateAdapter } from '@angular/material';
 
 export interface User {
   uid:string;
@@ -22,7 +24,7 @@ export interface User {
 }
 export interface Order {
   packageId:string;
-  orderTime:Date;
+  orderTime:number;
   status:string;
   userId:string;
 }
@@ -47,8 +49,10 @@ export class OrderService {
   user: Observable<User>;
   userId$: BehaviorSubject<String>;
   uid:string;
-  title:string;
+  showTitle:string;
+  place:string;
   array=[];
+  array2=[];
 
   orderCollection:AngularFirestoreCollection<Order>;
   orderItem:Observable<Order[]>;
@@ -83,34 +87,47 @@ export class OrderService {
     var collection = db.collection('packages');
     
     collection.doc(packageId).get().then(doc=>{
+      this.showTitle = doc.data().title
       console.log(doc.data());
       this.array.push(doc.data());
     })
+  }
 
+  getTitle(){
+    console.log("get title start")
+    console.log("this.array.length" + this.array.length);
     this.array.forEach(element=>{
-      this.title=element.title;
+      this.showTitle=element.title
+      console.log(this.showTitle);
     })
+    console.log("get title end")
+    return this.showTitle;
+  }
 
-    return this.title;
+  getPlace(){
+    this.array.forEach(element=>{
+      this.place=element.place
+    })
+    return this.place;
   }
 
   collectionInitialization(){
     this.orderCollection = this.db.collection('order');
-
-    this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{
+    
+    this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
       return changes.map( change => {
         const data = change.payload.doc.data();
         const packageId = data.packageId;
+        this.setPackTitle(packageId);        
+        const title=this.showTitle;
+        const place=this.getPlace();
         const orderTime = data.orderTime;
         const status=data.status;
         const userId=data.userId;
-
-        const title = this.setPackTitle(packageId);
-
-        console.log('userID'+userId);
+        
           return this.db.doc(userId).valueChanges().pipe(map( (SignupData: User) => {
-            return Object.assign(
-              {UID:userId, name: SignupData.Name, packageId:packageId,status:status, OrderTime:orderTime, title:this.title});
+            return Object.assign( 
+              {UID:userId, name: SignupData.Name, packageId:packageId,status:status, OrderTime:orderTime,title:title,place:place})
           }
           ));
       });
@@ -125,7 +142,5 @@ export class OrderService {
   selectAll(){
     this.collectionInitialization();
     return this.orderItem;
-  }
-
-  
+  }  
 }
