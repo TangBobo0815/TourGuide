@@ -60,7 +60,7 @@ export interface Package {
   startDate?:string;
   endDate?:string,
   detailsArray?:Array<true>,
-  userRef?:string,
+  userId?:string,
 }
 
 export class User {

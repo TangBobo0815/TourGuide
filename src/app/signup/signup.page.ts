@@ -177,20 +177,7 @@ export class SignupPage implements OnInit {
 
     const data = {
       phone:form.phone,
-      // imgsrc:this.imgurl,
-      // fileRef:this.fileRef ,
-      // imgsrc:null,
-      // fileRef:null,
-      // userid:form.userImgInfoGroup.userid,
     };
-    // if (data.touron==false){
-    //   // data.imgsrc =null;
-    //   // data.fileRef = null;
-    //   // data.userid=null;
-    // }
-    // else{
-    //   //this.imgsrc$.subscribe(path=> data.imgsrc=path);
-    // }
     this.auth.imgsignUp(user,data).then(data=>{
       if(data== 0){
         this.register2Sucess();
@@ -389,15 +376,6 @@ export class SignupPage implements OnInit {
     //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料  
   }
 
-  get e164(){
-    const form = this.secondForm.value;
-    const num = form.phone;
-    return `+${num}`
-  }
-
-
-
-  
   //------------------------------------
   //---------------註冊成功toast
 

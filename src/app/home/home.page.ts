@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserDateService } from '../services/user-date.service';
 import { PackageService } from '../services/package.service';
 import { AuthService } from '../services/auth.service';
-
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 
 import { Package } from '../../models/package'
@@ -26,7 +26,9 @@ import { FirestoreSettingsToken } from 'angularfire2/firestore';
 })
 export class HomePage implements OnInit{
   packages:Package[];
+  show=[];
   test=[];
+  userName:string;
   isItemAvailable = false; // initialize the items with false
   unItemAvailable = true;
   
@@ -115,17 +117,38 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit(){
+    // var db= firebase.firestore();   
+    // var collection = db.collection('packages');
+
     this.packDetail.getPackages().subscribe(packages=>{
       this.packages=packages;
+      // this.packages.forEach(value=>{
+      //   console.log(value);
+      //   var userId=value.userId;
+      //   console.log(userId);
+      //   firebase.firestore().collection('users').doc(userId).get().then(doc=>{
+      //     console.log(doc.data());
+      //     this.userName=doc.data().Name;
+      //     console.log('userName:'+this.userName);
+      //   })
+      // })
     })
   }
 
 
- getreload() {
-  this.packDetail.getPackages().subscribe(packages=>{
-    console.log(packages);
-    this.packages=packages;})
-}
+  getreload() {
+    this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
+      this.packages=packages;
+      this.test.push(this.packages);
+    })
+  }
+
+  getUser(){
+
+  }
+
+
 
 getItem(Item)
 {

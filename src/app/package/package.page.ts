@@ -12,10 +12,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser' ;
 
+import * as firebase from 'firebase';
+
 export interface User {
   uid:string;
   Name:string;
-
 }
 
 @Component({
@@ -30,6 +31,7 @@ export class PackagePage implements OnInit {
   imgurl$:Observable<string>;
   imgurl:string;
   fileRef:string;
+  userName:string;
   imgsrc$: Observable<string>;
   snapshot:Observable<any>;
   uploadPercent$:Observable<number>;
@@ -97,6 +99,7 @@ export class PackagePage implements OnInit {
       detailsArray:form.detailsGroup,
       packageId:id,
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      userName:this.getUserName()
       // userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
     }
 
@@ -107,7 +110,15 @@ export class PackagePage implements OnInit {
     console.log(data);
 
     this.Sucess();
+  }
 
+  getUserName(){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.userName=doc.data().Name;
+      console.log('userName:'+this.userName);
+    })
+    return this.userName
   }
 
   // public setFormArrayValue() {
