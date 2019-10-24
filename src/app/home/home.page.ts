@@ -32,6 +32,8 @@ export class HomePage implements OnInit{
   isItemAvailable = false; // initialize the items with false
   unItemAvailable = true;
   
+  i:number=0;
+
   public searchInput='';
 
   segmentChanged(ev: any) {
@@ -121,6 +123,7 @@ export class HomePage implements OnInit{
     // var collection = db.collection('packages');
 
     this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
       this.packages=packages;
       // this.packages.forEach(value=>{
       //   console.log(value);

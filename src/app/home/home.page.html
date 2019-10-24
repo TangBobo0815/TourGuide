@@ -48,7 +48,13 @@
           </ion-col>
         </ion-row>
       </div>
-      <ion-img [src]="package.detailsArray[0].photo"></ion-img>
+      <div >
+          <ion-slides pager="true" >
+              <ion-slide *ngFor="let photos of package.detailsArray">
+                  <ion-img [src]=photos.photo  class="imagestyle"></ion-img>
+              </ion-slide>
+            </ion-slides>
+      </div>
       <ion-card-header>
         <ion-card-title>{{package.title}}</ion-card-title>
       </ion-card-header>
@@ -72,7 +78,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <img class="img" [src]="user.userImg">
+            <ion-img class="img" [src]="user.userImg"></ion-img>
           </ion-col>
           <ion-col size="9"><br>
             {{user.Name}}
