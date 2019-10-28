@@ -31,6 +31,7 @@ export class JoinPage implements OnInit {
   packagejoin =null;
   i:number;
 
+
   //---------------
   packageId:string;
   title:string;
@@ -40,6 +41,7 @@ export class JoinPage implements OnInit {
   detailsArray:Array<string>;
   context:string;
   money:string;
+  userName:string;
   //---------------
   joinForm:any;
 

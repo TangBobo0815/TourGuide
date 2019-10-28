@@ -10,32 +10,51 @@
 </ion-header>
 
   <ion-content >
-      <div>
-          <ion-slides pager="true" >
-              <ion-slide *ngFor="let photos of packagejoin.detailsArray">
-                  <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
-              </ion-slide>
-            </ion-slides>
-      </div>
+     
     <ion-card>
+        <div>
+            
+            <ion-slides pager="true" >
+                <ion-slide *ngFor="let photos of detailsArray">
+                    <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
+                </ion-slide>
+              </ion-slides>
+        </div>
       <div>
         <ion-card-content >
-          <ion-card-content text-center>
-            {{packagejoin.startDate}}
+          <ion-card-content text-left color="dark">
+            <p>時間：{{startDate}} ～  {{endDate}}</p> 
             <div></div>
-            {{packagejoin.endDate}}
+            <p>地點：{{place}}</p> 
             <div></div>
-            {{packagejoin.place}}
-            <div></div>
-            {{packagejoin.context}}
-            <div></div>
-            {{packagejoin.money}}
-            <!-- {{packageId}} -->
+            <p>每人預算：NT${{money}}</p> 
           </ion-card-content> 
-      
         </ion-card-content>
       </div> 
-      <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入
-      </ion-button>
-    </ion-card>
+      </ion-card>
+      <ion-card>
+        <ion-card-header class="b" text-center>
+          行程規劃
+        </ion-card-header>
+        <ion-card-subtitle>
+            <ion-row>
+                <ion-col>
+             <b text-left class="user">開團者： {{userName}} </b>
+                </ion-col>
+                <ion-col>
+               <ion-button size="small" shape="round" color="navy" fill="outline" >查看個人檔案
+                </ion-button>
+                </ion-col>
+              </ion-row>
+        </ion-card-subtitle>
+        <ion-card-content text-left>
+          <div></div>
+          {{context}}
+        </ion-card-content>
+      </ion-card>
+  
+  
+
+      <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入行程
+        </ion-button>
   </ion-content>
