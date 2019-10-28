@@ -19,7 +19,7 @@ export class Tab1Page implements OnInit {
   orders:Order[];
   user: Observable<User>;
   userId:string;
-  
+  show:'false';
   userImg:string;
 
   constructor(

@@ -15,7 +15,7 @@
     </ion-card>
   </div>-->
 
-  <div class="panel panel-warning" *ngFor="let order of orders">
+ <!--<div class="panel panel-warning" *ngFor="let order of orders">
     <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -79,7 +79,68 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>--> 
+
+<div *ngFor="let order of orders">
+  <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
+  <div  class="panel panel-warning" (click)="show = !show">
+    <div class="panel-title" >
+        <ion-grid>
+            <ion-row>
+              <ion-col  >
+                {{order.title}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+      <ion-grid>
+          <ion-row>
+            <ion-col size="6" >
+              {{order.place}}
+            </ion-col>
+            <ion-col size="6" >
+              {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        </div>
+    </div>
+    
+        <div   *ngIf="show">
+        <ion-grid>
+            <ion-row>
+              <ion-col left>
+                <ion-item>
+                  <ion-avatar slot="start">
+                    <img class="img" src="user.userImg">
+                  </ion-avatar>
+                  <ion-label>{{order.name}}</ion-label>
+                  <div>
+                    <ion-label>申請加入</ion-label>
+                  </div>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div  text-center>同意</div>
+                <ion-button color="dark" fill="outline" expand="full" shape="round">
+                  <ion-icon name="checkmark"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                  <div text-center >不同意</div>
+                <ion-button color="danger" fill="outline" expand="full" shape="round">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+</div>
+
 
 
 </ion-content>
