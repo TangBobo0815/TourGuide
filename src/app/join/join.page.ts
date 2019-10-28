@@ -27,6 +27,7 @@ export class JoinPage implements OnInit {
   packages:Package[];
   array:[];
 
+
   //---------------
   packageId:string;
   title:string;
@@ -36,6 +37,7 @@ export class JoinPage implements OnInit {
   detailsArray:Array<string>;
   context:string;
   money:string;
+  userName:string;
   //---------------
   joinForm:any;
 
@@ -70,6 +72,7 @@ export class JoinPage implements OnInit {
       this.detailsArray=element.detailsArray;
       this.context=element.context;
       this.money=element.money;
+      this.userName=element.userName;
     })
     
   }
