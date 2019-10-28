@@ -12,22 +12,21 @@
   <ion-content >
      
     <ion-card>
-        <div>
-            
-            <ion-slides pager="true" >
-                <ion-slide *ngFor="let photos of detailsArray">
-                    <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
-                </ion-slide>
-              </ion-slides>
-        </div>
+      <div>
+        <ion-slides pager="true" >
+            <ion-slide *ngFor="let photos of packagejoin.detailsArray">
+                <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
+            </ion-slide>
+          </ion-slides>
+    </div>
       <div>
         <ion-card-content >
           <ion-card-content text-left color="dark">
-            <p>時間：{{startDate}} ～  {{endDate}}</p> 
+            <p>時間：{{packagejoin.startDate}} ～  {{packagejoin.endDate}}</p> 
             <div></div>
-            <p>地點：{{place}}</p> 
+            <p>地點：{{packagejoin.place}}</p> 
             <div></div>
-            <p>每人預算：NT${{money}}</p> 
+            <p>每人預算：NT${{packagejoin.money}}</p> 
           </ion-card-content> 
         </ion-card-content>
       </div> 
@@ -39,7 +38,7 @@
         <ion-card-subtitle>
             <ion-row>
                 <ion-col>
-             <b text-left class="user">開團者： {{userName}} </b>
+             <b text-left class="user">開團者： {{packagejoin.userName}} </b>
                 </ion-col>
                 <ion-col>
                <ion-button size="small" shape="round" color="navy" fill="outline" >查看個人檔案
@@ -49,7 +48,7 @@
         </ion-card-subtitle>
         <ion-card-content text-left>
           <div></div>
-          {{context}}
+          {{packagejoin.context}}
         </ion-card-content>
       </ion-card>
   
