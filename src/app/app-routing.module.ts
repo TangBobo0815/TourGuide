@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'userpack', loadChildren: './userpack/userpack.module#UserpackPageModule' },
   { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },
   { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
+  { path: 'join/:uid', loadChildren: './join/join.module#JoinPageModule' },
   { path: '', loadChildren: './order/order.module#OrderPageModule' },
 
 

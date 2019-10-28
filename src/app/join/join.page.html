@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-      <ion-title *ngIf="title">
-        {{title}}
+      <ion-title >
+        {{packagejoin.title}}
         </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +12,7 @@
   <ion-content >
       <div>
           <ion-slides pager="true" >
-              <ion-slide *ngFor="let photos of detailsArray">
+              <ion-slide *ngFor="let photos of packagejoin.detailsArray">
                   <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
               </ion-slide>
             </ion-slides>
@@ -21,15 +21,15 @@
       <div>
         <ion-card-content >
           <ion-card-content text-center>
-            {{startDate}}
+            {{packagejoin.startDate}}
             <div></div>
-            {{endDate}}
+            {{packagejoin.endDate}}
             <div></div>
-            {{place}}
+            {{packagejoin.place}}
             <div></div>
-            {{context}}
+            {{packagejoin.context}}
             <div></div>
-            {{money}}
+            {{packagejoin.money}}
             <!-- {{packageId}} -->
           </ion-card-content> 
       

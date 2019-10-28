@@ -21,6 +21,7 @@ export class PackageService {
   packagesData:string;
   test=[];
   id:string;
+  private data = [];
 
   constructor(
     private db: AngularFirestore,
@@ -30,29 +31,36 @@ export class PackageService {
       this.packages = this.db.collection('packages').valueChanges();
   }
 
+
   getPackages(){
     return this.packages;
+  }
+
+  getPjoin(){
+    return this.db.collection('packages').doc(this.id).valueChanges();
   }
 
   getPackagesData(id){
     this.id=id;
   }
 
-  getData(){
+
+   getData(){
     //return this.db.collection('packages').doc(id);
     var db= firebase.firestore();   
     var collection = db.collection('packages')
     
-    // var ref = db.collection('packages').where("title","==","title");
   
-    collection.doc(this.id).get().then(doc => {
+    collection.doc(this.id).get().then( doc => {
       console.log(doc.id, doc.data());
-      this.test.push(doc.id,doc.data());
+      this.test.push(doc.id, doc.data());
     })
     console.log(this.test);
     return this.test;
     
   }
+
+  
 }
 
 export interface Package {

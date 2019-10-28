@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { PopoverController} from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 
 import { Platform } from '@ionic/angular';
@@ -31,7 +31,7 @@ export class HomePage implements OnInit{
   userName:string;
   isItemAvailable = false; // initialize the items with false
   unItemAvailable = true;
-  
+  join:any;
   i:number=0;
 
   public searchInput='';
@@ -182,8 +182,8 @@ getItem(Item)
 }
 
 
-  get(id){
-    var db= firebase.firestore();   
+  get(uid){
+  /*  var db= firebase.firestore();   
     var collection = db.collection('packages')
     
     // var ref = db.collection('packages').where("title","==","title");
@@ -193,10 +193,11 @@ getItem(Item)
       console.log(doc.id, doc.data());
       //this.test.push(doc.data());
       this.packDetail.getPackagesData(doc.id);
-    }).then(i=>this.router.navigate(['/join']))
-    
-
+    }).then(i=>this.router.navigate(['/join']))*/
+    console.log(uid);
+    this.router.navigate(['/join/'+uid])
   }
+
 
 getDetail(id){
   var db= firebase.firestore();   
@@ -209,7 +210,7 @@ getDetail(id){
     console.log(doc.id, doc.data());
     //this.test.push(doc.data());
     this.packDetail.getPackagesData(doc.id);
-  }).then(i=>this.router.navigateByUrl('/join'))
+  }).then(i=>this.router.parseUrl('/join'))
 
 }
 
