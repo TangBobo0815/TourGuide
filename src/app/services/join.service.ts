@@ -16,6 +16,7 @@ import { AlertController , ToastController } from '@ionic/angular';
 })
 export class JoinService {
   user: Observable<User>;
+  userName:string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -43,6 +44,7 @@ export class JoinService {
 
     const data={
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      userName:this.getUserName(),
       status:'申請中',
       packageId:packageId,
       orderTime:finishedAt
@@ -53,6 +55,15 @@ export class JoinService {
         this.Sucess()
       )
     console.log(data);
+  }
+
+  getUserName(){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.userName=doc.data().Name;
+      console.log('userName:'+this.userName);
+    })
+    return this.userName
   }
 
   async Sucess(){

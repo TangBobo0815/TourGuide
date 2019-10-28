@@ -14,19 +14,25 @@ import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { stringify } from '@angular/core/src/render3/util';
 import { Title } from '@angular/platform-browser';
-import { element } from '@angular/core/src/render3';
+import { element, reference } from '@angular/core/src/render3';
 import { toDate } from '@angular/common/src/i18n/format_date';
 import { DateAdapter } from '@angular/material';
+import { Package } from './package.service';
+import { User } from 'src/models/user';
+
+
 
 export interface User {
   uid:string;
   Name:string;
 }
+
 export interface Order {
   packageId:string;
-  orderTime:number;
+  orderTime:Date;
   status:string;
-  userId:string;
+  userId:DocumentReference;
+  userName:string;
 }
 export interface Show {
   uid?:string;
@@ -38,6 +44,7 @@ export interface Show {
 
 export interface Pack {
   title:string;
+  place:string;
   userId:string;
   packageId:string;
 }
@@ -47,12 +54,9 @@ export interface Pack {
 })
 export class OrderService {
   user: Observable<User>;
-  userId$: BehaviorSubject<String>;
   uid:string;
-  showTitle:string;
-  place:string;
+  UID:string;
   array=[];
-  array2=[];
 
   orderCollection:AngularFirestoreCollection<Order>;
   orderItem:Observable<Order[]>;
@@ -82,35 +86,6 @@ export class OrderService {
     this.collectionInitialization();
    }
 
-   setPackTitle(packageId){
-    var db= firebase.firestore();   
-    var collection = db.collection('packages');
-    
-    collection.doc(packageId).get().then(doc=>{
-      this.showTitle = doc.data().title
-      console.log(doc.data());
-      this.array.push(doc.data());
-    })
-  }
-
-  getTitle(){
-    console.log("get title start")
-    console.log("this.array.length" + this.array.length);
-    this.array.forEach(element=>{
-      this.showTitle=element.title
-      console.log(this.showTitle);
-    })
-    console.log("get title end")
-    return this.showTitle;
-  }
-
-  getPlace(){
-    this.array.forEach(element=>{
-      this.place=element.place
-    })
-    return this.place;
-  }
-
   collectionInitialization(){
     this.orderCollection = this.db.collection('order');
     
@@ -118,16 +93,22 @@ export class OrderService {
       return changes.map( change => {
         const data = change.payload.doc.data();
         const packageId = data.packageId;
-        this.setPackTitle(packageId);        
-        const title=this.showTitle;
-        const place=this.getPlace();
-        const orderTime = data.orderTime;
+        //this.setPackTitle(packageId);        
+        const orderTime = (data.orderTime);
         const status=data.status;
-        const userId=data.userId;
+        const userId=(data.userId);
+        const userName=data.userName;
+        // const userImg=this.db.doc(userId).valueChanges().forEach(value=>{
+        //   this.array.push(value);
+        //   this.array.forEach(value=>{
+        //     return value.userImg.toString
+        //   })
+        // });
         
-          return this.db.doc(userId).valueChanges().pipe(map( (SignupData: User) => {
+        
+          return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
             return Object.assign( 
-              {UID:userId, name: SignupData.Name, packageId:packageId,status:status, OrderTime:orderTime,title:title,place:place})
+              {UID:userId, name: userName, packageId:packageId,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
           }
           ));
       });
@@ -142,5 +123,11 @@ export class OrderService {
   selectAll(){
     this.collectionInitialization();
     return this.orderItem;
-  }  
+  }
+
+  getUserImg(){
+    this.array.forEach(value=>{
+      return value.userImg;
+    })
+  }
 }

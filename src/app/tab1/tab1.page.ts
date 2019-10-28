@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
-import { element } from '@angular/core/src/render3';
-import { TouchSequence } from 'selenium-webdriver';
 import { Order} from '../../models/order';
+import { Observable, of } from 'rxjs';
+import { User } from "../../models/user";
+import { UserDateService } from '../services/user-date.service';
+import { switchMap } from 'rxjs/operators';
 
+import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference } from 'angularfire2/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-tab1',
@@ -11,30 +16,33 @@ import { Order} from '../../models/order';
   styleUrls: ['./tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-
-  UID:string;
-  name:string;
-  orderTime:string;
-  title:string;
-
   orders:Order[];
+  user: Observable<User>;
+  userId:string;
+  
+  userImg:string;
 
-  constructor(private orderService: OrderService) { }
+  constructor(
+    private orderService: OrderService,
+    private authData: UserDateService,
+    private db: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    ) {
+      this.user = this.afAuth.authState.pipe(
+        switchMap(user => {
+          if(user) {
+            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      ); 
+    }
 
   ngOnInit() {
     this.orderService.selectAll().forEach(element=>{
       console.log(element);
-      this.orders=element; 
+      this.orders=element;
     })
-    
-    // this.orders.push()
-    // this.title=this.orderService.setTitle()
-    // console.log('title:'+this.title);
-
-    // this.orderService.getPackTitle().forEach(value=>{
-    //   this.title=value.title;
-    //   console.log('title:'+this.title)
-    // });
   }
-  
 }

@@ -136,34 +136,34 @@ export class AuthService {
   //------------------------
   //---------------google註冊
 
-  googleLogin(){
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider)
-  }
+  // googleLogin(){
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   return this.oAuthLogin(provider)
+  // }
 
-  private oAuthLogin(provider){
-    return this.afAuth.auth.signInWithPopup(provider)
-    .then((credential)=>{
-      this.googleUser(
-        credential.user,
-      );
-    })
-  }
+  // private oAuthLogin(provider){
+  //   return this.afAuth.auth.signInWithPopup(provider)
+  //   .then((credential)=>{
+  //     this.googleUser(
+  //       credential.user,
+  //     );
+  //   })
+  // }
 
-  private googleUser(user){
-    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
-    const data : User = {
-      uid:user.uid,
-      email:user.email,
-      Name:user.displayName,
-      //date:user.birth,
-      // gender:user.gender,
-      //phone:user.phone,
-      //address:user.address,
-      imgsrc:user.photoURL
-    }
-    return userRef.set(data,{merge:true});
-  }
+  // private googleUser(user){
+  //   const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`)
+  //   const data : User = {
+  //     uid:user.uid,
+  //     email:user.email,
+  //     Name:user.displayName,
+  //     //date:user.birth,
+  //     // gender:user.gender,
+  //     //phone:user.phone,
+  //     //address:user.address,
+  //     imgsrc:user.photoURL
+  //   }
+  //   return userRef.set(data,{merge:true});
+  // }
 
   //---------------忘記密碼
   async resetPassword(user){

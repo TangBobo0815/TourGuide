@@ -29,7 +29,7 @@
                 {{order.title}}
               </ion-col>
               <ion-col size="2" right>
-                {{order.OrderTime}}
+                {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
               </ion-col>
               <ion-col size="1">
                 <div class="div">
@@ -42,39 +42,41 @@
       </h4>
     </div>
     <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        <ion-grid>
-          <ion-row>
-            <ion-col left>
-              <ion-item>
-                <ion-avatar slot="start">
-                  <img class="img" src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg">
-                </ion-avatar>
-                <ion-label>{{order.name}}</ion-label>
-                <div>
-                  <ion-label>申請加入</ion-label>
-                </div>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <div  *ngIf="(authData.user | async) || {} as user">
+        <div class="panel-body">
+          <ion-grid>
+            <ion-row>
+              <ion-col left>
+                <ion-item>
+                  <ion-avatar slot="start">
+                    <img class="img" src="user.userImg">
+                  </ion-avatar>
+                  <ion-label>{{order.name}}</ion-label>
+                  <div>
+                    <ion-label>申請加入</ion-label>
+                  </div>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div  text-center>同意</div>
-              <ion-button color="dark" fill="outline" expand="full" shape="round">
-                <ion-icon name="checkmark"></ion-icon>
-              </ion-button>
-            </ion-col>
-            <ion-col>
-                <div text-center >不同意</div>
-              <ion-button color="danger" fill="outline" expand="full" shape="round">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div  text-center>同意</div>
+                <ion-button color="dark" fill="outline" expand="full" shape="round">
+                  <ion-icon name="checkmark"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                  <div text-center >不同意</div>
+                <ion-button color="danger" fill="outline" expand="full" shape="round">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       </div>
     </div>
   </div>
