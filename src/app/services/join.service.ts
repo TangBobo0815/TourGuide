@@ -34,6 +34,7 @@ export class JoinService {
         }
       })
     );
+    this.getUserName();
   }
 
   joinOrder(packageId){
@@ -44,7 +45,7 @@ export class JoinService {
 
     const data={
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
-      userName:this.getUserName(),
+      userName:this.userName,
       status:'申請中',
       packageId:packageId,
       orderTime:finishedAt
