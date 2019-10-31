@@ -22,7 +22,6 @@ import { User } from 'src/models/user';
 import { resolve } from 'q';
 
 
-
 export interface User {
   uid:string;
   Name:string;
@@ -34,6 +33,7 @@ export interface Order {
   status:string;
   userId:DocumentReference;
   userName:string;
+  packUser:string;
 }
 export interface Show {
   uid?:string;
@@ -48,6 +48,7 @@ export interface Pack {
   place:string;
   userId:string;
   packageId:string;
+  userName:string;
 }
 
 @Injectable({
@@ -64,6 +65,8 @@ export class OrderService {
   packCollectionRef:AngularFirestoreCollection<Pack>;
   packItem:any;
 
+  uuuid:string;
+
 
   constructor(
     private orderService: OrderService,
@@ -77,17 +80,19 @@ export class OrderService {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if(user) {
-          this.uid=(user.uid).toString();
           return this.db.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
       })
     );
+    this.getUserName();
     this.collectionInitialization();
    }
 
   async collectionInitialization(){
+
+
     this.orderCollection = this.db.collection('order');
     
     this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
@@ -97,14 +102,20 @@ export class OrderService {
         //this.setPackTitle(packageId);        
         const orderTime = (data.orderTime);
         const status=data.status;
-        const userId=(data.userId);
+        const userId=data.userId;
         const userName=data.userName;   
+        const packUser=data.packUser;
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
+
         
-          return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
-            return Object.assign( 
-              {UID:userId, name: userName, packageId:packageId,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+
+        return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
+        
+            if(userName==this.uuuid){
+              return Object.assign( 
+                {UID:userId, name: userName, packageId:packageId,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+            } 
           }
           ));
       });
@@ -125,6 +136,14 @@ export class OrderService {
     return this.db.doc(userId).get().toPromise().then(doc=>{
       if(doc.exists) return doc.data().userImg
       else return Promise.reject('No such document');
+    })
+  }
+
+  getUserName(){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.uuuid=doc.data().Name;
+      console.log('userName:'+this.uuuid);
     })
   }
 

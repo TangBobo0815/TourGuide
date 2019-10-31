@@ -40,9 +40,9 @@ export class Tab1Page implements OnInit {
     }
 
   ngOnInit() {
-    this.orderService.selectAll().forEach(element=>{
-      console.log(element);
-      this.orders=element;
-    })
+    // this.orderService.selectAll().forEach(element=>{
+    //   console.log(element);
+    //   this.orders=element;
+    // })
   }
 }
