@@ -86,9 +86,13 @@ export class JoinPage implements OnInit {
   }
 
   ViewCreater(){
-    this.userId = this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref;
-    console.log(this.userId);
-    this.router.navigate(['/profile/'+ this.userId])
+    // this.userId = this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref;
+    // console.log(this.userId);
+    // this.router.navigate(['/profile/'+ this.userId])
+    console.log(this.packagejoin.userId);
+    this.db.doc(this.packagejoin.userId).get().forEach(doc=>{
+      console.log(doc.data());
+    })
   }
 
 
