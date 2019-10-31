@@ -19,6 +19,7 @@ import { toDate } from '@angular/common/src/i18n/format_date';
 import { DateAdapter } from '@angular/material';
 import { Package } from './package.service';
 import { User } from 'src/models/user';
+import { resolve } from 'q';
 
 
 
@@ -86,7 +87,7 @@ export class OrderService {
     this.collectionInitialization();
    }
 
-  collectionInitialization(){
+  async collectionInitialization(){
     this.orderCollection = this.db.collection('order');
     
     this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
@@ -97,14 +98,9 @@ export class OrderService {
         const orderTime = (data.orderTime);
         const status=data.status;
         const userId=(data.userId);
-        const userName=data.userName;
-        // const userImg=this.db.doc(userId).valueChanges().forEach(value=>{
-        //   this.array.push(value);
-        //   this.array.forEach(value=>{
-        //     return value.userImg.toString
-        //   })
-        // });
-        
+        const userName=data.userName;   
+        // const userImg=this.getUserImg(userId);
+        console.log('userId:'+userId);
         
           return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
             return Object.assign( 
@@ -125,9 +121,23 @@ export class OrderService {
     return this.orderItem;
   }
 
-  getUserImg(){
-    this.array.forEach(value=>{
-      return value.userImg;
+  getUserImg(userId){
+    return this.db.doc(userId).get().toPromise().then(doc=>{
+      if(doc.exists) return doc.data().userImg
+      else return Promise.reject('No such document');
     })
   }
+
+
+
+  async delay() {
+    // `delay` returns a promise
+    return new Promise(function(resolve, reject) {
+      // Only `delay` is able to resolve or reject the promise
+      setTimeout(function() {
+        resolve(); // After 3 seconds, resolve the promise with value 42
+      }, 10000);
+    });
+  }
+  
 }
