@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { PackageService } from '../services/package.service';
 import { JoinService } from '../services/join.service';
@@ -26,6 +26,11 @@ export class JoinPage implements OnInit {
   test=[];
   packages:Package[];
   array:[];
+  data: any;
+  id:string;
+  packagejoin =null;
+  i:number;
+
 
   //---------------
   packageId:string;
@@ -36,6 +41,7 @@ export class JoinPage implements OnInit {
   detailsArray:Array<string>;
   context:string;
   money:string;
+  userName:string;
   //---------------
   joinForm:any;
 
@@ -48,17 +54,12 @@ export class JoinPage implements OnInit {
     public joinService:JoinService,
     private toast: ToastController,
     private builder: FormBuilder,
-    private photoViewer: PhotoViewer
-  ) { }
+    private photoViewer: PhotoViewer,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    // this.packDetail.getData(this.array).forEach(packages=>{
-    //   console.log(packages);
-    //   this.packages=packages;
-    //   console.log('data:'+this.packages);
-    // })
-    //this.buildForm()
-    this.packDetail.getData().forEach(element=>{
+   /*this.packDetail.getData().forEach(element=>{
       console.log(element);
       // this.packages=element;
       // console.log(this.packages);
@@ -70,8 +71,15 @@ export class JoinPage implements OnInit {
       this.detailsArray=element.detailsArray;
       this.context=element.context;
       this.money=element.money;
-    })
-    
+    })*/
+   this.id = this.route.snapshot.paramMap.get('uid');
+   console.log(this.id);
+   this.packDetail.getPackagesData(this.id);
+   this.packDetail.getPjoin().subscribe(packages=>{
+    console.log(packages);
+    this.packagejoin=packages;
+  })
+
   }
 
   join(){
