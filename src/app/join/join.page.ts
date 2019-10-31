@@ -79,7 +79,6 @@ export class JoinPage implements OnInit {
     console.log(packages);
     this.packagejoin=packages;
   })
-
   }
 
   join(){
@@ -90,6 +89,6 @@ export class JoinPage implements OnInit {
   zoomImage(img) {
     console.log(img);
     this.photoViewer.show(img,'圖片');
-}
+  }
 
 }
