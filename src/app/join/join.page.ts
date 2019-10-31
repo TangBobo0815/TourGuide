@@ -30,7 +30,7 @@ export class JoinPage implements OnInit {
   id:string;
   packagejoin =null;
   i:number;
-
+  userId;
 
   //---------------
   packageId:string;
@@ -83,7 +83,13 @@ export class JoinPage implements OnInit {
   }
 
   join(){
-    this.joinService.joinOrder(this.packageId)
+    this.joinService.joinOrder(this.id)
+  }
+
+  ViewCreater(){
+    this.userId = this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref;
+    console.log(this.userId);
+    this.router.navigate(['/profile/'+ this.userId])
   }
 
 

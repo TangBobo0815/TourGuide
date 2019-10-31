@@ -11,6 +11,7 @@ import { AlertController , ToastController } from '@ionic/angular';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { Reference } from '@angular/fire/storage/interfaces';
 import { Url } from 'url';
+import * as firebase from 'firebase';
 
 export interface User {
    uid:string;
@@ -29,6 +30,7 @@ export interface User {
 
 export class UserDateService {
   user: Observable<User>;
+  userId;
   
   constructor(
     private db: AngularFirestore,
@@ -54,6 +56,20 @@ export class UserDateService {
     });
 
   }*/
+
+
+  getViewCreate(){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.userId=doc.data().userId;
+      console.log('userId:'+this.userId);
+    })
+      return this.userId
+}
+
+getCreateData(){
+  return this.db.collection('users').doc(this.userId).valueChanges();
+}
 
   updataUser(user: User,data:any){
     return this.db.doc('users/' + user.uid).update(data);

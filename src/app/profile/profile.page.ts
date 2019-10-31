@@ -11,7 +11,7 @@ import { User } from "../../models/user";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -25,7 +25,9 @@ export class ProfilePage implements OnInit {
   user: Observable<User>;
   test:string = 'false';
   show:string = 'false';
-  
+  userId;
+  view:string = 'false';
+  Creater=null;
   constructor(
     private builder: FormBuilder,
     private authData: UserDateService,
@@ -35,7 +37,10 @@ export class ProfilePage implements OnInit {
     private afAuth: AngularFireAuth,
     private router: Router,
     private alertCtrl: AlertController,
+    private route: ActivatedRoute
   ) {
+    
+    if(this.userId = null){
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if(user) {
@@ -45,6 +50,16 @@ export class ProfilePage implements OnInit {
         }
       })
     ); 
+  }
+  this.userId = this.route.snapshot.paramMap.get('uid');
+    console.log(this.userId);
+    if(this.userId != null){
+      this.view = 'true';
+      this.authData.getViewCreate();
+      this.authData.getCreateData().subscribe(CreaterData=>{
+        console.log(CreaterData);
+        this.Creater=CreaterData;}) 
+    }
   }
 
   formErrors = {
@@ -61,7 +76,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.buildForm();
+      this.buildForm();
   }
 
   buildForm() {
