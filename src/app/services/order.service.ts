@@ -65,7 +65,7 @@ export class OrderService {
   packCollectionRef:AngularFirestoreCollection<Pack>;
   packItem:any;
 
-  uuuid:string;
+  loginUserName:string;
 
 
   constructor(
@@ -112,7 +112,7 @@ export class OrderService {
 
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         
-            if(userName==this.uuuid){
+            if(userName==this.loginUserName){
               return Object.assign( 
                 {UID:userId, name: userName, packageId:packageId,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
             } 
@@ -142,8 +142,8 @@ export class OrderService {
   getUserName(){
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
       console.log(doc.data());
-      this.uuuid=doc.data().Name;
-      console.log('userName:'+this.uuuid);
+      this.loginUserName=doc.data().Name;
+      console.log('userName:'+this.loginUserName);
     })
   }
 

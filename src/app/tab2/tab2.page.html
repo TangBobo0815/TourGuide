@@ -4,143 +4,30 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <!--<div *ngFor="let order of orders">
-    <ion-card class="welcome-card">
-      <ion-img></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{order.name}}</ion-card-title>
-      </ion-card-header>
-      <ion-label>{{order.OrderTime}}</ion-label>
-    </ion-card>
-  </div>-->
-
- <!--<div class="panel panel-warning" *ngFor="let order of orders">
-    <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="3" left>
-                {{order.place}}
-              </ion-col>
-              <ion-col size="6">
-                {{order.title}}
-              </ion-col>
-              <ion-col size="2" right>
-                {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
-              </ion-col>
-              <ion-col size="1">
-                <div class="div">
-                  <ion-icon name="list"></ion-icon>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div  *ngIf="(authData.user | async) || {} as user">
-        <div class="panel-body">
-          <ion-grid>
-            <ion-row>
-              <ion-col left>
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img class="img" src="user.userImg">
-                  </ion-avatar>
-                  <ion-label>{{order.name}}</ion-label>
-                  <div>
-                    <ion-label>申請加入</ion-label>
-                  </div>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <div  text-center>同意</div>
-                <ion-button color="dark" fill="outline" expand="full" shape="round">
-                  <ion-icon name="checkmark"></ion-icon>
-                </ion-button>
-              </ion-col>
-              <ion-col>
-                  <div text-center >不同意</div>
-                <ion-button color="danger" fill="outline" expand="full" shape="round">
-                  <ion-icon name="close"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-      </div>
-    </div>
-  </div>--> 
-
-<div *ngFor="let order of orders">
-  <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
-  <div  class="panel panel-warning" (click)="show = !show">
-    <div class="panel-title" >
-        <ion-grid>
-            <ion-row>
-              <ion-col  >
-                {{order.title}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-      <ion-grid>
+<ion-content padding *ngFor="let order of orders">
+  <ion-card class="welcome-card">
+    <ion-card-header text-center><b>{{order.title}}</b></ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg">
+        </ion-col>
+        <ion-col text-center>
           <ion-row>
-            <ion-col size="6" >
-              {{order.place}}
-            </ion-col>
+            <ion-col>{{order.place}}</ion-col>
+          </ion-row>
+          <!-- <ion-col>人數</ion-col> -->
+          <ion-row>
             <ion-col size="6" >
               {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
             </ion-col>
           </ion-row>
-        </ion-grid>
-        </div>
-    </div>
-    
-        <div   *ngIf="show">
-        <ion-grid>
-            <ion-row>
-              <ion-col left>
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img class="img" src="user.userImg">
-                  </ion-avatar>
-                  <ion-label>{{order.name}}</ion-label>
-                  <div>
-                    <ion-label>申請加入</ion-label>
-                  </div>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <div  text-center>同意</div>
-                <ion-button color="dark" fill="outline" expand="full" shape="round">
-                  <ion-icon name="checkmark"></ion-icon>
-                </ion-button>
-              </ion-col>
-              <ion-col>
-                  <div text-center >不同意</div>
-                <ion-button color="danger" fill="outline" expand="full" shape="round">
-                  <ion-icon name="close"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-</div>
-
-
-
+          <ion-row>
+            <ion-col right>狀態:</ion-col>
+            <ion-col class="bgcolor"><b>申請中</b></ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>
