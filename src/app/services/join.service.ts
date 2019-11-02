@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { WindowService } from '../window.service';
+
 //--------------
 
 import { Observable, of, from } from 'rxjs';
@@ -17,13 +18,15 @@ import { AlertController , ToastController } from '@ionic/angular';
 export class JoinService {
   user: Observable<User>;
   userName:string;
+  packageId:string;
+  packUser:string;
 
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
     private router: Router,
     public alertCtrl :AlertController,
-    private toast: ToastController,
+    private toast: ToastController
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
@@ -35,19 +38,21 @@ export class JoinService {
       })
     );
     this.getUserName();
-  }
+    }
 
-  joinOrder(packageId){
+  joinOrder(packageId,packName){
     let id = this.db.createId();
+    
     //var myFirebaseFirestoreTimestampFromDate = firebase.firestore.Timestamp.fromDate(new Date());
     var finishedAt = firebase.firestore.FieldValue.serverTimestamp();
-
+    
 
     const data={
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
       userName:this.userName,
       status:'申請中',
       packageId:packageId,
+      packUser:packName,
       orderTime:finishedAt
     }
 
@@ -65,6 +70,10 @@ export class JoinService {
       console.log('userName:'+this.userName);
     })
     return this.userName
+  }
+
+  getPackUser(){
+    
   }
 
   async Sucess(){

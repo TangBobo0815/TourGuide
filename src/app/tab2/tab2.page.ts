@@ -10,6 +10,7 @@ import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Refere
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 
+
 @Component({
   selector: 'app-tab2',
   templateUrl: './tab2.page.html',

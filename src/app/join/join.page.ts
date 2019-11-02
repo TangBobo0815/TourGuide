@@ -31,6 +31,7 @@ export class JoinPage implements OnInit {
   packagejoin =null;
   i:number;
   userId;
+  packUserName:string;
 
   //---------------
   packageId:string;
@@ -79,10 +80,22 @@ export class JoinPage implements OnInit {
     console.log(packages);
     this.packagejoin=packages;
   })
+
+  this.get();
   }
 
   join(){
-    this.joinService.joinOrder(this.id)
+    this.joinService.joinOrder(this.id,this.packUserName);
+    // this.joinService.getPackUser(this.id);
+  }
+
+  get(){
+    firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
+      this.packUserName=doc.data().userName;
+      console.log(doc.data().userName);
+    })
+
+    return this.packUserName;
   }
 
   ViewCreater(){
