@@ -62,6 +62,7 @@ export class OrderService {
 
   orderCollection:AngularFirestoreCollection<Order>;
   orderItem:Observable<Order[]>;
+  orderItem2:Observable<Order[]>;
   packCollectionRef:AngularFirestoreCollection<Pack>;
   packItem:any;
 
@@ -88,11 +89,10 @@ export class OrderService {
     );
     this.getUserName();
     this.collectionInitialization();
+    this.collectionInitialization2();
    }
 
   async collectionInitialization(){
-
-
     this.orderCollection = this.db.collection('order');
     
     this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
@@ -108,14 +108,15 @@ export class OrderService {
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
 
-        
-
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         
             if(userName==this.loginUserName){
               return Object.assign( 
-                {UID:userId, name: userName, packageId:packageId,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
-            } 
+                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+            }else if(packUser==this.loginUserName){
+              return Object.assign( 
+                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+            }
           }
           ));
       });
@@ -127,9 +128,47 @@ export class OrderService {
     });
   }
 
+  async collectionInitialization2(){
+    this.orderCollection = this.db.collection('order');
+    
+    this.orderItem2 = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
+      return changes.map( change => {
+        const data = change.payload.doc.data();
+        const packageId = data.packageId;
+        //this.setPackTitle(packageId);        
+        const orderTime = (data.orderTime);
+        const status=data.status;
+        const userId=data.userId;
+        const userName=data.userName;   
+        const packUser=data.packUser;
+        // const userImg=this.getUserImg(userId);
+        console.log('userId:'+userId);
+
+        return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
+        
+             if(packUser==this.loginUserName){
+              return Object.assign( 
+                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+            }
+          }
+          ));
+      });
+    }),
+    flatMap(shows => combineLatest(shows)));
+    
+    this.orderItem2.forEach(value => {
+      console.log(value);
+    });
+  }
+
   selectAll(){
     this.collectionInitialization();
     return this.orderItem;
+  }
+
+  selectAll2(){
+    this.collectionInitialization2();
+    return this.orderItem2;
   }
 
   getUserImg(userId){
