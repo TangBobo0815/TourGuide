@@ -92,6 +92,8 @@ export class JoinPage implements OnInit {
     console.log(this.packagejoin.userId);
     this.db.doc(this.packagejoin.userId).get().forEach(doc=>{
       console.log(doc.data());
+      this.userId=doc.data().uid;
+      this.router.navigate(['/profile/'+ this.userId])
     })
   }
 
