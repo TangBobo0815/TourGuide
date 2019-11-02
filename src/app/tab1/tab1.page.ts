@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { isUndefined } from 'util';
+import undefined = require('firebase/empty-import');
 
 
 @Component({
@@ -43,8 +43,12 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.orderService.selectAll2().forEach(element=>{
-      if(element.values == null){
-        delete element.values;
+      for(var i=1;i<=element.length;i++){
+        element.forEach(data=>{
+          if(data == undefined){
+            element.pop();
+          }
+        })
       }
       console.log(element);
       this.orders=element;
