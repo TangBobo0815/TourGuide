@@ -9,8 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import undefined = require('firebase/empty-import');
-
+//import undefined = require('firebase/empty-import');
+ 
 
 @Component({
   selector: 'app-tab1',

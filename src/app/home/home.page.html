@@ -4,10 +4,10 @@
     <ion-item>
       <ion-menu-button></ion-menu-button>
     <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>
-      <ion-button size="small" shape="round" color="dark" (click)="popovers()">
+    <!--  <ion-button size="small" shape="round" color="dark" (click)="popovers()">
         <ion-icon name="options"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
-      </ion-button>
+      </ion-button>-->
     </ion-item>
 
     <ion-list *ngIf="searchInput !== ''" >
@@ -33,13 +33,13 @@
   </ion-item>
   <div *ngFor="let package of packages" disabled="false">
     <ion-card class="welcome-card" (click)="get(package.packageId)">
-      <div class="local-size">
+      <div class="local-size" >
         <ion-row>
           <ion-col>
             <ion-chip>
-              <ion-avatar>
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-              </ion-avatar>
+              <!--<ion-avatar>
+                <img [src]="package.userImg">
+              </ion-avatar>-->
               <ion-label>{{package.userName}}</ion-label>
             </ion-chip>
           </ion-col>

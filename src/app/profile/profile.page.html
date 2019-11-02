@@ -71,9 +71,6 @@
       <ng-template #noshow>
         <div center padding="10px" font-size="12px">
           <form [formGroup]="updataForm" (ngSubmit)="updataUser(user)">
-              <div padding-left="40px">
-                  <img class="ViewPH" [src]="user.userImg">
-                </div>
             <ion-grid>
               <ion-row>
                 <ion-col>
@@ -124,7 +121,9 @@
                   <ion-col>
                     <ion-item>
                       生日:
-                      <ion-input left [(ngModel)]="user.date" formControlName="date"></ion-input>
+                      <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
+                      [(ngModel)]="user.date" formControlName="date">
+                    </ion-datetime>
                     </ion-item>
                   </ion-col>
                 </ion-row>
@@ -132,7 +131,7 @@
             </ion-grid>
             <div padding text-center>
               <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"
-                routerLink="/profile"> 送出
+                routerLink="/profile"> 儲存
               </ion-button>
             </div>
           </form>
