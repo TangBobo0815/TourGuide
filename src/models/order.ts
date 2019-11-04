@@ -5,5 +5,7 @@ export interface Order {
     packageId:string;
     orderTime:Date;
     status:string;
+    packUser:string;
+    userName:string;
     userId:DocumentReference;
   }

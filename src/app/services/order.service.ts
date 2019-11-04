@@ -113,9 +113,6 @@ export class OrderService {
             if(userName==this.loginUserName){
               return Object.assign( 
                 {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
-            }else if(packUser==this.loginUserName){
-              return Object.assign( 
-                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
             }
           }
           ));
@@ -124,7 +121,7 @@ export class OrderService {
     flatMap(shows => combineLatest(shows)));
     
     this.orderItem.forEach(value => {
-      console.log(value);
+     console.log(value);
     });
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { Order} from '../../models/order';
-import { Observable, of } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { User } from "../../models/user";
 import { UserDateService } from '../services/user-date.service';
 import { switchMap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
+import { isUndefined, isNullOrUndefined, isNull } from 'util';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class Tab2Page implements OnInit {
   userId:string;
   show:'false';
   userImg:string;
+  key:number;
+  array=[];
 
   constructor(
     private orderService: OrderService,
@@ -42,8 +45,13 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {
     this.orderService.selectAll().forEach(element=>{
-      console.log(element);
+      for(var i=element.length;i>=0;i--){
+        if((element[i]) == null){
+          element.splice(i, 1);
+        }
+      }
       this.orders=element;
+      console.log(element);
     })
   }
 }
