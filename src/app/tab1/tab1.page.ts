@@ -42,12 +42,10 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.orderService.selectAll2().forEach(element=>{
-      for(var i=1;i<=element.length+1;i++){
-        element.forEach(data=>{
-          if(data == undefined){
-            element.pop();
-          }
-        })
+      for(var i=element.length;i>=0;i--){
+        if((element[i]) == null){
+          element.splice(i, 1);
+        }
       }
       console.log(element);
       this.orders=element;
