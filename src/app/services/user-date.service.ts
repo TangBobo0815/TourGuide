@@ -67,8 +67,8 @@ export class UserDateService {
       return this.userId
 }
 
-getCreateData(){
-  return this.db.collection('users').doc(this.userId).valueChanges();
+getCreateData(userId){
+  return this.db.collection('users').doc(userId).valueChanges();
 }
 
   updataUser(user: User,data:any){

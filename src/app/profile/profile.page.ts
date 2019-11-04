@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
   test:string = 'false';
   show:string = 'false';
   userId;
-  view:string = 'false';
+  view = true;
   Creater=null;
   constructor(
     private builder: FormBuilder,
@@ -39,8 +39,9 @@ export class ProfilePage implements OnInit {
     private alertCtrl: AlertController,
     private route: ActivatedRoute
   ) {
-    
-    if(this.userId = null){
+    this.userId = this.route.snapshot.paramMap.get('uid');
+    console.log(this.userId);
+    if(this.userId == null || this.userId == ''){
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if(user) {
@@ -48,17 +49,20 @@ export class ProfilePage implements OnInit {
         } else {
           return of(null);
         }
-      })
-    ); 
-  }
+       })); 
+
+    this.authData.getCreateData('XMJQSh1auHXCrObAz0hfOmJfxC33').subscribe(CreaterData=>{
+      console.log(CreaterData);
+      this.Creater=CreaterData;});
+    }
+
   this.userId = this.route.snapshot.paramMap.get('uid');
-    console.log(this.userId);
-    if(this.userId != null){
-      this.view = 'true';
-      this.authData.getViewCreate();
-      this.authData.getCreateData().subscribe(CreaterData=>{
+     if(this.userId != null){
+       this.view = !this.view;
+      this.authData.getCreateData(this.userId).subscribe(CreaterData=>{
         console.log(CreaterData);
         this.Creater=CreaterData;}) 
+      
     }
   }
 
@@ -74,6 +78,8 @@ export class ProfilePage implements OnInit {
       'maxlength': '長度為10'
      }
   }
+
+  
 
   ngOnInit() {
       this.buildForm();

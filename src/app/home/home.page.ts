@@ -107,9 +107,11 @@ export class HomePage implements OnInit{
 
   doRefresh(event) {
     console.log('Begin async operation');
-
     setTimeout(() => {
       this.getreload();
+      this.ngOnInit();
+    //  this.i++;
+    //  console.log(this.i);
       event.target.complete();
     }, 2000);
   }
@@ -199,18 +201,10 @@ getItem(Item)
   }
 
 
-getDetail(id){
-  var db= firebase.firestore();   
-  var collection = db.collection('packages')
-  
-  // var ref = db.collection('packages').where("title","==","title");
-  
+getDetail(uid){
 
-  collection.doc(id).get().then(doc => {
-    console.log(doc.id, doc.data());
-    //this.test.push(doc.data());
-    this.packDetail.getPackagesData(doc.id);
-  }).then(i=>this.router.parseUrl('/join'))
+  console.log(uid);
+  this.router.navigate(['/join/'+uid])
 
 }
 

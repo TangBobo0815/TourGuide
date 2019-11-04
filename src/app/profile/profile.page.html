@@ -1,67 +1,37 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="light">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      個人檔案
+      <ion-img class="back" src="https://ppt.cc/fsYTQx@.png"></ion-img>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="(authData.user | async) || {} as user">
-    <ion-card>
-      <div center>
-        <ion-img class="back" src="https://ppt.cc/fsYTQx@.png"></ion-img>
-      </div>
-      <div center>
-        <img class="img" [src]="user.userImg">
-      </div>
-      <div>
-        <ion-card-content>
-          <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
-        </ion-card-content>
-
-        <div center padding="10px" font-size="12px" *ngIf="show;else noshow">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>姓名:</ion-label>
-                  <ion-label>{{user.Name}}</ion-label>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item>
-                  <ion-label>性別:</ion-label>
-                  <ion-label>{{user.gender}}</ion-label>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  信箱:
-                  <ion-label left>{{user.email}}</ion-label>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <div>
+  <div *ngIf="view;else noview">
+    <div center *ngIf="(authData.user | async) || {} as user" font-size="12px">
+      <div padding-top="10px" *ngIf="show;else noshow">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <img class="img" [src]="user.userImg">
+            </ion-col>
+            <ion-col size="8">
               <ion-row>
                 <ion-col>
                   <ion-item>
-                    手機:
-                    <ion-label left>{{user.phone}}</ion-label>
+                    姓名:
+                    <ion-label left>{{user.Name}}</ion-label>
                   </ion-item>
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col>
                   <ion-item>
-                    住址:
-                    <ion-label left>{{user.address}}</ion-label>
+                    性別:
+                    <ion-label left>{{user.gender}}</ion-label>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -73,137 +43,171 @@
                   </ion-item>
                 </ion-col>
               </ion-row>
-            </div>
-          </ion-grid>
-          <div padding text-center>
-            <div center padding="10px" font-size="12px" *ngIf="view;else noview">
-
-            </div>
-            <ng-template #noview>
-              <ion-button color="dark" id="touron" block shape="round" expand="full" (click)="show = !show"> 修改
-              </ion-button>
-            </ng-template>
-          </div>
-        </div>
-
-
-        <ng-template #noshow>
-          <div center padding="10px" font-size="12px">
-            <form [formGroup]="updataForm" (ngSubmit)="updataUser(user)">
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label>姓名:</ion-label>
-                      <ion-label>{{user.Name}}</ion-label>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label>性別:</ion-label>
-                      <ion-label>{{user.gender}}</ion-label>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      信箱:
-                      <ion-label left>{{user.email}}</ion-label>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-
-                <div>
-                  <ion-row>
-                    <ion-col>
-                      <ion-item>
-                        手機:
-                        <ion-input left [(ngModel)]="user.phone" formControlName="phone"></ion-input>
-                      </ion-item>
-
-                      <ion-item *ngIf="formErrors.phone">
-                        <ion-text color="danger">
-                          <p>{{ formErrors.phone }}</p>
-                        </ion-text>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col>
-                      <ion-item>
-                        住址:
-                        <ion-input left [(ngModel)]="user.address" formControlName="address"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col>
-                      <ion-item>
-                        生日:
-                        <ion-input left [(ngModel)]="user.date" formControlName="date"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
-                </div>
-              </ion-grid>
-              <div padding text-center>
-                <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"
-                  routerLink="/profile"> 送出
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2">
+              <div text-center pdding-left="5px">
+                <img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg">4.2
+              </div>
+            </ion-col>
+            <ion-col size="10">
+              <ion-item>
+                信箱:
+                <ion-label left>{{user.email}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div text-center>
+                <ion-button color="dark" id="touron" block shape="round" expand="full" (click)="show = !show"> 編輯資料
                 </ion-button>
               </div>
-
-            </form>
-          </div>
-        </ng-template>
-
-
-
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
-    </ion-card>
+      <ng-template #noshow>
+        <div center padding="10px" font-size="12px">
+          <form [formGroup]="updataForm" (ngSubmit)="updataUser(user)">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>姓名:</ion-label>
+                    <ion-label>{{user.Name}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>性別:</ion-label>
+                    <ion-label>{{user.gender}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    信箱:
+                    <ion-label left>{{user.email}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
 
+              <div>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      手機:
+                      <ion-input left [(ngModel)]="user.phone" formControlName="phone"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="formErrors.phone">
+                      <ion-text color="danger">
+                        <p>{{ formErrors.phone }}</p>
+                      </ion-text>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      住址:
+                      <ion-input left [(ngModel)]="user.address" formControlName="address"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      生日:
+                      <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
+                      [(ngModel)]="user.date" formControlName="date">
+                    </ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-grid>
+            <div padding text-center>
+              <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"
+                routerLink="/profile"> 儲存
+              </ion-button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
 
-    <!-- <div>
-    <span [ngSwitch]="user.touron">
-      <div *ngSwitchCase="true">
-        <div>
-          <ion-toolbar>
+    </div>
+  </div>
+
+  <ng-template #noview>
+    <ion-card>
+        <ion-card-content>
+      <div>
+        <img class="ViewPH" [src]="Creater.userImg">
+      </div>
+      <br >
+        <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
+      </ion-card-content>
+
+      <div center padding="10px" font-size="12px">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>姓名:</ion-label>
+                <ion-label>{{Creater.Name}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>性別:</ion-label>
+                <ion-label>{{Creater.gender}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                信箱:
+                <ion-label left>{{Creater.email}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <div>
             <ion-row>
               <ion-col>
-                <ion-segment-button>
-                  <ion-label>行事曆</ion-label>
-                  <ion-icon name="calendar" color="danger"></ion-icon>
-                </ion-segment-button>
-              </ion-col>
-              <ion-col>
-                <ion-segment-button routerLink="/package">
-                  <ion-label>建立行程</ion-label>
-                  <ion-icon name="add-circle-outline" color="success"></ion-icon>
-                </ion-segment-button>
-              </ion-col>
-              <ion-col>
-                <ion-segment-button routerLink="/list">
-                  <ion-label>行程管理</ion-label>
-                  <ion-icon name="construct" color="primary"></ion-icon>
-                </ion-segment-button>
-              </ion-col>
-              <ion-col>
-                <ion-segment-button>
-                  <ion-label>訂單管理</ion-label>
-                  <ion-icon name="clipboard" color="tertiary"></ion-icon>
-                </ion-segment-button>
+                <ion-item>
+                  手機:
+                  <ion-label left>{{Creater.phone}}</ion-label>
+                </ion-item>
               </ion-col>
             </ion-row>
-          </ion-toolbar>
-        </div>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  住址:
+                  <ion-label left>{{Creater.address}}</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  生日:
+                  <ion-label left>{{Creater.date}}</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-grid>
       </div>
-      <p *ngSwitchDefault text-center>
-        想當響導嗎？<br>
-        補足基本資料，即可開啟。
-      </p>
-    </span>
-  </div> -->
-  </div>
+    </ion-card>
+  </ng-template>
+
+
 
 
 </ion-content>
