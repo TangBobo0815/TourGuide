@@ -26,6 +26,7 @@ import { JoinPage } from './join/join.page';
 import { JoinPageModule } from './join/join.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/database';
 
 //import { IonicStepperModule } from 'ionic-stepper';
 
@@ -46,7 +47,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     BrowserAnimationsModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    
+    AngularFireDatabaseModule,
 
   ],
   providers: [

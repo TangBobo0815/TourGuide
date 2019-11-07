@@ -1,40 +1,134 @@
 <ion-header>
-    <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        推廣通知
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-split-pane>
-      <ion-menu>
-        <ion-header>
-          <ion-toolbar color="dark">
-            <ion-title>Menu</ion-title>
-          </ion-toolbar>
-              <ion-chip>
-                  <ion-avatar>
-                      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </ion-avatar>
-                  <ion-icon name="contact"></ion-icon>
-                  <ion-label>會員響導訪客名稱</ion-label>
-                </ion-chip>
-        </ion-header>
-        <ion-content>
-            <ion-list class="menu">      
-              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-                <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-                  <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
-                  <ion-label>
-                    {{p.title}}
-                  </ion-label>
-                </ion-item>
-              </ion-menu-toggle>
-            </ion-list>
-          </ion-content>
-        </ion-menu>
-        <ion-router-outlet main></ion-router-outlet>
-      </ion-split-pane>
+  <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-searchbar type="text" debounce="500" [(ngModel)]="searchterm" (keydown)="search($event)"></ion-searchbar>
+
+
+    <!--  <ion-list *ngIf="searchInput !== ''" >
+      <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
+        {{ item.title }}
+      </ion-item>
+  </ion-list>-->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment  scrollable="true" >
+    <ion-segment-button>
+      <ion-row>
+        <ion-col font-size="15px" padding-top="6px">
+          <ion-icon name="pin" color="danger"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-select okText="確定" cancelText="取消" placeholder="地區" color="dark">
+            <ion-select-option>基隆市</ion-select-option>
+            <ion-select-option>臺北市</ion-select-option>
+            <ion-select-option>新北市</ion-select-option>
+            <ion-select-option>桃園市</ion-select-option>
+            <ion-select-option>新竹市</ion-select-option>
+            <ion-select-option>新竹縣</ion-select-option>
+            <ion-select-option>苗栗縣</ion-select-option>
+            <ion-select-option>臺中市</ion-select-option>
+            <ion-select-option>彰化縣</ion-select-option>
+            <ion-select-option>南投縣</ion-select-option>
+            <ion-select-option>雲林縣</ion-select-option>
+            <ion-select-option>嘉義市</ion-select-option>
+            <ion-select-option>嘉義縣</ion-select-option>
+            <ion-select-option>臺南市</ion-select-option>
+            <ion-select-option>高雄市</ion-select-option>
+            <ion-select-option>屏東縣</ion-select-option>
+            <ion-select-option>臺東縣</ion-select-option>
+            <ion-select-option>花蓮縣</ion-select-option>
+            <ion-select-option>宜蘭縣</ion-select-option>
+            <ion-select-option>澎湖縣</ion-select-option>
+            <ion-select-option>金門縣</ion-select-option>
+            <ion-select-option>連江縣</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-segment-button>
+
+    <ion-segment-button>
+      <ion-row>
+        <ion-col padding-top="6px">
+          <ion-icon name="contacts" color="danger" ></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-select okText="確定" cancelText="取消" placeholder="人數" color="dark">
+            <ion-select-option value="01">2</ion-select-option>
+            <ion-select-option value="02">3~5</ion-select-option>
+            <ion-select-option value="03">5~8</ion-select-option>
+            <ion-select-option value="04">8以上</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-segment-button>
+
+    <ion-segment-button>
+      <ion-row>
+        <ion-col padding-top="6px">
+          <ion-icon name="pricetag" color="danger" ></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-select okText="確定" cancelText="取消" placeholder="預算" color="dark">
+            <ion-select-option value="01">1000以下</ion-select-option>
+            <ion-select-option value="02">1000~2000</ion-select-option>
+            <ion-select-option value="03">2000~4000</ion-select-option>
+            <ion-select-option value="04">4000~6000</ion-select-option>
+            <ion-select-option value="05">6000以上</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <div *ngFor="let package of packages">
+    <ion-card (click)="get(package.packageId)">
+      <div>
+        <ion-row>
+          <ion-col size="5">
+            <ion-slides pager="true">
+              <ion-slide *ngFor="let photos of package.detailsArray">
+                <ion-img [src]=photos.photo class="imagestyle"></ion-img>
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+          <ion-col size="7" padding-top="3px">
+            <ion-row text-center class="titlesize">
+              <b> {{package.title}} </b>
+            </ion-row>
+            <ion-row text-left>
+              <ion-col size="2">
+                <ion-icon name="pin"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <b> {{package.place}} </b>
+              </ion-col>
+            </ion-row>
+            <ion-row class="moneysize">
+              <ion-col text-right>
+                <b> NT$: {{package.money}} </b>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-right>
+                <b> {{package.startDate}} ~ {{package.endDate}}</b>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-card>
+  </div>
+
+  <div *ngIf="packages?.length < 1">
+
+  </div>
+
+
+</ion-content>

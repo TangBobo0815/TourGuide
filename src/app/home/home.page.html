@@ -1,21 +1,24 @@
 <ion-router-outlet main></ion-router-outlet>
 <ion-header>
-  <ion-toolbar color="">
+  
     <ion-item>
       <ion-menu-button></ion-menu-button>
-    <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>
-    <!--  <ion-button size="small" shape="round" color="dark" (click)="popovers()">
-        <ion-icon name="options"></ion-icon>
+      <div   text-center>
+          <img class="image" src="..\..\assets\logo.png" >
+        </div>
+   <!--  <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>-->
+     <ion-button size="small" shape="round" color="dark" (click)="popovers()">
+        <ion-icon name="search"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
-      </ion-button>-->
+      </ion-button>
     </ion-item>
 
-    <ion-list *ngIf="searchInput !== ''" >
+   <!--  <ion-list *ngIf="searchInput !== ''" >
       <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
         {{ item.title }}
       </ion-item>
-  </ion-list>
-  </ion-toolbar>
+  </ion-list>-->
+  
 </ion-header>
 
 
@@ -64,13 +67,6 @@
     </ion-card>
   </div>
 </ion-content>
-<ion-footer *ngIf="searchInput == ''">
-    <ion-toolbar translucent="true">
-        <div   text-center>
-            <img class="image" src="..\..\assets\logo.png" >
-          </div>
-    </ion-toolbar>
-  </ion-footer>
 
 <ion-menu side="start">
   <ion-header>

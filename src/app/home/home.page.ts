@@ -95,14 +95,8 @@ export class HomePage implements OnInit{
 
               }
               
-  async popovers(ev: any) {
-    const popover = await this.popoverController.create({
-        component: PopoverComponent,
-        event: ev,
-        animated: true,
-        showBackdrop: true
-    });
-    return await popover.present();
+   popovers() {
+    this.router.navigate(['/notifications'])
   }
 
   doRefresh(event) {
