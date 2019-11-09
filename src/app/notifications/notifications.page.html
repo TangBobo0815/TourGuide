@@ -1,98 +1,102 @@
 <ion-header>
   <ion-toolbar color="">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
-    </ion-buttons>
 
-    <ion-searchbar type="text" debounce="500" [(ngModel)]="searchterm" (keydown)="search($event)"></ion-searchbar>
+    <ion-row>
+      <ion-col size="2">
+        <ion-button [routerLink]="['/home']" color="light" class="buttonsize">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="10">
+        <ion-searchbar type="text" debounce="500" [(ngModel)]="searchterm" (keydown)="search($event)"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-segment scrollable="true">
+        <ion-segment-button class="segmentsize">
+          <ion-row>
+            <ion-col font-size="15px" padding-top="6px">
+              <ion-icon name="pin" color="danger"></ion-icon>
+            </ion-col>
+            <ion-col color="black">
+              <ion-select okText="確定" cancelText="取消" placeholder="地區" color="dark" [(ngModel)]="place"
+                (ionChange)="selectplace(place)">
+                <ion-select-option value="基隆市">基隆市</ion-select-option>
+                <ion-select-option value="臺北市">臺北市</ion-select-option>
+                <ion-select-option value="新北市">新北市</ion-select-option>
+                <ion-select-option value="桃園市">桃園市</ion-select-option>
+                <ion-select-option value="新竹市">新竹市</ion-select-option>
+                <ion-select-option value="新竹縣">新竹縣</ion-select-option>
+                <ion-select-option value="苗栗縣">苗栗縣</ion-select-option>
+                <ion-select-option value="臺中市">臺中市</ion-select-option>
+                <ion-select-option value="彰化縣">彰化縣</ion-select-option>
+                <ion-select-option value="南投縣">南投縣</ion-select-option>
+                <ion-select-option value="雲林縣">雲林縣</ion-select-option>
+                <ion-select-option value="嘉義市">嘉義市</ion-select-option>
+                <ion-select-option value="嘉義縣">嘉義縣</ion-select-option>
+                <ion-select-option value="臺南市">臺南市</ion-select-option>
+                <ion-select-option value="高雄市">高雄市</ion-select-option>
+                <ion-select-option value="屏東縣">屏東縣</ion-select-option>
+                <ion-select-option value="臺東縣">臺東縣</ion-select-option>
+                <ion-select-option value="花蓮縣">花蓮縣</ion-select-option>
+                <ion-select-option value="宜蘭縣">宜蘭縣</ion-select-option>
+                <ion-select-option value="澎湖縣">澎湖縣</ion-select-option>
+                <ion-select-option value="金門縣">金門縣</ion-select-option>
+                <ion-select-option value="連江縣">連江縣</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-segment-button>
 
+        <ion-segment-button class="segmentsize">
+          <ion-row>
+            <ion-col padding-top="6px">
+              <ion-icon name="contacts" color="danger"></ion-icon>
+            </ion-col>
+            <ion-col color="black">
+              <ion-select okText="確定" cancelText="取消" placeholder="人數" color="dark" [(ngModel)]="people"
+                (ionChange)="selectpeople(people)">
+                <ion-select-option value="1">2人以下(含)</ion-select-option>
+                <ion-select-option value="2">3~5人</ion-select-option>
+                <ion-select-option value="3">5~8人</ion-select-option>
+                <ion-select-option value="4">8人以上</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-segment-button>
 
-    <!--  <ion-list *ngIf="searchInput !== ''" >
-      <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
-        {{ item.title }}
-      </ion-item>
-  </ion-list>-->
+        <ion-segment-button class="segmentsize">
+          <ion-row>
+            <ion-col padding-top="6px">
+              <ion-icon name="pricetag" color="danger"></ion-icon>
+            </ion-col>
+            <ion-col color="black">
+              <ion-select okText="確定" cancelText="取消" placeholder="預算" color="dark" [(ngModel)]="money"
+                (ionChange)="selectmoney(money)">
+                <ion-select-option value="1">1000以下</ion-select-option>
+                <ion-select-option value="2">1000~2000</ion-select-option>
+                <ion-select-option value="3">2000~4000</ion-select-option>
+                <ion-select-option value="4">4000~6000</ion-select-option>
+                <ion-select-option value="5">6000以上</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-segment-button>
+
+      </ion-segment>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-segment  scrollable="true" >
-    <ion-segment-button>
-      <ion-row>
-        <ion-col font-size="15px" padding-top="6px">
-          <ion-icon name="pin" color="danger"></ion-icon>
-        </ion-col>
-        <ion-col>
-          <ion-select okText="確定" cancelText="取消" placeholder="地區" color="dark">
-            <ion-select-option>基隆市</ion-select-option>
-            <ion-select-option>臺北市</ion-select-option>
-            <ion-select-option>新北市</ion-select-option>
-            <ion-select-option>桃園市</ion-select-option>
-            <ion-select-option>新竹市</ion-select-option>
-            <ion-select-option>新竹縣</ion-select-option>
-            <ion-select-option>苗栗縣</ion-select-option>
-            <ion-select-option>臺中市</ion-select-option>
-            <ion-select-option>彰化縣</ion-select-option>
-            <ion-select-option>南投縣</ion-select-option>
-            <ion-select-option>雲林縣</ion-select-option>
-            <ion-select-option>嘉義市</ion-select-option>
-            <ion-select-option>嘉義縣</ion-select-option>
-            <ion-select-option>臺南市</ion-select-option>
-            <ion-select-option>高雄市</ion-select-option>
-            <ion-select-option>屏東縣</ion-select-option>
-            <ion-select-option>臺東縣</ion-select-option>
-            <ion-select-option>花蓮縣</ion-select-option>
-            <ion-select-option>宜蘭縣</ion-select-option>
-            <ion-select-option>澎湖縣</ion-select-option>
-            <ion-select-option>金門縣</ion-select-option>
-            <ion-select-option>連江縣</ion-select-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-    </ion-segment-button>
-
-    <ion-segment-button>
-      <ion-row>
-        <ion-col padding-top="6px">
-          <ion-icon name="contacts" color="danger" ></ion-icon>
-        </ion-col>
-        <ion-col>
-          <ion-select okText="確定" cancelText="取消" placeholder="人數" color="dark">
-            <ion-select-option value="01">2</ion-select-option>
-            <ion-select-option value="02">3~5</ion-select-option>
-            <ion-select-option value="03">5~8</ion-select-option>
-            <ion-select-option value="04">8以上</ion-select-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-    </ion-segment-button>
-
-    <ion-segment-button>
-      <ion-row>
-        <ion-col padding-top="6px">
-          <ion-icon name="pricetag" color="danger" ></ion-icon>
-        </ion-col>
-        <ion-col>
-          <ion-select okText="確定" cancelText="取消" placeholder="預算" color="dark">
-            <ion-select-option value="01">1000以下</ion-select-option>
-            <ion-select-option value="02">1000~2000</ion-select-option>
-            <ion-select-option value="03">2000~4000</ion-select-option>
-            <ion-select-option value="04">4000~6000</ion-select-option>
-            <ion-select-option value="05">6000以上</ion-select-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-    </ion-segment-button>
-
-  </ion-segment>
 
   <div *ngFor="let package of packages">
-    <ion-card (click)="get(package.packageId)">
+    <ion-card (click)="get(package.packageId)" color="black">
       <div>
         <ion-row>
           <ion-col size="5">
-            <ion-slides pager="true">
+            <ion-slides>
               <ion-slide *ngFor="let photos of package.detailsArray">
                 <ion-img [src]=photos.photo class="imagestyle"></ion-img>
               </ion-slide>
@@ -103,14 +107,17 @@
               <b> {{package.title}} </b>
             </ion-row>
             <ion-row text-left>
-              <ion-col size="2">
-                <ion-icon name="pin"></ion-icon>
+              <ion-col size="1">
+                <ion-icon name="pin" color="danger"></ion-icon>
               </ion-col>
-              <ion-col size="10">
+              <ion-col size="11">
                 <b> {{package.place}} </b>
               </ion-col>
             </ion-row>
             <ion-row class="moneysize">
+              <ion-col text-left>
+                <b> 人數: {{package.person}} </b>
+              </ion-col>
               <ion-col text-right>
                 <b> NT$: {{package.money}} </b>
               </ion-col>

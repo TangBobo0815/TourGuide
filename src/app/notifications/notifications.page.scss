@@ -17,3 +17,13 @@
     font-size:15px;
     padding-top: 10%;
   }
+
+  .buttonsize{
+    --box-shadow:none;
+    --ion-color-base:#f4f5f800 !important;
+    font-size: 19px;
+  }
+
+  .segmentsize{
+    --color-checked:rgb(183, 51, 12);
+  }
