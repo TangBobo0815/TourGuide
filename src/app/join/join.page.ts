@@ -25,7 +25,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 export class JoinPage implements OnInit {
   test=[];
   packages:Package[];
-  array:[];
+  array=[];
+  array2=[];
   data: any;
   id:string;
   packagejoin =null;
@@ -33,6 +34,8 @@ export class JoinPage implements OnInit {
   userId;
   packUserName:string;
   view:boolean=true;
+  packId:string;
+  packId2:string;
   //---------------
   packageId:string;
   title:string;
@@ -78,18 +81,56 @@ export class JoinPage implements OnInit {
         this.packUserName=doc.data().userName;
         console.log(doc.data().userName);
 
-        if(this.packUserName==this.loginUserName){
-          this.view=false;
-        }else{
-          this.view=true;
-        }
-        console.log(this.packUserName);
+        // if(this.packUserName!=this.loginUserName){
+        //   this.view=true;
+        // }else{
+        //   this.view=false;
+        // }
+        // console.log(this.packUserName);
       })
+    }).then(()=>{
+      firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.data());
+          this.array.push(doc.id);
+        })
+      }).then(()=>{
+        console.log(this.array);
+        firebase.firestore().collection('order').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            console.log(doc.data());
+            this.array2.push(doc.id);
+        })
+        console.log(this.array2);
+      }).then(()=>{
+        for(var i=0;i<=this.array.length;i++){
+          const packId=this.array.pop();
+          console.log(packId);
+          
+          for(var i=0;i<=this.array2.length;i++){
+            const packId2=this.array2.pop();
+            console.log(packId2);
+            if(packId==packId2 || this.packUserName==this.loginUserName){
+              this.view=false;
+              break;
+            }
+            continue;
+          }
+        }
+      })
+      })
+    }).then(()=>{
+      // if(this.packUserName!=this.loginUserName){
+      //       this.view=true;
+      //     }else{
+      //       this.view=false;
+      //     }
     })
   }
 
   join(){
     this.joinService.joinOrder(this.id,this.packUserName);
+    this.view=false;
     // this.joinService.getPackUser(this.id);
   }
 
@@ -117,6 +158,17 @@ export class JoinPage implements OnInit {
   zoomImage(img) {
     console.log(img);
     this.photoViewer.show(img,'圖片');
+  }
+
+  async Sucess(){
+    const toast = await this.toast.create({
+      message: '已經申請過了哦!',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
   }
 
 }
