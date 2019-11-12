@@ -110,9 +110,11 @@ export class JoinPage implements OnInit {
           for(var i=0;i<=this.array2.length;i++){
             const packId2=this.array2.pop();
             console.log(packId2);
-            if(packId==packId2 || this.packUserName==this.loginUserName){
+            if((packId==packId2)&&(packId!=null) || this.packUserName==this.loginUserName){
               this.view=false;
               break;
+            }else{
+              this.view=true;
             }
             continue;
           }

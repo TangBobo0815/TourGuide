@@ -106,7 +106,7 @@
         </div>
     </div>
     
-        <div   *ngIf="show">
+        <div   *ngIf="show;else noshow">
         <ion-grid>
             <ion-row>
               <ion-col left>
@@ -126,13 +126,13 @@
             <ion-row>
               <ion-col>
                 <div  text-center>同意</div>
-                <ion-button color="dark" fill="outline" expand="full" shape="round">
+                <ion-button color="dark" fill="outline" expand="full" shape="round" (click)="ok(order.id)">
                   <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
               </ion-col>
               <ion-col>
                   <div text-center >不同意</div>
-                <ion-button color="danger" fill="outline" expand="full" shape="round">
+                <ion-button color="danger" fill="outline" expand="full" shape="round" (click)="reject()">
                   <ion-icon name="close"></ion-icon>
                 </ion-button>
               </ion-col>

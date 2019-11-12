@@ -130,6 +130,7 @@ export class OrderService {
     
     this.orderItem2 = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
       return changes.map( change => {
+        const id= change.payload.doc.id;
         const data = change.payload.doc.data();
         const packageId = data.packageId;
         //this.setPackTitle(packageId);        
@@ -145,7 +146,7 @@ export class OrderService {
         
              if(packUser==this.loginUserName){
               return Object.assign( 
-                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+                {id:id,UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
             }
           }
           ));
@@ -182,8 +183,6 @@ export class OrderService {
       console.log('userName:'+this.loginUserName);
     })
   }
-
-
 
   async delay() {
     // `delay` returns a promise
