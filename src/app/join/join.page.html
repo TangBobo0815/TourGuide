@@ -121,13 +121,16 @@
     </ion-card>
   </div>
   <ion-card-subtitle>
-    <ion-row>
+    <ion-row *ngIf="view;else noview">
       <ion-col>
           <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入行程
             </ion-button>
       </ion-col>
     </ion-row>
   </ion-card-subtitle>
+
+  <ng-template #noview>
+</ng-template>
 
 
 

@@ -41,8 +41,8 @@ export class JoinService {
     }
 
   joinOrder(packageId,packName){
+    let result;
     let id = this.db.createId();
-    
     //var myFirebaseFirestoreTimestampFromDate = firebase.firestore.Timestamp.fromDate(new Date());
     var finishedAt = firebase.firestore.FieldValue.serverTimestamp();
     

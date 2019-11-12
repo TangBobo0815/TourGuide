@@ -32,7 +32,7 @@ export class JoinPage implements OnInit {
   i:number;
   userId;
   packUserName:string;
-
+  view:boolean=true;
   //---------------
   packageId:string;
   title:string;
@@ -45,6 +45,7 @@ export class JoinPage implements OnInit {
   userName:string;
   //---------------
   joinForm:any;
+  loginUserName:string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -60,28 +61,31 @@ export class JoinPage implements OnInit {
   ) {}
 
   ngOnInit() {
-   /*this.packDetail.getData().forEach(element=>{
-      console.log(element);
-      // this.packages=element;
-      // console.log(this.packages);
-      this.packageId=element.packageId;
-      this.title=element.title;
-      this.startDate=element.startDate;
-      this.endDate=element.endDate;
-      this.place=element.place;
-      this.detailsArray=element.detailsArray;
-      this.context=element.context;
-      this.money=element.money;
-    })*/
-   this.id = this.route.snapshot.paramMap.get('uid');
-   console.log(this.id);
-   this.packDetail.getPackagesData(this.id);
-   this.packDetail.getPjoin().subscribe(packages=>{
-    console.log(packages);
-    this.packagejoin=packages;
-  })
+    this.id = this.route.snapshot.paramMap.get('uid');
+    console.log(this.id);
+    this.packDetail.getPackagesData(this.id);
+    this.packDetail.getPjoin().subscribe(packages=>{
+      console.log(packages);
+      this.packagejoin=packages;
+    })
 
-  this.get();
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.loginUserName=doc.data().Name;
+      console.log('userName:'+this.loginUserName);
+    }).then(()=>{
+      firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
+        this.packUserName=doc.data().userName;
+        console.log(doc.data().userName);
+
+        if(this.packUserName==this.loginUserName){
+          this.view=false;
+        }else{
+          this.view=true;
+        }
+        console.log(this.packUserName);
+      })
+    })
   }
 
   join(){
@@ -89,14 +93,13 @@ export class JoinPage implements OnInit {
     // this.joinService.getPackUser(this.id);
   }
 
-  get(){
-    firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
-      this.packUserName=doc.data().userName;
-      console.log(doc.data().userName);
-    })
-
-    return this.packUserName;
-  }
+  // get(){
+  //   firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
+  //     this.packUserName=doc.data().userName;
+  //     console.log(doc.data().userName);
+  //   })
+  //   return this.packUserName;
+  //}
 
   ViewCreater(){
     // this.userId = this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref;

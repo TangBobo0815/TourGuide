@@ -195,41 +195,41 @@ getItem(Item)
   }
 
 
-getDetail(uid){
+  getDetail(uid){
 
-  console.log(uid);
-  this.router.navigate(['/join/'+uid])
-
-}
-
-getItems(ev: any) {
-  // Reset items back to all of the items
- this.packDetail.getPackages().subscribe(packages=>{
-    console.log(packages);
-    this.packages=packages;
-  })
-  // set val to the value of the searchbar
-  const val = ev.target.value.toLowerCase();
-  if (val && val.trim() != '') {
-    this.packages = this.packages.filter(pak => {
-      return ( pak=> pak.toLowerCase().indexOf(val) > -1);
-    })
-
+    console.log(uid);
+    this.router.navigate(['/join/'+uid])
 
   }
 
-  /*const db = firebase.firestore();
-  db.settings({timestampsInSnapshots : true});
-  const col = db.collection('packages');
-  const query = col.where('title', '>=',ev);
-  
-  query.get().then(snapshot =>{
-    snapshot.docs.forEach(doc => {
-      console.log(doc.id,doc.data())
+  getItems(ev: any) {
+    // Reset items back to all of the items
+  this.packDetail.getPackages().subscribe(packages=>{
+      console.log(packages);
+      this.packages=packages;
     })
-  })*/
+    // set val to the value of the searchbar
+    const val = ev.target.value.toLowerCase();
+    if (val && val.trim() != '') {
+      this.packages = this.packages.filter(pak => {
+        return ( pak=> pak.toLowerCase().indexOf(val) > -1);
+      })
 
-}
+
+    }
+
+    /*const db = firebase.firestore();
+    db.settings({timestampsInSnapshots : true});
+    const col = db.collection('packages');
+    const query = col.where('title', '>=',ev);
+    
+    query.get().then(snapshot =>{
+      snapshot.docs.forEach(doc => {
+        console.log(doc.id,doc.data())
+      })
+    })*/
+
+  }
 
 
 }
