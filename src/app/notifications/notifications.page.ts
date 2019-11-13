@@ -3,16 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, PopoverController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthService } from '../services/auth.service';
 
-import { FormsModule } from '@angular/forms';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Subject, Observable, combineLatest } from 'rxjs';
+import { AngularFirestore} from '@angular/fire/firestore';
+import { Subject, combineLatest } from 'rxjs';
 import * as _ from 'lodash';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
-import { PopoverComponent } from '../popover/popover.component';
+
 
 @Component({
   selector: 'app-notifications',
@@ -31,9 +29,9 @@ export class NotificationsPage implements OnInit {
   selectvalue;
   qplace = [];
   packages = [];
-  place: string;
-  money: string;
-  people:string;
+  place: string = null;
+  money: string = null;
+  people:string = null;
   startobs = this.startAt.asObservable();
   ensobs = this.endAt.asObservable();
 
@@ -46,30 +44,28 @@ export class NotificationsPage implements OnInit {
     private db: AngularFireDatabase,
     private router: Router,
     public popoverController: PopoverController
-  ) { this.initializeApp(); }
+  )  {}
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
 
   ngOnInit() {
     combineLatest(this.startobs, this.ensobs).subscribe((value) => {
       this.firequery(value[0], value[1]).subscribe((packages) => {
         this.packages = packages;
       })
+      this.place = null;
+      this.people = null;
+      this.money = null;
     });
-
-
-
   }
 
   selectplace(chplace) {
     var db = firebase.firestore();
-    var collection = db.collection('packages')
+    var collection = db.collection('packages') 
     this.packages = [];
+    if(chplace != null){
+      this.people = null;
+      this.money = null;
+    }
     collection.where("place", "==", chplace).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         console.log(doc.data());
@@ -86,6 +82,10 @@ export class NotificationsPage implements OnInit {
     var db = firebase.firestore();
     var collection = db.collection('packages')
     this.packages = [];
+    if(chmoney != null){
+      this.place = null;
+      this.people = null;
+    }
     if (chmoney == "1") {
       this.qmoney = 1000;
       collection.where("money", "<", this.qmoney).get().then(querySnapshot => {
@@ -161,6 +161,10 @@ export class NotificationsPage implements OnInit {
     var db = firebase.firestore();
     var collection = db.collection('packages')
     this.packages = [];
+    if(chpeople != null){
+      this.place = null;
+      this.money = null;
+    }
     if (chpeople == "1") {
       this.qpeople = "2";
       collection.where("person", "<=", this.qpeople).get().then(querySnapshot => {
@@ -219,17 +223,6 @@ export class NotificationsPage implements OnInit {
 
 
   get(uid) {
-    /*  var db= firebase.firestore();   
-      var collection = db.collection('packages')
-      
-      // var ref = db.collection('packages').where("title","==","title");
-      
-    
-      collection.doc(id).get().then(doc => {
-        console.log(doc.id, doc.data());
-        //this.test.push(doc.data());
-        this.packDetail.getPackagesData(doc.id);
-      }).then(i=>this.router.navigate(['/join']))*/
     console.log(uid);
     this.router.navigate(['/join/' + uid])
   }
