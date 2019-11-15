@@ -29,8 +29,13 @@
   font-size: 16px
 }
 
+
+
  ion-grid{
   --ion-grid-padding:8%;
   --ion-grid-padding-md:22%;
+}
+.btncolor {
+  --background: var(--ion-color-btn);
 }
 
