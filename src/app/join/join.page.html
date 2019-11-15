@@ -60,7 +60,7 @@
 
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="text">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -102,7 +102,7 @@
         </ion-card-content>
       </ion-card-content>
       <div text-right>
-          <ion-button class="userpro" size="small" shape="round" color="navy" fill="outline" (click)="ViewCreater()">
+          <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="ViewCreater()">
             {{packagejoin.userName}}個人檔案
           </ion-button>
         </div>
@@ -123,7 +123,7 @@
   <ion-card-subtitle>
     <ion-row *ngIf="view;else noview">
       <ion-col>
-          <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入行程
+          <ion-button size="small" shape="round" class="btncolor" (click)="join()" expand="full" >加入行程
             </ion-button>
       </ion-col>
     </ion-row>

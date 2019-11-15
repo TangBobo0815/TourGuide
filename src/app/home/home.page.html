@@ -7,8 +7,8 @@
           <img class="image" src="..\..\assets\logo.png" >
         </div>
    <!--  <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>-->
-     <ion-button size="small" shape="round" color="dark" (click)="popovers()">
-        <ion-icon name="search"></ion-icon>
+     <ion-button  size="small" shape="round" (click)="popovers()">
+        <ion-icon  name="search"></ion-icon>
         <ion-badge color="dark" slot="end"></ion-badge>
       </ion-button>
     </ion-item>
@@ -76,7 +76,7 @@
           <ion-col>
             <img class="img" [src]="user.userImg">
           </ion-col>
-          <ion-col size="9"><br>
+          <ion-col  size="9"><br>
             {{user.Name}}
             <br>
             {{user.address}}
