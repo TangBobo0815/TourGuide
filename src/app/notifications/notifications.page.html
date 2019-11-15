@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="">
+  <ion-toolbar>
 
     <ion-row>
       <ion-col size="2">
@@ -16,10 +16,10 @@
         <ion-segment-button class="segmentsize">
           <ion-row>
             <ion-col font-size="15px" padding-top="6px">
-              <ion-icon name="pin" color="danger"></ion-icon>
+              <ion-icon name="pin" color="light"></ion-icon>
             </ion-col>
             <ion-col color="black">
-              <ion-select okText="確定" cancelText="取消" placeholder="地區" color="dark" [(ngModel)]="place"
+              <ion-select okText="確定" cancelText="取消" placeholder="地區"  [(ngModel)]="place"
                 (ionChange)="selectplace(place)">
                 <ion-select-option value="基隆市">基隆市</ion-select-option>
                 <ion-select-option value="臺北市">臺北市</ion-select-option>
@@ -51,10 +51,10 @@
         <ion-segment-button class="segmentsize">
           <ion-row>
             <ion-col padding-top="6px">
-              <ion-icon name="contacts" color="danger"></ion-icon>
+              <ion-icon name="contacts" color="light"></ion-icon>
             </ion-col>
             <ion-col color="black">
-              <ion-select okText="確定" cancelText="取消" placeholder="人數" color="dark" [(ngModel)]="people"
+              <ion-select okText="確定" cancelText="取消" placeholder="人數" [(ngModel)]="people"
                 (ionChange)="selectpeople(people)">
                 <ion-select-option value="1">2人以下(含)</ion-select-option>
                 <ion-select-option value="2">3~5人</ion-select-option>
@@ -68,10 +68,10 @@
         <ion-segment-button class="segmentsize">
           <ion-row>
             <ion-col padding-top="6px">
-              <ion-icon name="pricetag" color="danger"></ion-icon>
+              <ion-icon name="pricetag" color="light"></ion-icon>
             </ion-col>
             <ion-col color="black">
-              <ion-select okText="確定" cancelText="取消" placeholder="預算" color="dark" [(ngModel)]="money"
+              <ion-select okText="確定" cancelText="取消" placeholder="預算" [(ngModel)]="money"
                 (ionChange)="selectmoney(money)">
                 <ion-select-option value="1">1000以下</ion-select-option>
                 <ion-select-option value="2">1000~2000</ion-select-option>

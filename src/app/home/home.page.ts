@@ -64,7 +64,7 @@ export class HomePage implements OnInit{
       icon: 'home'
     },
     {
-      title: '個人資訊',
+      title: '個人檔案',
       url: 'profile', 
       icon: 'contact'
     },
