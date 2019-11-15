@@ -25,6 +25,7 @@
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
+    "@ionic-native/background-mode": "^5.16.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/pedometer": "^5.3.0",
     "@ionic-native/photo-viewer": "^5.15.1",
@@ -36,9 +37,12 @@
     "com-sarriaroman-photoviewer": "1.2.4",
     "cordova-android": "7.1.4",
     "cordova-android-support-gradle-release": "^3.0.1",
+    "cordova-plugin-background-mode": "0.7.3",
+    "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^3.1.2",
+    "cordova-plugin-local-notification": "0.9.0-beta.2",
     "cordova-plugin-pedometer": "0.4.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -97,7 +101,9 @@
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
       },
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-local-notification": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "android"

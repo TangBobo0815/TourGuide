@@ -17,7 +17,11 @@ import { Package } from '../../models/package'
 import { getCurrentView } from '@angular/core/src/render3';
 import { identifierModuleUrl, unescapeIdentifier } from '@angular/compiler';
 import { FirestoreSettingsToken } from 'angularfire2/firestore';
-
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from "../../models/user";
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +30,7 @@ import { FirestoreSettingsToken } from 'angularfire2/firestore';
 })
 export class HomePage implements OnInit{
   packages:Package[];
+  user: Observable<User>;
   show=[];
   test=[];
   userName:string;
@@ -33,6 +38,16 @@ export class HomePage implements OnInit{
   unItemAvailable = true;
   join:any;
   i:number=0;
+  a:number=0;
+  loginUserName:string;
+
+  Date=new Date();
+  year=this.Date.getFullYear().toString();
+  month=(this.Date.getMonth()+1).toString();
+  date=this.Date.getDate().toString();
+  
+  Today=this.year+'-'+this.month+'-'+this.date;
+  packageId:string;
 
   public searchInput='';
 
@@ -82,8 +97,56 @@ export class HomePage implements OnInit{
               private packDetail:PackageService,
               private auth: AuthService,
               private router: Router,
+              private db: AngularFirestore,
+              private backgroundMode: BackgroundMode,
+              private afAuth:AngularFireAuth
               ) {
+                this.user = this.afAuth.authState.pipe(
+                  switchMap(user => {
+                    if(user) {
+                      return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+                    } else {
+                      return of(null);
+                    }
+                   }))
                 this.initializeApp();
+                this.backgroundMode.enable();
+                firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+                  console.log(doc.data());
+                  this.loginUserName=doc.data().Name;
+                  console.log('userName:'+this.loginUserName);
+                }).then(()=>{
+                  firebase.firestore().collection('packages').where('startDate','==',this.Today).get().then(querySnapshot => {
+                    querySnapshot.forEach(docx => {
+                      console.log(docx.data());
+                      this.packageId=docx.data().packageId;
+                      this.userName=docx.data().userName;
+                      console.log(this.packageId);
+
+                      firebase.firestore().collection('attendStatus').where('packageId','==',docx.data().packageId).get().then(querySnapshot => {
+                        if (querySnapshot.size==0) {
+                          console.log('There is no document in this query')
+                          this.a=-1;
+                        }else{
+                          this.a=0;
+                        }
+                        
+                        querySnapshot.forEach(doc => {
+                          console.log(doc.data());
+                          console.log(this.a)
+                        })
+
+                        if(this.loginUserName==docx.data().userName && querySnapshot.size==0){
+                          this.router.navigate(['/attend/'+this.packageId])
+                        }
+                      })
+                      })
+
+                  })
+
+                  
+                  
+                })
               }
             
               initializeApp() {

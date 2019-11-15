@@ -27,7 +27,7 @@ import { JoinPageModule } from './join/join.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/database';
-
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 //import { IonicStepperModule } from 'ionic-stepper';
 
 
@@ -55,6 +55,7 @@ import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/databa
     SplashScreen,
     AngularFireAuth,
     PhotoViewer,
+    BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
