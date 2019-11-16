@@ -36,7 +36,7 @@
                           <ion-icon name="walk"></ion-icon>開始日期
                         </ion-label>
                       <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select Date" formControlName="startDate"></ion-datetime>
-                      <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="startTime"></ion-datetime>
+                         <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="startTime"></ion-datetime>  -->
                   </ion-item>
                 </ion-col>
               <ion-col>
@@ -45,7 +45,7 @@
                           <ion-icon name="man"></ion-icon>返回日期
                         </ion-label>
                        <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select Date" formControlName="endDate"></ion-datetime>
-                       <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="endTime"></ion-datetime>
+                       <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="endTime"></ion-datetime>-->
                   </ion-item>
                 </ion-col>
           </ion-row>
@@ -190,7 +190,7 @@
    <br>
     
       <div padding text-center>
-        <ion-button type="submit" color="Tertiary" block shape="round" fill="outline" expand="full" [disabled]="!packageForm.valid">完成</ion-button>
+        <ion-button type="submit" class="btncolor"  block shape="round"  expand="full" [disabled]="!packageForm.valid">完成</ion-button>
       </div>
 
       <!--

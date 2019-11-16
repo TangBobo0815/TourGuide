@@ -152,7 +152,7 @@
                 <ion-item>
                   <input id="file" type="file"  accept="image/*" (change)="chooseuserImg($event)" 
                     style="display: none"  formControlName="userImg"/>
-                  <ion-button color="light" type="button" onclick="file.click()" >
+                  <ion-button class="btncolor" type="button" onclick="file.click()" >
                     個人照上傳
                   </ion-button>
                   {{uploadPercent$ | async}}

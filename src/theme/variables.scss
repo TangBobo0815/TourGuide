@@ -75,12 +75,12 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  
+  --ion-color-btn:rgb(187, 96, 22);
 }
 
 ion-content{
 
-  --ion-background-color: rgb(234, 242, 245);
+  --ion-background-color: rgb(235, 225, 214);
 }
 
 ion-card{
@@ -88,5 +88,5 @@ ion-card{
 
 }
 ion-toolbar {
-  --background: navy;
+  --background:  rgb(90, 71, 51);
   }
