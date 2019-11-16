@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar class="text">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="login"></ion-back-button>
     </ion-buttons>
@@ -152,7 +152,7 @@
                 <ion-item>
                   <input id="file" type="file"  accept="image/*" (change)="chooseuserImg($event)" 
                     style="display: none"  formControlName="userImg"/>
-                  <ion-button type="button" onclick="file.click()"  color="dark">
+                  <ion-button class="btncolor" type="button" onclick="file.click()" >
                     個人照上傳
                   </ion-button>
                   {{uploadPercent$ | async}}

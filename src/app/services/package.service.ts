@@ -46,7 +46,6 @@ export class PackageService {
 
 
    getData(){
-    //return this.db.collection('packages').doc(id);
     var db= firebase.firestore();   
     var collection = db.collection('packages')
     
@@ -60,9 +59,18 @@ export class PackageService {
     
   }
 
+
+  getUserData(){
+    return this.db.collection('packages').doc(this.id).valueChanges();
+  }
   
+
+
+updatepackage(packageId ,data:any){
+  return this.db.collection('packages').doc(packageId).update(data);
 }
 
+}
 export interface Package {
   title?:string;
   startDate?:string;

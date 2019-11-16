@@ -13,6 +13,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { PackageService } from '../services/package.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-profile',
@@ -21,13 +23,17 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
 
+  ownpack=[];
   updataForm: any;
   user: Observable<User>;
-  test:string = 'false';
-  show:string = 'false';
+  test: string = 'false';
+  show: string = 'false';
   userId;
+  ownid;
   view = true;
-  Creater=null;
+  pac = false;
+  icon = true;
+  Creater = null;
   constructor(
     private builder: FormBuilder,
     private authData: UserDateService,
@@ -37,52 +43,57 @@ export class ProfilePage implements OnInit {
     private afAuth: AngularFireAuth,
     private router: Router,
     private alertCtrl: AlertController,
+    private pack: PackageService,
     private route: ActivatedRoute
   ) {
     this.userId = this.route.snapshot.paramMap.get('uid');
     console.log(this.userId);
-    if(this.userId == null || this.userId == ''){
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if(user) {
-          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-       })); 
+    if (this.userId == null || this.userId == '') {
+      this.user = this.afAuth.authState.pipe(
+        switchMap(user => {
+          if (user) {
+            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        }));
 
-    this.authData.getCreateData('XMJQSh1auHXCrObAz0hfOmJfxC33').subscribe(CreaterData=>{
-      console.log(CreaterData);
-      this.Creater=CreaterData;});
+      this.authData.getCreateData('XMJQSh1auHXCrObAz0hfOmJfxC33').subscribe(CreaterData => {
+        this.Creater = CreaterData;
+      });
     }
 
-  this.userId = this.route.snapshot.paramMap.get('uid');
-     if(this.userId != null){
-       this.view = !this.view;
-      this.authData.getCreateData(this.userId).subscribe(CreaterData=>{
+    this.userId = this.route.snapshot.paramMap.get('uid');
+    if (this.userId != null) {
+      this.view = !this.view;
+      this.authData.getCreateData(this.userId).subscribe(CreaterData => {
         console.log(CreaterData);
-        this.Creater=CreaterData;}) 
-      
+        this.Creater = CreaterData;
+      })
     }
+
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
+      this.ownid = doc.data().Name;})
+
   }
 
   formErrors = {
-    'phone':''
+    'phone': ''
   };
 
   validatorMessages = {
-     'phone': {
+    'phone': {
       'required': '必填欄位',
-      'pattern':'只能輸入數字09開頭',
+      'pattern': '只能輸入數字09開頭',
       'minlength': '長度為10',
       'maxlength': '長度為10'
-     }
+    }
   }
 
-  
+
 
   ngOnInit() {
-      this.buildForm();
+    this.buildForm();
   }
 
   buildForm() {
@@ -104,7 +115,7 @@ export class ProfilePage implements OnInit {
       address: ['',
         [Validators.required]
       ],
-      phone:[,
+      phone: [,
         [Validators.required,
         Validators.min(10),
         Validators.maxLength(10),
@@ -112,8 +123,7 @@ export class ProfilePage implements OnInit {
       ]
     });
 
-    this.updataForm.valueChanges.subscribe(data => this.onValueChanged(data)); 
-    // reset messages
+    this.updataForm.valueChanges.subscribe(data => this.onValueChanged(data));
     this.onValueChanged();
   }
 
@@ -134,28 +144,50 @@ export class ProfilePage implements OnInit {
             }
           }
           break;
-      }    
+      }
     }
   }
 
+  ownpackage() {
+    var db = firebase.firestore();
+    var collection = db.collection('packages')
+
+    collection.where("userName", "==", this.ownid).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.log(doc.data());
+        this.ownpack.push(doc.data());
+      })
+    })
+    if(this.ownid != []){
+      this.ownid = [];
+    }
+    this.pac = !this.pac;
+    this.icon = !this.icon;
+  } 
+
+
+  get(uid){
+      console.log(uid);
+      this.router.navigate(['/setting/'+uid])
+    }
+
+
   updataUser(user) {
-    let form = this.updataForm.value;    
-    const data:any = {
+    let form = this.updataForm.value;
+    const data: any = {
       phone: form.phone,
       address: form.address,
       date: form.date,
     };
-    this.authData.updataUser(user,data)
-    .then(
-      this.Sucess
-    );
-    console.log(data);
-
+    this.authData.updataUser(user, data)
+      .then(
+        this.Sucess
+      );
     this.Sucess();
   }
 
-   
-  async Sucess(){
+
+  async Sucess() {
     var self = this;
     const alert = await self.alertCtrl.create({
       header: '修改成功',

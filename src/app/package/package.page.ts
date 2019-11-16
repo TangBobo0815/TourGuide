@@ -47,6 +47,7 @@ export class PackagePage implements OnInit {
     private afAuth:AngularFireAuth,
     private sanitizer: DomSanitizer)
   {
+    
     this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if(user) {
@@ -56,6 +57,7 @@ export class PackagePage implements OnInit {
           }
         })
       ); 
+      
   }
 
   formErrors = {
@@ -79,6 +81,8 @@ export class PackagePage implements OnInit {
   ngOnInit() { 
     this.buildForm();
   }
+
+
 
   packageUp(){
     let form = this.packageForm.value;

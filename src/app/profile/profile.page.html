@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar class="text">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      <ion-img class="back" src="https://ppt.cc/fsYTQx@.png"></ion-img>
+      個人檔案
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -58,16 +58,93 @@
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col>
-              <div text-center>
-                <ion-button color="dark" id="touron" block shape="round" expand="full" (click)="show = !show"> 編輯資料
-                </ion-button>
-              </div>
-            </ion-col>
-          </ion-row>
         </ion-grid>
+        <br />
+        <ion-item color="primary" (click)="show = !show">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="11" text-left>
+                編輯基本資料
+              </ion-col>
+              <ion-col size="1" text-right>
+                <ion-icon name="arrow-dropright"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <br />
+        <ion-item color="success" (click)="ownpackage()">
+          <ion-grid >
+            <ion-row>
+              <ion-col size="9" text-left>
+                個人開團紀錄
+              </ion-col>
+              <ion-col size="2" text-right>
+
+              </ion-col>
+              <ion-col size="1" text-right>
+                <div *ngIf="icon;else noicon">
+                  <ion-icon name="arrow-dropright"></ion-icon>
+                </div>
+                <ng-template #noicon>
+                  <div>
+                    <ion-icon name="arrow-dropdown"></ion-icon>
+                  </div>
+                </ng-template>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <div *ngIf="pac;else nopac" class="borderList">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <ion-grid>
+                  <ion-row *ngFor="let package of ownpack;let even = even">
+                    <ion-col class="colpad">
+                      <div *ngIf="even">
+                        {{package.title}}
+                        <ion-slides>
+                          <ion-slide *ngFor="let photos of package.detailsArray">
+                            <ion-img [src]=photos.photo class="imagestyle"></ion-img>
+                          </ion-slide>
+                        </ion-slides>
+                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
+                        </ion-button>
+                        <div class="border"></div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+              <ion-col size="6">
+                <ion-grid>
+                  <ion-row *ngFor="let package of ownpack;let odd = odd">
+                    <ion-col class="colpad">
+                      <div *ngIf="odd">
+                        {{package.title}}
+                        <ion-slides>
+                          <ion-slide *ngFor="let photos of package.detailsArray">
+                            <ion-img [src]=photos.photo class="imagestyle"></ion-img>
+                          </ion-slide>
+                        </ion-slides>
+                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
+                        </ion-button>
+                        <div class="border"></div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ng-template #nopac>
+
+          </ng-template>
+        </div>
       </div>
+
       <ng-template #noshow>
         <div center padding="10px" font-size="12px">
           <form [formGroup]="updataForm" (ngSubmit)="updataUser(user)">
@@ -122,8 +199,8 @@
                     <ion-item>
                       生日:
                       <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
-                      [(ngModel)]="user.date" formControlName="date">
-                    </ion-datetime>
+                        [(ngModel)]="user.date" formControlName="date">
+                      </ion-datetime>
                     </ion-item>
                   </ion-col>
                 </ion-row>
@@ -131,7 +208,8 @@
             </ion-grid>
             <div padding text-center>
               <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"
-                routerLink="/profile"> 儲存
+                routerLink="/profile">
+                儲存
               </ion-button>
             </div>
           </form>
@@ -143,11 +221,11 @@
 
   <ng-template #noview>
     <ion-card>
-        <ion-card-content>
-      <div>
-        <img class="ViewPH" [src]="Creater.userImg">
-      </div>
-      <br >
+      <ion-card-content>
+        <div>
+          <img class="ViewPH" [src]="Creater.userImg">
+        </div>
+        <br>
         <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
       </ion-card-content>
 

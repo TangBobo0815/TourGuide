@@ -32,6 +32,7 @@ import { StarRatingModule } from 'ionic4-star-rating';
 
 
 
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 //import { IonicStepperModule } from 'ionic-stepper';
 
 
@@ -63,6 +64,7 @@ import { StarRatingModule } from 'ionic4-star-rating';
     SplashScreen,
     AngularFireAuth,
     PhotoViewer,
+    BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} },
   ],
