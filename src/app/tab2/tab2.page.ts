@@ -10,6 +10,8 @@ import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Refere
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
+import {Router} from '@angular/router';
+
 
 
 @Component({
@@ -31,7 +33,9 @@ export class Tab2Page implements OnInit {
     private authData: UserDateService,
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
+    private route: Router,
     ) {
+      
       this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if(user) {
@@ -42,6 +46,12 @@ export class Tab2Page implements OnInit {
         })
       ); 
     }
+
+    get(uid){
+        console.log(uid); 
+        this.route.navigate(['/star/'+uid])
+    }
+    
 
   ngOnInit() {
     this.orderService.selectAll().forEach(element=>{

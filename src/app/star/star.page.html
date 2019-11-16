@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>評分</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>  
+  <ion-card>
+      <ion-card-content>
+          <ion-item lines="none">
+              <ion-label  position="stacked">為這個行程評分</ion-label>
+              <br>
+                <ionic4-star-rating #rating
+                activeIcon = "ios-star"
+                defaultIcon = "ios-star-outline"
+                activeColor = "#488aff" 
+                defaultColor = "#f4f4f4"
+                readonly="false"
+                rating="3"
+                fontSize = "32px"
+                (ratingChanged)="logRatingChange($event)">
+                </ionic4-star-rating>
+            </ion-item>
+      </ion-card-content>
+      <ion-card-content>
+        <ion-button  expand="full">確定</ion-button>
+      </ion-card-content>
+  </ion-card>    
+</ion-content>

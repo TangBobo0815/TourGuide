@@ -27,6 +27,10 @@ import { JoinPageModule } from './join/join.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/database';
+import { IonicRatingModule } from 'ionic4-rating';
+import { StarRatingModule } from 'ionic4-star-rating';
+
+
 
 //import { IonicStepperModule } from 'ionic-stepper';
 
@@ -35,6 +39,9 @@ import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/databa
 @NgModule({
   declarations: [AppComponent, PopoverComponent],
   entryComponents: [PopoverComponent],
+  
+
+
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -48,7 +55,8 @@ import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/databa
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-
+    IonicRatingModule,
+    StarRatingModule
   ],
   providers: [
     StatusBar,
