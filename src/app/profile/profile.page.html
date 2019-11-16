@@ -74,7 +74,7 @@
         </ion-item>
         <br />
         <ion-item color="success" (click)="ownpackage()">
-          <ion-grid>
+          <ion-grid >
             <ion-row>
               <ion-col size="9" text-left>
                 個人開團紀錄
@@ -110,6 +110,8 @@
                             <ion-img [src]=photos.photo class="imagestyle"></ion-img>
                           </ion-slide>
                         </ion-slides>
+                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
+                        </ion-button>
                         <div class="border"></div>
                       </div>
                     </ion-col>
@@ -127,6 +129,8 @@
                             <ion-img [src]=photos.photo class="imagestyle"></ion-img>
                           </ion-slide>
                         </ion-slides>
+                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
+                        </ion-button>
                         <div class="border"></div>
                       </div>
                     </ion-col>

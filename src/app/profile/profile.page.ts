@@ -163,7 +163,13 @@ export class ProfilePage implements OnInit {
     }
     this.pac = !this.pac;
     this.icon = !this.icon;
-  }
+  } 
+
+
+  get(uid){
+      console.log(uid);
+      this.router.navigate(['/setting/'+uid])
+    }
 
 
   updataUser(user) {
