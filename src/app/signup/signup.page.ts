@@ -100,7 +100,7 @@ export class SignupPage implements OnInit {
   
   constructor(public navCtrl:NavController,
               private builder: FormBuilder,
-              private auth: AuthService,
+              public auth: AuthService,
               private router : Router,
               //----------
               private storage: AngularFireStorage,

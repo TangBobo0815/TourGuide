@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class UpdateUserdataPage implements OnInit {
   editState:boolean = false;
 
-  constructor( private authData:UserDateService) { }
+  constructor( public authData:UserDateService) { }
 
   ngOnInit() {
   }

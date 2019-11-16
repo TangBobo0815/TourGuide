@@ -93,7 +93,7 @@ export class HomePage implements OnInit{
               private platform: Platform,
               private splashScreen: SplashScreen,
               private statusBar: StatusBar,
-              private authData:UserDateService,
+              public authData:UserDateService,
               private packDetail:PackageService,
               private auth: AuthService,
               private router: Router,

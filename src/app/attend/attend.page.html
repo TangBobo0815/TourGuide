@@ -14,7 +14,7 @@
       </ion-list-header>
       
       <div formArrayName="detailsGroup">
-      <div [formGroupName]="i" *ngFor="let detail of attendForm.get('detailsGroup').controls; let i = index">
+      <div [formGroupName]="i" *ngFor="let detail of attendForm.get('detailsGroup')['controls']; let i = index">
       <!-- <div *ngFor="let detail of arrays; let i = index"> -->
       <ion-item (click)="click(detail.isChecked)" >
         <ion-input formControlName="userId">{{detail.userId}}</ion-input>

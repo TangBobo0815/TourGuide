@@ -137,7 +137,7 @@
     </ion-button>
 
 <ion-slides formArrayName="detailsGroup" pager="true">
-    <ion-slide [formGroupName]="i"  *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">             
+    <ion-slide [formGroupName]="i"  *ngFor="let detail of packageForm.get('detailsGroup')['controls']; let i = index">             
             <ion-card color="dark">
               <ion-item>
                 <ion-icon name="images" slot="start" color="dark"></ion-icon>
