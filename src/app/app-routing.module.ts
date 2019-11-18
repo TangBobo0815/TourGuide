@@ -24,12 +24,9 @@ const routes: Routes = [
   { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
   { path: 'join/:uid', loadChildren: './join/join.module#JoinPageModule' },
   { path: '', loadChildren: './order/order.module#OrderPageModule' },
-<<<<<<< HEAD
   { path: 'star', loadChildren: './star/star.module#StarPageModule' },
-  { path: 'star/:uid', loadChildren: './star/star.module#StarPageModule' }
-=======
+  { path: 'star/:uid', loadChildren: './star/star.module#StarPageModule' },
   { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },
->>>>>>> refs/remotes/origin/master
 
 
 

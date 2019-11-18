@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { Order} from '../../models/order';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, of, empty, VirtualTimeScheduler } from 'rxjs';
 import { User } from "../../models/user";
 import { UserDateService } from '../services/user-date.service';
 import { switchMap } from 'rxjs/operators';
@@ -11,7 +11,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import {Router} from '@angular/router';
-
 
 
 @Component({
@@ -27,6 +26,15 @@ export class Tab2Page implements OnInit {
   userImg:string;
   key:number;
   array=[];
+  a;
+  isenabled:boolean=false;
+
+  Date=new Date();
+  year=this.Date.getFullYear().toString();
+  month=(this.Date.getMonth()+1).toString();
+  date=this.Date.getDate().toString();
+  
+  Today=this.year+'-'+this.month+'-'+this.date;
 
   constructor(
     private orderService: OrderService,
@@ -60,8 +68,20 @@ export class Tab2Page implements OnInit {
           element.splice(i, 1);
         }
       }
-      this.orders=element;
-      console.log(element);
+      
+      this.a=element.length;
+      this.array=element;
+
+      console.log(this.orders);
+    }).then(()=>{
+      for(var i=0;i<=this.a;i++){
+        console.log(this.a);
+        if((this.array[i].startDate==this.Today)&&(this.array[i].status=='申請成功')){
+          console.log(this.array[i].startDate)
+          this.isenabled=true;
+        }
+      }
+      this.orders=this.array;
     })
   }
 }

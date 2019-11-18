@@ -26,6 +26,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-button style="float: right;" (click)="get(order.packageId)">評分</ion-button>
+    <ion-button [disabled]="!isenabled" style="float: right;" (click)="get(order.packageId)">評分</ion-button>
      </ion-card>
 </ion-content>
