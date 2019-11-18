@@ -26,6 +26,42 @@ const routes: Routes = [
   { path: '', loadChildren: './order/order.module#OrderPageModule' },
   { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },  { path: 'favorite', loadChildren: './favorite/favorite.module#FavoritePageModule' },
 
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'home',loadChildren: './home/home.module#HomePageModule' },
+  { path: 'home/:uid',loadChildren: './home/home.module#HomePageModule' },
+  { path: 'list',loadChildren: './list/list.module#ListPageModule' }, 
+  { path: 'package', loadChildren: './package/package.module#PackagePageModule' },
+  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
+  { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsPageModule' },
+  { path: 'setting', loadChildren: './setting/setting.module#SettingPageModule' },
+  { path: 'setting/:uid', loadChildren: './setting/setting.module#SettingPageModule' },
+  { path: 'getpasswd', loadChildren: './getpasswd/getpasswd.module#GetpasswdPageModule' },
+  { path: 'profile/:uid', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'userpack', loadChildren: './userpack/userpack.module#UserpackPageModule' },
+  { path: 'update-userdata', loadChildren: './update-userdata/update-userdata.module#UpdateUserdataPageModule' },
+  { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
+  { path: 'join/:uid', loadChildren: './join/join.module#JoinPageModule' },
+  { path: '', loadChildren: './order/order.module#OrderPageModule' },
+  { path: 'star', loadChildren: './star/star.module#StarPageModule' },
+  { path: 'star/:uid', loadChildren: './star/star.module#StarPageModule' },
+  { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
 
 
 
