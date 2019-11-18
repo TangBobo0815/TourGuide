@@ -79,15 +79,20 @@ export class HomePage implements OnInit{
       icon: 'clipboard'
     },
     {
-      title: '使用說明',
-      url: 'setting',
+      title: '收藏',
+      url: 'favorite',
       icon: 'information-circle-outline'
     },
-    {
-      title: '升級VIP',
-      url: 'vip',
-      icon: 'star-outline'
-    }
+    // {
+    //   title: '',
+    //   url: 'setting',
+    //   icon: 'information-circle-outline'
+    // },
+    // {
+    //   title: '升級VIP',
+    //   url: 'vip',
+    //   icon: 'star-outline'
+    // }
   ];
   constructor(public popoverController: PopoverController , 
               private platform: Platform,
@@ -108,7 +113,7 @@ export class HomePage implements OnInit{
                     } else {
                       return of(null);
                     }
-                   }))
+                }))
                 this.initializeApp();
                 this.backgroundMode.enable();
                 firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
@@ -230,9 +235,9 @@ getItem(Item)
   {
     this.router.navigate(['/order'])  
   }
-  else if(Item == "setting")
+  else if(Item == "favorite")
   {
-    this.router.navigate(['/setting'])  
+    this.router.navigate(['/favorite'])  
   }
   else if(Item == "vip")
   {
