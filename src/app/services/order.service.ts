@@ -80,15 +80,15 @@ export class OrderService {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth
   ) {
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if(user) {
-          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    // this.user = this.afAuth.authState.pipe(
+    //   switchMap(user => {
+    //     if(user) {
+    //       return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+    //     } else {
+    //       return of(null);
+    //     }
+    //   })
+    // );
     this.getUserName();
     this.collectionInitialization();
     this.collectionInitialization2();
@@ -143,6 +143,7 @@ export class OrderService {
         const packUser=data.packUser;
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
+        console.log(this.loginUserName);
 
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         

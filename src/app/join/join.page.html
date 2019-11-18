@@ -101,6 +101,11 @@
          
         </ion-card-content>
       </ion-card-content>
+      <div text-left>
+        <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
+          <ion-icon name="heart"></ion-icon>
+        </ion-button>
+      </div>
       <div text-right>
           <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="ViewCreater()">
             {{packagejoin.userName}}個人檔案

@@ -27,10 +27,8 @@ const routes: Routes = [
   { path: 'star', loadChildren: './star/star.module#StarPageModule' },
   { path: 'star/:uid', loadChildren: './star/star.module#StarPageModule' },
   { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },
-
-
-
-];
+  { path: 'favorite', loadChildren: './favorite/favorite.module#FavoritePageModule' },
+  ]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

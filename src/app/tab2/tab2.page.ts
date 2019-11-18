@@ -68,18 +68,27 @@ export class Tab2Page implements OnInit {
           element.splice(i, 1);
         }
       }
+      this.array=element;
+      console.log(Date);
+
       // for(var i=0;i<=element.length;i++){
-      //   if((element[i].startDate==this.Today)&&(element[i].status=='申請成功')){
-      //     this.isenabled=true;
-      //   }else if(element[i]==null){
-      //     this.isenabled=false;
-      //     break;
-      //   }else{
-      //     this.isenabled=false;
-      //   }
-      // }
+      //   console.log(this.array[i].startDate);
+      //   const startDate=this.array[i].startDate;
+      
+      //   this.array[i].startDate=startDate.replace("-", "/").replace("-", "/")
+        // if((this.array[i].startDate==null)){
+        //   this.isenabled=false;
+        //   continue;
+        // }else if((this.array[i].startDate>=this.Today)&&(this.array[i].status=='申請成功')){
+        //   console.log(this.array[i].startDate>=this.Today);
+        //   this.isenabled=true;
+        //   break;
+        // }else{
+        //   this.isenabled=false;
+        // }
+      //}
         
-      this.orders=element;
+      this.orders=this.array;
 
       
       console.log(this.orders);
