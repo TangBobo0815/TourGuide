@@ -7,5 +7,6 @@ export interface Order {
     status:string;
     packUser:string;
     userName:string;
+    startDate:string;
     userId:DocumentReference;
   }

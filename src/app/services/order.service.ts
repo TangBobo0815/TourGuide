@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵangular_packages_core_core_k } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -34,7 +34,7 @@ export interface Order {
   userId:DocumentReference;
   userName:string;
   packUser:string;
-  title:string;
+  startDate:string;
 }
 export interface Show {
   uid?:string;
@@ -50,6 +50,7 @@ export interface Pack {
   userId:string;
   packageId:string;
   userName:string;
+  startDate:string;
 }
 
 @Injectable({
@@ -79,15 +80,15 @@ export class OrderService {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth
   ) {
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if(user) {
-          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    // this.user = this.afAuth.authState.pipe(
+    //   switchMap(user => {
+    //     if(user) {
+    //       return this.db.doc<User>(`users/${user.uid}`).valueChanges();
+    //     } else {
+    //       return of(null);
+    //     }
+    //   })
+    // );
     this.getUserName();
     this.collectionInitialization();
     this.collectionInitialization2();
@@ -113,7 +114,7 @@ export class OrderService {
         
             if(userName==this.loginUserName){
               return Object.assign( 
-                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place,startDate:PackData.startDate})
             }
           }
           ));
@@ -142,6 +143,7 @@ export class OrderService {
         const packUser=data.packUser;
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
+        console.log(this.loginUserName);
 
 
 
@@ -149,7 +151,7 @@ export class OrderService {
         
              if(packUser==this.loginUserName){
               return Object.assign( 
-                {id:id,UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place})
+                {id:id,UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place,startDate:PackData.startDate})
             }
           }
           ));

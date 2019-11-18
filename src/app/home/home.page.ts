@@ -253,7 +253,7 @@ getItem(Item)
       //this.test.push(doc.data());
       this.packDetail.getPackagesData(doc.id);
     }).then(i=>this.router.navigate(['/join']))*/
-    console.log(uid);
+    console.log(uid); 
     this.router.navigate(['/join/'+uid])
   }
 

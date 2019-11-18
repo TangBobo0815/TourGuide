@@ -121,12 +121,6 @@ export class JoinPage implements OnInit {
         }
       })
       })
-    }).then(()=>{
-      // if(this.packUserName!=this.loginUserName){
-      //       this.view=true;
-      //     }else{
-      //       this.view=false;
-      //     }
     })
   }
 
@@ -156,6 +150,55 @@ export class JoinPage implements OnInit {
     })
   }
 
+  favorite(name,id,title){
+    let uid = this.db.createId();
+
+    const data={
+      userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+      userName:this.loginUserName,
+      package:[{
+        packageId:id,
+        title:title
+      }]
+    }
+
+    firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+      if (querySnapshot.size==0) {
+        console.log('There is no document in this query')
+        this.db.collection('favorite').doc(uid).set(data)
+        .then(
+        )
+        console.log(data);
+      }else{
+        querySnapshot.forEach(doc => {
+          console.log(doc.id,doc.data());
+          this.db.collection('favorite').doc(doc.id).update({
+            package: firebase.firestore.FieldValue.arrayUnion({id,title})
+          }).then(
+            
+          )
+        })
+
+        // this.db.collection('favorite').doc(doc.id).update({
+        //   package: firebase.firestore.FieldValue.arrayUnion(data)
+        // })
+        // .then(
+          
+        // )
+        console.log(data)
+      }
+      
+    })
+  }
+
+  getUserName(){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.userName=doc.data().Name;
+      console.log('userName:'+this.userName);
+    })
+    return this.userName
+  }
 
   zoomImage(img) {
     console.log(img);

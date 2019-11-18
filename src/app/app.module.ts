@@ -27,6 +27,11 @@ import { JoinPageModule } from './join/join.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AngularFireDatabaseModule, AngularFireList } from '@angular/fire/database';
+import { IonicRatingModule } from 'ionic4-rating';
+import { StarRatingModule } from 'ionic4-star-rating';
+
+
+
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 //import { IonicStepperModule } from 'ionic-stepper';
 
@@ -35,6 +40,9 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 @NgModule({
   declarations: [AppComponent, PopoverComponent],
   entryComponents: [PopoverComponent],
+  
+
+
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -48,7 +56,8 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-
+    IonicRatingModule,
+    StarRatingModule
   ],
   providers: [
     StatusBar,

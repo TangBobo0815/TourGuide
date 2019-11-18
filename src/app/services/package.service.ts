@@ -35,7 +35,7 @@ export class PackageService {
   getPackages(){
     return this.packages;
   }
-
+  
   getPjoin(){
     return this.db.collection('packages').doc(this.id).valueChanges();
   }
