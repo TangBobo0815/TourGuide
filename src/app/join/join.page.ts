@@ -29,6 +29,7 @@ export class JoinPage implements OnInit {
   array2=[];
   data: any;
   id:string;
+  check=false;
   packagejoin =null;
   i:number;
   userId;
@@ -122,6 +123,14 @@ export class JoinPage implements OnInit {
       })
       })
     })
+
+    firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+      if (querySnapshot.size==0){
+        this.check = false;
+      }else{
+        this.check = true;
+      }
+    })
   }
 
   join(){
@@ -172,23 +181,14 @@ export class JoinPage implements OnInit {
       }else{
         querySnapshot.forEach(doc => {
           console.log(doc.id,doc.data());
-          this.db.collection('favorite').doc(doc.id).update({
-            package: firebase.firestore.FieldValue.arrayUnion({id,title})
-          }).then(
-            
+          this.db.collection('favorite').doc(doc.id).delete().then(
           )
         })
 
-        // this.db.collection('favorite').doc(doc.id).update({
-        //   package: firebase.firestore.FieldValue.arrayUnion(data)
-        // })
-        // .then(
-          
-        // )
-        console.log(data)
+        console.log(data);
       }
-      
     })
+    this.check = !this.check;
   }
 
   getUserName(){

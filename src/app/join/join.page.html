@@ -98,19 +98,30 @@
           <div>
             <p>每人預算：NT${{packagejoin.money}}</p>
           </div>
-         
+
         </ion-card-content>
       </ion-card-content>
-      <div text-left>
-        <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
-          <ion-icon name="heart"></ion-icon>
+      <ion-row>
+        <ion-col>
+      <div text-left  >
+          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
+            <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
+          </div>
+          <ng-template #nocheck >
+            <div  (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
+            <ion-icon name="heart-empty" class="iconsize"></ion-icon>
+            </div>
+          </ng-template>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div text-right>
+        <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="ViewCreater()">
+          {{packagejoin.userName}}個人檔案
         </ion-button>
       </div>
-      <div text-right>
-          <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="ViewCreater()">
-            {{packagejoin.userName}}個人檔案
-          </ion-button>
-        </div>
+    </ion-col>
+    </ion-row>
     </div>
   </ion-card>
   <div>
@@ -119,23 +130,23 @@
         行程規劃
       </ion-card-header>
       <ion-card-content text-left>
-        <div class="contextcolor" >
-        {{packagejoin.context}}
-      </div>
+        <div class="contextcolor">
+          {{packagejoin.context}}
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
   <ion-card-subtitle>
     <ion-row *ngIf="view;else noview">
       <ion-col>
-          <ion-button size="small" shape="round" class="btncolor" (click)="join()" expand="full" >加入行程
-            </ion-button>
+        <ion-button size="small" shape="round" class="btncolor" (click)="join()" expand="full">加入行程
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-card-subtitle>
 
   <ng-template #noview>
-</ng-template>
+  </ng-template>
 
 
 
