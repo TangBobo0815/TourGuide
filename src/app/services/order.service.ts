@@ -34,6 +34,7 @@ export interface Order {
   userId:DocumentReference;
   userName:string;
   packUser:string;
+  title:string;
 }
 export interface Show {
   uid?:string;
@@ -126,7 +127,7 @@ export class OrderService {
   }
 
   async collectionInitialization2(){
-    this.orderCollection = this.db.collection('order');
+    this.orderCollection = this.db.collection<Order>('order' , ref => ref.orderBy('packageId'));
     
     this.orderItem2 = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
       return changes.map( change => {
@@ -141,6 +142,8 @@ export class OrderService {
         const packUser=data.packUser;
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
+
+
 
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         

@@ -18,12 +18,22 @@ import { AlertController , ToastController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit {
   orders:Order[];
+  Failorders:Order[];
+  agreeorders:Order[];
   user: Observable<User>;
   userId:string;
   show:boolean=true;
   userImg:string;
   array=[];
   array2=[];
+  ownid;
+  ownpack=[];
+  wait = true;
+  icon = false;
+  cancel = false;
+  icon1 = true;
+  agree = false;
+  icon2 = true;
 
   constructor(
     private orderService: OrderService,
@@ -41,6 +51,9 @@ export class Tab1Page implements OnInit {
           }
         })
       ); 
+
+      firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
+        this.ownid = doc.data().Name;})
     }
 
   ngOnInit() {
@@ -50,9 +63,46 @@ export class Tab1Page implements OnInit {
           element.splice(i, 1);
         }
       }
-      console.log(element);
       this.orders=element;
     })
+   
+  
+  }
+
+  changewait(id){
+    if(id == 1){
+      this.wait = !this.wait;
+      this.icon = !this.icon;
+    }
+    else if(id == 2){
+
+      this.orderService.selectAll2().forEach(failpac=>{
+        for(var i=failpac.length;i>=0;i--){
+          if((failpac[i]) == null ||failpac[i].status=='申請成功' ){
+            failpac.splice(i, 1);
+          }
+        }
+        this.Failorders=failpac;
+      })
+
+      this.cancel = !this.cancel;
+      this.icon1 = !this.icon1;
+    }
+    else if(id == 3){
+
+      this.orderService.selectAll2().forEach(argeepac=>{
+        for(var i=argeepac.length;i>=0;i--){
+          if((argeepac[i]) == null ||argeepac[i].status=='申請失敗' ){
+            argeepac.splice(i, 1);
+          }
+        }
+        this.agreeorders=argeepac;
+      })
+
+      this.agree = !this.agree;
+      this.icon2 = !this.icon2;
+    }
+    
   }
 
   ok(id){

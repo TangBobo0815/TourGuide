@@ -4,143 +4,205 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <!--<div *ngFor="let order of orders">
-    <ion-card class="welcome-card">
-      <ion-img></ion-img>
-      <ion-card-header>
-        <ion-card-title>{{order.name}}</ion-card-title>
-      </ion-card-header>
-      <ion-label>{{order.OrderTime}}</ion-label>
-    </ion-card>
-  </div>-->
+<ion-content padding="3px">
 
- <!--<div class="panel panel-warning" *ngFor="let order of orders">
-    <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+  <ion-item (click)="changewait(1)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9" text-left>
+          待處理清單
+        </ion-col>
+        <ion-col size="2" text-right>
+
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon;else noicon">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <div *ngIf="wait;else nowait">
+    <div *ngFor="let order of orders">
+      <div class="packagetitle">
+        <div>
           <ion-grid>
             <ion-row>
-              <ion-col size="3" left>
-                {{order.place}}
-              </ion-col>
-              <ion-col size="6">
+              <ion-col>
                 {{order.title}}
-              </ion-col>
-              <ion-col size="2" right>
-                {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
-              </ion-col>
-              <ion-col size="1">
-                <div class="div">
-                  <ion-icon name="list"></ion-icon>
-                </div>
               </ion-col>
             </ion-row>
           </ion-grid>
-        </a>
-      </h4>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                {{order.place}}
+              </ion-col>
+              <ion-col size="6">
+                {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+      <div>
+        <ion-grid>
+          <ion-row>
+            <ion-col left size="6">
+              <ion-item>
+                <ion-label><b>{{order.name}}</b>申請加入</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="3">
+              <div text-center>同意</div>
+              <ion-button color="dark" fill="outline" expand="full" shape="round" (click)="ok(order.id)">
+                <ion-icon name="checkmark"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="3">
+              <div text-center>不同意</div>
+              <ion-button color="danger" fill="outline" expand="full" shape="round" (click)="reject(order.id)">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div  *ngIf="(authData.user | async) || {} as user">
-        <div class="panel-body">
+  </div>
+  <ng-template #nowait>
+  </ng-template>
+  <br>
+  <ion-item (click)="changewait(2)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9" text-left>
+          已拒絕清單
+        </ion-col>
+        <ion-col size="2" text-right>
+
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon1;else noicon1">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon1>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <div *ngIf="cancel;else nocancel">
+    <div *ngFor="let Failorder of Failorders">
+      <div class="packagetitle borderList">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                {{Failorder.title}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                {{Failorder.place}}
+              </ion-col>
+              <ion-col size="6">
+                {{Failorder.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div >
           <ion-grid>
             <ion-row>
               <ion-col left>
                 <ion-item>
-                  <ion-avatar slot="start">
-                    <img class="img" src="user.userImg">
-                  </ion-avatar>
-                  <ion-label>{{order.name}}</ion-label>
-                  <div>
-                    <ion-label>申請加入</ion-label>
-                  </div>
+                  <ion-label><b>{{Failorder.name}}</b>申請已被您拒絕</ion-label>
                 </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <div  text-center>同意</div>
-                <ion-button color="dark" fill="outline" expand="full" shape="round">
-                  <ion-icon name="checkmark"></ion-icon>
-                </ion-button>
-              </ion-col>
-              <ion-col>
-                  <div text-center >不同意</div>
-                <ion-button color="danger" fill="outline" expand="full" shape="round">
-                  <ion-icon name="close"></ion-icon>
-                </ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
         </div>
       </div>
     </div>
-  </div>--> 
+  </div>
+  <ng-template #nocancel>
+  </ng-template>
 
-<div *ngFor="let order of orders">
-  <img src="https://www.erv-nsa.gov.tw/content/images/page/top-attration-hualien-01.jpg" alt="開團照片">
-  <div  class="panel panel-warning" (click)="show = !show">
-    <div class="panel-title" >
-        <ion-grid>
-            <ion-row>
-              <ion-col  >
-                {{order.title}}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+  <br>
+  <ion-item (click)="changewait(3)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9" text-left>
+          已同意清單
+        </ion-col>
+        <ion-col size="2" text-right>
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon2;else noicon2">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon2>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 
-      <ion-grid>
-          <ion-row>
-            <ion-col size="6" >
-              {{order.place}}
-            </ion-col>
-            <ion-col size="6" >
-              {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        </div>
-    </div>
-    
-        <div   *ngIf="show;else noshow">
-        <ion-grid>
+  <div *ngIf="agree;else noagree">
+    <div *ngFor="let agreeorder of agreeorders">
+      <div class="packagetitle borderList">
+        <div>
+          <ion-grid>
             <ion-row>
-              <ion-col left>
-                <ion-item>
-                  <ion-avatar slot="start">
-                    <img class="img" src="user.userImg">
-                  </ion-avatar>
-                  <ion-label>{{order.name}}</ion-label>
-                  <div>
-                    <ion-label>申請加入</ion-label>
-                  </div>
-                </ion-item>
+              <ion-col>
+                {{agreeorder.title}}
               </ion-col>
             </ion-row>
           </ion-grid>
           <ion-grid>
             <ion-row>
-              <ion-col>
-                <div  text-center>同意</div>
-                <ion-button color="dark" fill="outline" expand="full" shape="round" (click)="ok(order.id)">
-                  <ion-icon name="checkmark"></ion-icon>
-                </ion-button>
+              <ion-col size="6">
+                {{agreeorder.place}}
               </ion-col>
-              <ion-col>
-                  <div text-center >不同意</div>
-                <ion-button color="danger" fill="outline" expand="full" shape="round" (click)="reject(order.id)">
-                  <ion-icon name="close"></ion-icon>
-                </ion-button>
+              <ion-col size="6">
+                {{agreeorder.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
               </ion-col>
             </ion-row>
           </ion-grid>
         </div>
-</div>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col left>
+                <ion-item>
+                  <ion-label><b>{{agreeorder.name}}</b>申請已被您接受</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
+  <ng-template #noagree>
+  </ng-template>
 
 </ion-content>
