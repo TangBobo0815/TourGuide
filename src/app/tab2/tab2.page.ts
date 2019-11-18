@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { Order} from '../../models/order';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, of, empty, VirtualTimeScheduler } from 'rxjs';
 import { User } from "../../models/user";
 import { UserDateService } from '../services/user-date.service';
 import { switchMap } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Refere
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -25,13 +26,24 @@ export class Tab2Page implements OnInit {
   userImg:string;
   key:number;
   array=[];
+  a;
+  isenabled:boolean=false;
+
+  Date=new Date();
+  year=this.Date.getFullYear().toString();
+  month=(this.Date.getMonth()+1).toString();
+  date=this.Date.getDate().toString();
+  
+  Today=this.year+'-'+this.month+'-'+this.date;
 
   constructor(
     private orderService: OrderService,
     private authData: UserDateService,
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
+    private route: Router,
     ) {
+      
       this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if(user) {
@@ -43,6 +55,12 @@ export class Tab2Page implements OnInit {
       ); 
     }
 
+    get(uid){
+        console.log(uid); 
+        this.route.navigate(['/star/'+uid])
+    }
+    
+
   ngOnInit() {
     this.orderService.selectAll().forEach(element=>{
       for(var i=element.length;i>=0;i--){
@@ -50,8 +68,22 @@ export class Tab2Page implements OnInit {
           element.splice(i, 1);
         }
       }
+      // for(var i=0;i<=element.length;i++){
+      //   if((element[i].startDate==this.Today)&&(element[i].status=='申請成功')){
+      //     this.isenabled=true;
+      //   }else if(element[i]==null){
+      //     this.isenabled=false;
+      //     break;
+      //   }else{
+      //     this.isenabled=false;
+      //   }
+      // }
+        
       this.orders=element;
-      console.log(element);
+
+      
+      console.log(this.orders);
     })
+      
   }
 }
