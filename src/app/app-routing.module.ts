@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'join', loadChildren: './join/join.module#JoinPageModule' },
   { path: 'join/:uid', loadChildren: './join/join.module#JoinPageModule' },
   { path: '', loadChildren: './order/order.module#OrderPageModule' },
-  { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },
+  { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },  { path: 'favorite', loadChildren: './favorite/favorite.module#FavoritePageModule' },
+
 
 
 

@@ -52,6 +52,7 @@ export class Tab1Page implements OnInit {
       }
       console.log(element);
       this.orders=element;
+      console.log(this.orders)
     })
   }
 
