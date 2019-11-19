@@ -11,6 +11,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { isUndefined, isNullOrUndefined, isNull } from 'util';
 import {Router} from '@angular/router';
+import { elementStyleProp } from '@angular/core/src/render3';
+import { copyStyles } from '@angular/animations/browser/src/util';
+
 
 
 @Component({
@@ -28,13 +31,18 @@ export class Tab2Page implements OnInit {
   array=[];
   a;
   isenabled:boolean=false;
+  
 
   Date=new Date();
+  
+  
   year=this.Date.getFullYear().toString();
   month=(this.Date.getMonth()+1).toString();
   date=this.Date.getDate().toString();
-  
+
   Today=this.year+'-'+this.month+'-'+this.date;
+  
+  
 
   constructor(
     private orderService: OrderService,
@@ -63,38 +71,54 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {
     this.orderService.selectAll().forEach(element=>{
+      
       for(var i=element.length;i>=0;i--){
         if((element[i]) == null){
           element.splice(i, 1);
         }
       }
       this.array=element;
-      console.log(Date);
+      
+      // for(var i=0;i<this.array.length;i++){
+      //   var isenable:boolean=false;
+      //   console.log(element[i].startDate);
+      //   if(element[i].startDate!=null){
+      //     var startDate=element[i].startDate;
+      //     console.log(element[i].startDate);
+          
+      //     const Today2=this.Today.replace("-", "/").replace("-", "/");
+      //     const Today3=Date.parse(Today2).valueOf();
+  
+      //     startDate=startDate.replace("-", "/").replace("-", "/");
+      //     const statDate2=Date.parse(startDate).valueOf();
+      //     console.log(statDate2<=Today3);
 
-      for(var i=0;i<=element.length;i++){
-        console.log(this.array[i].startDate);
-        var startDate=this.array[i].startDate;
+      //     if((statDate2<=Today3)&&element[i].status=='申請成功'){
+            
+      //       console.log(startDate);
+      //       console.log(Today3);  
 
-        startDate=startDate.replace("-", "/").replace("-", "/");
-        new Date(startDate);
-        console.log(startDate);
-        if((startDate==null)){
-          this.isenabled=false;
-          continue;
-        }else if(((startDate>=Date)==true)&&(this.array[i].status=='申請成功')){
-          console.log(startDate>=Date);
-          this.isenabled=true;
-          break;
-        }else{
-          this.isenabled=false;
-        }
-      }
-        
+      //       console.log(element[i].status);
+      //       isenable=true;
+
+      //       this.array.push(isenable);
+      //       this.array.splice(i,0, isenable)
+      //       console.log(this.array);
+
+      //     }else{
+      //       this.array.splice(i,0, isenable=false)
+      //       console.log(this.array);
+      //     }
+      //     continue;
+      //   }else{
+      //     this.array.splice(i,0, isenable=false)
+      //     console.log(this.array);
+      //   }
+      // }
       this.orders=this.array;
 
-      
-      console.log(this.orders);
     })
-      
+    
+
   }
 }
