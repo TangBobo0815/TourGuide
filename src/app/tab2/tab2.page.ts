@@ -78,43 +78,43 @@ export class Tab2Page implements OnInit {
         }
       }
       this.array=element;
+      console.log(this.array);
       
-      // for(var i=0;i<this.array.length;i++){
-      //   var isenable:boolean=false;
-      //   console.log(element[i].startDate);
-      //   if(element[i].startDate!=null){
-      //     var startDate=element[i].startDate;
-      //     console.log(element[i].startDate);
+      for(var i=0;i<this.array.length;i++){
+        var isenable:boolean=false;
+        console.log(element[i].startDate);
+        if(element[i].startDate!=null){
+          var startDate=element[i].startDate;
+          console.log(element[i].startDate);
           
-      //     const Today2=this.Today.replace("-", "/").replace("-", "/");
-      //     const Today3=Date.parse(Today2).valueOf();
+          const Today2=this.Today.replace("-", "/").replace("-", "/");
+          const Today3=Date.parse(Today2).valueOf();
   
-      //     startDate=startDate.replace("-", "/").replace("-", "/");
-      //     const statDate2=Date.parse(startDate).valueOf();
-      //     console.log(statDate2<=Today3);
+          startDate=startDate.replace("-", "/").replace("-", "/");
+          const statDate2=Date.parse(startDate).valueOf();
 
-      //     if((statDate2<=Today3)&&element[i].status=='申請成功'){
+          console.log(statDate2<=Today3);
+
+          if((statDate2<=Today3)&&(element[i].status=='申請成功')){
+
+            console.log((statDate2<=Today3)&&(element[i].status=='申請成功'));  
+
+            console.log(element[i].status);
+            isenable=true;
+
+            this.array[i]['isenable']=true;
             
-      //       console.log(startDate);
-      //       console.log(Today3);  
+            console.log(this.array);
 
-      //       console.log(element[i].status);
-      //       isenable=true;
-
-      //       this.array.push(isenable);
-      //       this.array.splice(i,0, isenable)
-      //       console.log(this.array);
-
-      //     }else{
-      //       this.array.splice(i,0, isenable=false)
-      //       console.log(this.array);
-      //     }
-      //     continue;
-      //   }else{
-      //     this.array.splice(i,0, isenable=false)
-      //     console.log(this.array);
-      //   }
-      // }
+          }else{
+            this.array[i]['isenable']=false;
+            console.log(this.array);
+          }
+        }else{
+          this.array[i]['isenable']=false;
+          console.log(this.array);
+        }
+      }
       this.orders=this.array;
 
     })
