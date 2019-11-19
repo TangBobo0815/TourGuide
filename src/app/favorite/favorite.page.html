@@ -5,36 +5,33 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let package of packages" disabled="false">
+  <div *ngFor="let favorite of array" disabled="false">
     <ion-card class="welcome-card" (click)="get(favorite.packageId)">
       <div class="local-size" >
         <ion-row>
           <ion-col>
             <ion-chip>
-              <!--<ion-avatar>
+              <!-- <ion-avatar>
                 <img [src]="package.userImg">
-              </ion-avatar>-->
-              <ion-label>{{package.userName}}</ion-label>
+              </ion-avatar> -->
+              <ion-label>{{loginUserName}}</ion-label>
             </ion-chip>
-          </ion-col>
-          <ion-col text-right>
-           <b> {{package.place}} </b>
           </ion-col>
         </ion-row>
       </div>
-      <div >
+      <!-- <div >
           <ion-slides pager="true" >
-              <ion-slide *ngFor="let photos of package.detailsArray">
+              <ion-slide *ngFor="let favorite of array">
                   <ion-img [src]=photos.photo  class="imagestyle"></ion-img>
               </ion-slide>
             </ion-slides>
-      </div>
+      </div> -->
       <ion-card-header>
-        <ion-card-title>{{package.title}}</ion-card-title>
+        <ion-card-title>{{favorite.title}}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-          <ion-text>{{package.context}}</ion-text>
-      </ion-card-content>
+      <!-- <ion-card-content>
+          <ion-text>{{favorite.context}}</ion-text>
+      </ion-card-content> -->
     </ion-card>
   </div>
 </ion-content>

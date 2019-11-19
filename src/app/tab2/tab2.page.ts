@@ -71,22 +71,24 @@ export class Tab2Page implements OnInit {
       this.array=element;
       console.log(Date);
 
-      // for(var i=0;i<=element.length;i++){
-      //   console.log(this.array[i].startDate);
-      //   const startDate=this.array[i].startDate;
-      
-      //   this.array[i].startDate=startDate.replace("-", "/").replace("-", "/")
-        // if((this.array[i].startDate==null)){
-        //   this.isenabled=false;
-        //   continue;
-        // }else if((this.array[i].startDate>=this.Today)&&(this.array[i].status=='申請成功')){
-        //   console.log(this.array[i].startDate>=this.Today);
-        //   this.isenabled=true;
-        //   break;
-        // }else{
-        //   this.isenabled=false;
-        // }
-      //}
+      for(var i=0;i<=element.length;i++){
+        console.log(this.array[i].startDate);
+        var startDate=this.array[i].startDate;
+
+        startDate=startDate.replace("-", "/").replace("-", "/");
+        new Date(startDate);
+        console.log(startDate);
+        if((startDate==null)){
+          this.isenabled=false;
+          continue;
+        }else if(((startDate>=Date)==true)&&(this.array[i].status=='申請成功')){
+          console.log(startDate>=Date);
+          this.isenabled=true;
+          break;
+        }else{
+          this.isenabled=false;
+        }
+      }
         
       this.orders=this.array;
 
