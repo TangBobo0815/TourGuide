@@ -179,9 +179,17 @@ export class JoinPage implements OnInit {
         )
         console.log(data);
       }else{
+        // querySnapshot.forEach(doc => {
+        //   console.log(doc.id,doc.data());
+        //   this.db.collection('favorite').doc(doc.id).delete().then(
+        //   )
+        // })
         querySnapshot.forEach(doc => {
           console.log(doc.id,doc.data());
-          this.db.collection('favorite').doc(doc.id).delete().then(
+          this.db.collection('favorite').doc(doc.id).update({
+            package:firebase.firestore.FieldValue.arrayUnion({id,title})
+          }
+          ).then(
           )
         })
 
