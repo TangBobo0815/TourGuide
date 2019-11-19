@@ -187,7 +187,7 @@ export class JoinPage implements OnInit {
         querySnapshot.forEach(doc => {
           console.log(doc.id,doc.data());
           this.db.collection('favorite').doc(doc.id).update({
-            package:firebase.firestore.FieldValue.arrayUnion({id,title})
+            package: firebase.firestore.FieldValue.arrayUnion({packageeId:id,title})
           }
           ).then(
           )
