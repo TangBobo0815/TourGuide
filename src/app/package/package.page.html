@@ -18,7 +18,7 @@
           <ion-label position="stacked">
             <ion-icon name="create"></ion-icon>名稱
           </ion-label>
-          <ion-input type="text" formControlName="title"></ion-input>
+          <ion-input type="text" formControlName="title" autoFocus></ion-input>
         </ion-item>
 
         <!-- <ion-item *ngIf="formErrors.title">
@@ -30,6 +30,7 @@
       </ion-card>
       <ion-grid>
         <ion-row>
+          <ion-col>
           <ion-item width="100%">
             <ion-icon color="dark" class="datee" name="man"></ion-icon>
             <ion-label class="datee">行程日期
@@ -45,6 +46,7 @@
               formControlName="endDate"></ion-datetime>
             <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="endTime"></ion-datetime>-->
           </ion-item>
+       </ion-col>
         </ion-row>
 
 
@@ -85,18 +87,19 @@
           </ion-col>
         </ion-row>
         <ion-row>
+          <ion-col>
+            <ion-label position="stacked">
+              <!--<ion-icon name="note"></ion-icon>地區備註-->&nbsp;
+            </ion-label>
+            <ion-item width="100%">
+              <ion-input placeholder="地區備註" type="text" formControlName="note"></ion-input>
 
-          <ion-label position="stacked">
-            <!--<ion-icon name="note"></ion-icon>地區備註-->&nbsp;
-          </ion-label>
-          <ion-item width="100%">
-            <ion-input placeholder="地區備註" type="text" formControlName="note"></ion-input>
 
-
-            <ion-button color="dark" size="small" type="button" fill="outline" (click)="addDetailsButtonClick()">
-              <ion-icon name="add"></ion-icon>圖片
-            </ion-button>
-          </ion-item>
+              <ion-button color="dark" size="small" type="button" fill="outline" (click)="addDetailsButtonClick()">
+                <ion-icon name="add"></ion-icon>圖片
+              </ion-button>
+            </ion-item>
+          </ion-col>
         </ion-row>
 
       </ion-grid>

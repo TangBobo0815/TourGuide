@@ -1,3 +1,4 @@
+
 .img{
     margin-top: 35px;
     height:120px;
@@ -10,6 +11,7 @@
     border-radius: 50%;
     height:40%;
     width:40%;
+    
 }
 
 .back{
@@ -44,9 +46,23 @@
   .borderList{
     border-width:2px;
     border-style:solid;
-    border-color: #10dc60;
+    border-color: burlywood;
     background-color: lightyellow;;
   }
 .text{
   color: white;
 }
+
+.edit{
+ 
+  color: rgb(187, 96, 22);
+
+}
+
+ion-item.my-label {
+  font-size: 20px;
+  --ion-background-color: rgb(235, 225, 214);
+}
+
+
+
