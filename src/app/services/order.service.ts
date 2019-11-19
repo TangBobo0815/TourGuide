@@ -128,7 +128,7 @@ export class OrderService {
   }
 
   async collectionInitialization2(){
-    this.orderCollection = this.db.collection('order');
+    this.orderCollection = this.db.collection<Order>('order' , ref => ref.orderBy('packageId'));
     
     this.orderItem2 = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
       return changes.map( change => {
@@ -144,6 +144,8 @@ export class OrderService {
         // const userImg=this.getUserImg(userId);
         console.log('userId:'+userId);
         console.log(this.loginUserName);
+
+
 
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         
