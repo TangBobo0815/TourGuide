@@ -75,7 +75,7 @@
     <div>
       <br>
       <ion-slides pager="true">
-        <ion-slide *ngFor="let photos of packagejoin.detailsArray">
+        <ion-slide *ngFor="let photos of packagejoin.detailsArray;let i = index">
           <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
         </ion-slide>
       </ion-slides>
@@ -103,12 +103,12 @@
       </ion-card-content>
       <ion-row>
         <ion-col>
-      <div text-left  >
-          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
+      <div text-left  *ngFor="let photos of packagejoin.detailsArray;let i = index" >
+          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
             <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
           </div>
           <ng-template #nocheck >
-            <div  (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title)">
+            <div  (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
             <ion-icon name="heart-empty" class="iconsize"></ion-icon>
             </div>
           </ng-template>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar class="text">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="profile"></ion-back-button>
     </ion-buttons>
@@ -40,8 +40,6 @@
               </ion-label>
               <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select Date"
                 [(ngModel)]="ownpackage.startDate" formControlName="startDate"></ion-datetime>
-              <ion-datetime displayFormat="HH:mm" placeholder="Select Time" [(ngModel)]="ownpackage.startTime"
-                formControlName="startTime"></ion-datetime>
             </ion-item>
           </ion-col>
           <ion-col>
@@ -51,8 +49,7 @@
               </ion-label>
               <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="Select Date"
                 [(ngModel)]="ownpackage.endDate" formControlName="endDate"></ion-datetime>
-              <ion-datetime displayFormat="HH:mm" placeholder="Select Time" [(ngModel)]="ownpackage.endTime"
-                formControlName="endTime"></ion-datetime>
+
             </ion-item>
           </ion-col>
         </ion-row>
@@ -60,9 +57,10 @@
 
       <ion-grid>
         <ion-row>
-          <ion-col style="width: 80px" size="5">
+          <ion-col >
             <ion-item>
               <ion-label position="stacked">
+                地區
               </ion-label>
               <ion-select okText="確定" cancelText="取消" formControlName="place" placeholder="select one"
                 [(ngModel)]="ownpackage.place" formControlName="place">
@@ -89,14 +87,7 @@
                 <ion-select-option>金門縣</ion-select-option>
                 <ion-select-option>連江縣</ion-select-option>
               </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size="7">
-              <ion-item style="width: 220px" class="itemstyle">
-            <ion-label position="stacked">
-            </ion-label>
-            
-              <ion-input type="text" [(ngModel)]="ownpackage.other" formControlName="note"></ion-input>
+              <ion-input type="text" [(ngModel)]="ownpackage.other" formControlName="note" placeholder="地區備註"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

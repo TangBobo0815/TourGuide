@@ -47,9 +47,9 @@
           </ion-row>
           <ion-row>
             <ion-col size="2">
-              <div text-center pdding-left="5px">
+          <!--    <div text-center pdding-left="5px">
                 <img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg">4.2
-              </div>
+              </div>-->
             </ion-col>
             <ion-col size="10">
               <ion-item>
@@ -60,7 +60,7 @@
           </ion-row>
         </ion-grid>
         <br />
-        <ion-item color="primary" (click)="show = !show">
+        <ion-item class="edit" (click)="show = !show">
           <ion-grid>
             <ion-row>
               <ion-col size="11" text-left>
@@ -73,7 +73,7 @@
           </ion-grid>
         </ion-item>
         <br />
-        <ion-item color="success" (click)="ownpackage()">
+        <ion-item class="edit" (click)="ownpackage()">
           <ion-grid >
             <ion-row>
               <ion-col size="9" text-left>
@@ -220,31 +220,29 @@
   </div>
 
   <ng-template #noview>
-    <ion-card>
+    <ion-card >
       <ion-card-content>
         <div>
           <img class="ViewPH" [src]="Creater.userImg">
         </div>
-        <br>
-        <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
+    <ion-item text-center class="my-label">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+              <ion-img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg"></ion-img>
+        <ion-label >{{Creater.Name}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-label>{{Creater.gender}}</ion-label>
+        </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
       </ion-card-content>
-
-      <div center padding="10px" font-size="12px">
+        <div  center padding="15px" font-size="10px">
         <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label>姓名:</ion-label>
-                <ion-label>{{Creater.Name}}</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>性別:</ion-label>
-                <ion-label>{{Creater.gender}}</ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
           <ion-row>
             <ion-col>
               <ion-item>

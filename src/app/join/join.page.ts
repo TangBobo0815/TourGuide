@@ -27,6 +27,7 @@ export class JoinPage implements OnInit {
   packages:Package[];
   array=[];
   array2=[];
+  Array3;
   data: any;
   id:string;
   check=false;
@@ -159,16 +160,19 @@ export class JoinPage implements OnInit {
     })
   }
 
-  favorite(name,id,title){
+  favorite(name,id,title,context,phonearray){
     let uid = this.db.createId();
-
+    this.Array3 = phonearray[0].photo;
+    
     const data={
       userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
       userName:this.loginUserName,
       package:[{
         packageId:id,
-        title:title
-      }]
+        title:title,
+        context:context,
+        photo:this.Array3
+      }],
     }
 
     firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
@@ -187,7 +191,7 @@ export class JoinPage implements OnInit {
         querySnapshot.forEach(doc => {
           console.log(doc.id,doc.data());
           this.db.collection('favorite').doc(doc.id).update({
-            package:firebase.firestore.FieldValue.arrayUnion({id,title})
+            package: firebase.firestore.FieldValue.arrayUnion({packageeId:id,title,context,photo:this.Array3})
           }
           ).then(
           )
