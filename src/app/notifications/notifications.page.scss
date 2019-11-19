@@ -22,6 +22,7 @@
     --box-shadow:none;
     --ion-color-base:#f4f5f800 !important;
     font-size: 19px;
+    color: white;
   }
 
   .segmentsize{
@@ -36,4 +37,11 @@
   .nosearchdata{
     background-image: url(src/assets/img/search.jpg);
   }
+  ion-content{
+    --background: none;
+    background-image: url(src/assets/img/search.jpg);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
 
+  }

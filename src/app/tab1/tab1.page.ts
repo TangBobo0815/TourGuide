@@ -10,6 +10,7 @@ import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Refere
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AlertController , ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -40,6 +41,7 @@ export class Tab1Page implements OnInit {
     private authData: UserDateService,
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
+    private router: Router,
     private toast: ToastController,
     ) {
       this.user = this.afAuth.authState.pipe(
@@ -79,7 +81,7 @@ export class Tab1Page implements OnInit {
 
       this.orderService.selectAll2().forEach(failpac=>{
         for(var i=failpac.length;i>=0;i--){
-          if((failpac[i]) == null ||failpac[i].status=='申請成功' ){
+          if((failpac[i]) == null ||(failpac[i].status)=='申請成功' ||(failpac[i].status)=='申請中'){
             failpac.splice(i, 1);
           }
         }
@@ -93,7 +95,7 @@ export class Tab1Page implements OnInit {
 
       this.orderService.selectAll2().forEach(argeepac=>{
         for(var i=argeepac.length;i>=0;i--){
-          if((argeepac[i]) == null ||argeepac[i].status=='申請失敗' ){
+          if((argeepac[i]) == null || (argeepac[i].status)=='申請失敗' || (argeepac[i].status)=='申請中' ){
             argeepac.splice(i, 1);
           }
         }
@@ -141,6 +143,7 @@ export class Tab1Page implements OnInit {
       closeButtonText: 'Ok'
     })
     toast.present();
+  //  this.router.navigate(['/order/tap1']);
   }
 
   async Fail(){
@@ -152,5 +155,6 @@ export class Tab1Page implements OnInit {
       closeButtonText: 'Ok'
     })
     toast.present();
+   // this.router.navigate(['/order/tap1']);
   }
 }
