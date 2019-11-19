@@ -25,6 +25,7 @@ export class FavoritePage implements OnInit {
   loginUserName:string;
   user: Observable<User>;
   array=[];
+  array2=[];
   packages:Package[];
 
   constructor(
@@ -66,19 +67,8 @@ export class FavoritePage implements OnInit {
   }
 
   get(uid){
-    /*  var db= firebase.firestore();   
-      var collection = db.collection('packages')
-      
-      // var ref = db.collection('packages').where("title","==","title");
-      
-    
-      collection.doc(id).get().then(doc => {
-        console.log(doc.id, doc.data());
-        //this.test.push(doc.data());
-        this.packDetail.getPackagesData(doc.id);
-      }).then(i=>this.router.navigate(['/join']))*/
       console.log(uid); 
-      this.router.navigate(['/details/'+uid])
+      this.router.navigate(['/join/'+uid])
     }
 
 }

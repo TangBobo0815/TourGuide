@@ -39,6 +39,7 @@ export class AttendPage implements OnInit {
   arrays=[];
   data=[];
   myBoolean = true;
+  pactitle;
 
   constructor(
     private router: Router,
@@ -63,6 +64,11 @@ export class AttendPage implements OnInit {
 
   ngOnInit() {
     console.log(this.id);
+    firebase.firestore().collection('packages').where('packageId','==',this.id).get().then(qtitle =>{
+      qtitle.forEach(doc1 =>{
+        this.pactitle = doc1.data().title;
+      })
+    })
     firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         console.log(doc.data());

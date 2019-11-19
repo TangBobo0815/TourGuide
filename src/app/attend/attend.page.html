@@ -1,37 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>attend</ion-title>
+    <ion-title class="fontstyle">{{pactitle}}的點名出席系統!</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding  >
+<ion-content padding>
   <form [formGroup]="attendForm" (ngSubmit)="submitForm()">
-  <!-- <form #form="ngForm" (ngSubmit)="submitForm(form.value)"> -->
-  <ion-list>
-    <ion-radio-group>
-      <ion-list-header>
-        <ion-label>請勾選有出席的旅伴</ion-label>
-      </ion-list-header>
-      
-      <div formArrayName="detailsGroup">
-      <div [formGroupName]="i" *ngFor="let detail of attendForm.get('detailsGroup')['controls']; let i = index">
-      <!-- <div *ngFor="let detail of arrays; let i = index"> -->
-      <ion-item (click)="click(detail.isChecked)" >
-        <ion-input formControlName="userId">{{detail.userId}}</ion-input>
-        <ion-input formControlName="userName">{{detail.userName}}</ion-input>
-        <ion-checkbox [color]="primary" formControlName="status"></ion-checkbox>
-      </ion-item>
+    <!-- <form #form="ngForm" (ngSubmit)="submitForm(form.value)"> -->
+    <ion-list>
+      <ion-radio-group>
+        <ion-list-header>
+          <ion-label>請勾選有出席的旅伴</ion-label>
+        </ion-list-header>
 
-      </div>
-      </div>
-    </ion-radio-group>
-  </ion-list>
-  <ion-row>
-    <ion-col>
-        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" type="submit" >確定
-          </ion-button>
-    </ion-col>
-  </ion-row>
-</form>
+        <div formArrayName="detailsGroup">
+          <div [formGroupName]="i" *ngFor="let detail of attendForm.get('detailsGroup')['controls']; let i = index">
+            <!-- <div *ngFor="let detail of arrays; let i = index"> -->
+            <ion-item (click)="click(detail.isChecked)">
+              <ion-row>
+                <ion-col class="fontsize" size="5">
+                  <input type="hidden" formControlName="userId">{{detail.userId}}
+                  <ion-input formControlName="userName">{{detail.userName}}</ion-input>
+                </ion-col>
+                <ion-col size="5">
+                  </ion-col>
+                <ion-col class="chkstyle" size="2">
+                  <ion-checkbox [color]="primary" formControlName="status"></ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </div>
+        </div>
+      </ion-radio-group>
+    </ion-list>
+    <ion-row>
+      <ion-col>
+        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" type="submit">確定
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>

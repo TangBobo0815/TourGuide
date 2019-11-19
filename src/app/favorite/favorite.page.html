@@ -1,37 +1,34 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>favorite</ion-title>
+  <ion-toolbar class="text">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      收藏團的資訊
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <div *ngFor="let favorite of array" disabled="false">
-    <ion-card class="welcome-card" (click)="get(favorite.packageId)">
-      <div class="local-size" >
+<ion-content >
+  <div *ngFor="let favorite of array">
+    <ion-card (click)="get(favorite.packageId)" class="bgcolor">
+      <div>
         <ion-row>
-          <ion-col>
-            <ion-chip>
-              <!-- <ion-avatar>
-                <img [src]="package.userImg">
-              </ion-avatar> -->
-              <ion-label>{{loginUserName}}</ion-label>
-            </ion-chip>
+          <ion-col size="5" padding-top="3px">
+                <ion-img [src]=favorite.photo class="imagestyle"></ion-img>
+          </ion-col>
+          <ion-col size="7"  class="favorite" >
+            <ion-row text-center  class="moneysize">
+              <b> {{favorite.title}} </b>
+            </ion-row>
+            <ion-row class="titlesize">
+              <ion-col text-left>
+                <b> {{favorite.context}} </b>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
       </div>
-      <!-- <div >
-          <ion-slides pager="true" >
-              <ion-slide *ngFor="let favorite of array">
-                  <ion-img [src]=photos.photo  class="imagestyle"></ion-img>
-              </ion-slide>
-            </ion-slides>
-      </div> -->
-      <ion-card-header>
-        <ion-card-title>{{favorite.title}}</ion-card-title>
-      </ion-card-header>
-      <!-- <ion-card-content>
-          <ion-text>{{favorite.context}}</ion-text>
-      </ion-card-content> -->
     </ion-card>
   </div>
 </ion-content>
