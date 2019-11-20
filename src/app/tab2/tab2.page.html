@@ -4,29 +4,196 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding >
-  <ion-card class="welcome-card" *ngFor="let order of orders">
-    <ion-label text-center><b>{{order.title}}</b></ion-label>
+<ion-content padding>
+  <ion-item (click)="changewait(1)">
     <ion-grid>
       <ion-row>
-        <ion-col text-center>
-          <ion-row>
-            <ion-col>{{order.place}}</ion-col>
-          </ion-row>
-          <!-- <ion-col>人數</ion-col> -->
-          <ion-row>
-            <ion-col size="6">
-              {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col text-right>狀態:</ion-col>
-            <ion-col class="bgcolor"><b>{{order.status}}</b></ion-col>
-          </ion-row>
+        <ion-col size="9" text-left>
+          申請成功清單
+        </ion-col>
+        <ion-col size="2" text-right>
+
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon;else noicon">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-button [disabled]="!(order.isenable)" style="float: right;" (click)="get(order.packageId)">評分</ion-button>
-    <!-- <ion-button  style="float: right;" (click)="get(order.packageId)">評分</ion-button> -->
-    </ion-card>
+  </ion-item>
+
+  <div *ngIf="wait;else nowait">
+    <div *ngFor="let order of orders">
+      <div class="packagetitle">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                {{order.title}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                {{order.place}}
+              </ion-col>
+              <ion-col size="6">
+                {{order.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col left >
+                <ion-item>
+                  <ion-label><b>{{order.name}}</b>恭喜您申請成功</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col >
+                <ion-button [disabled]="!(order.isenable)" (click)="get(order.packageId)" fill="outline" expand="full" shape="round" >評分</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #nowait>
+  </ng-template>
+  <br>
+  <ion-item (click)="changewait(2)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9" text-left>
+          申請失敗清單
+        </ion-col>
+        <ion-col size="2" text-right>
+
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon1;else noicon1">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon1>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <div *ngIf="cancel;else nocancel">
+    <div *ngFor="let Failorder of Failorders">
+      <div class="packagetitle borderList">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                {{Failorder.title}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                {{Failorder.place}}
+              </ion-col>
+              <ion-col size="6">
+                {{Failorder.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col center>
+                <ion-item>
+                  <ion-label><b>{{Failorder.name}}</b>您的申請拒絕</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #nocancel>
+  </ng-template>
+
+  <br>
+  <ion-item (click)="changewait(3)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="9" text-left>
+          等待申請中清單
+        </ion-col>
+        <ion-col size="2" text-right>
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon2;else noicon2">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </div>
+          <ng-template #noicon2>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <div *ngIf="agree;else noagree">
+    <div *ngFor="let agreeorder of agreeorders">
+      <div class="packagetitle borderList">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                {{agreeorder.title}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                {{agreeorder.place}}
+              </ion-col>
+              <ion-col size="6">
+                {{agreeorder.OrderTime.toDate() | date: 'dd MMM hh:mm'}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col center>
+                <ion-item>
+                  <ion-label><b>{{agreeorder.name}}</b>您正等待申請中</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noagree>
+  </ng-template>
 </ion-content>

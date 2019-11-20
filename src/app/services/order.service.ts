@@ -80,15 +80,6 @@ export class OrderService {
     private storage: AngularFireStorage,
     private afAuth:AngularFireAuth
   ) {
-    // this.user = this.afAuth.authState.pipe(
-    //   switchMap(user => {
-    //     if(user) {
-    //       return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-    //     } else {
-    //       return of(null);
-    //     }
-    //   })
-    // );
     this.getUserName();
     this.collectionInitialization();
     this.collectionInitialization2();
@@ -99,22 +90,20 @@ export class OrderService {
     
     this.orderItem = this.orderCollection.snapshotChanges().pipe(map(changes=>{    
       return changes.map( change => {
+        const id= change.payload.doc.id;
         const data = change.payload.doc.data();
-        const packageId = data.packageId;
-        //this.setPackTitle(packageId);        
+        const packageId = data.packageId;        
         const orderTime = (data.orderTime);
         const status=data.status;
         const userId=data.userId;
         const userName=data.userName;   
         const packUser=data.packUser;
-        // const userImg=this.getUserImg(userId);
-        console.log('userId:'+userId);
 
         return this.db.collection('packages').doc(packageId).valueChanges().pipe(map( (PackData: Pack) => {
         
             if(userName==this.loginUserName){
               return Object.assign( 
-                {UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place,startDate:PackData.startDate})
+                {id:id, UID:userId, name: userName, packageId:packageId,packUser:packUser,status:status, OrderTime:orderTime,title:PackData.title,place:PackData.place,startDate:PackData.startDate})
             }
           }
           ));
@@ -123,7 +112,6 @@ export class OrderService {
     flatMap(shows => combineLatest(shows)));
     
     this.orderItem.forEach(value => {
-     console.log(value);
     });
   }
 
@@ -135,15 +123,12 @@ export class OrderService {
         const id= change.payload.doc.id;
         const data = change.payload.doc.data();
         const packageId = data.packageId;
-        //this.setPackTitle(packageId);        
         const orderTime = (data.orderTime);
         const status=data.status;
         const userId=data.userId;
         const userName=data.userName;   
         const packUser=data.packUser;
-        // const userImg=this.getUserImg(userId);
-        console.log('userId:'+userId);
-        console.log(this.loginUserName);
+
 
 
 
@@ -160,7 +145,6 @@ export class OrderService {
     flatMap(shows => combineLatest(shows)));
     
     this.orderItem2.forEach(value => {
-      console.log(value);
     });
   }
 
@@ -183,9 +167,7 @@ export class OrderService {
 
   getUserName(){
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
-      console.log(doc.data());
       this.loginUserName=doc.data().Name;
-      console.log('userName:'+this.loginUserName);
     })
   }
 

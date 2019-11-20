@@ -68,7 +68,6 @@ export class NotificationsPage implements OnInit {
     }
     collection.where("place", "==", chplace).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        console.log(doc.data());
         this.qplace.push(doc.data());
         if (this.qplace !== this.packages) {
           this.qplace.push(doc.data());
@@ -90,7 +89,6 @@ export class NotificationsPage implements OnInit {
       this.qmoney = 1000;
       collection.where("money", "<", this.qmoney).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -104,7 +102,6 @@ export class NotificationsPage implements OnInit {
       this.qmoneyup = 2000;
       collection.where("money", ">=", this.qmoney).where("money", "<", this.qmoneyup).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -118,7 +115,6 @@ export class NotificationsPage implements OnInit {
       this.qmoneyup = 4000;
       collection.where("money", ">=", this.qmoney).where("money", "<", this.qmoneyup).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -133,7 +129,6 @@ export class NotificationsPage implements OnInit {
       collection.where("money", ">=", this.qmoney).where("money", "<", this.qmoneyup).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
           console.log(doc.data());
-          this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
             this.packages.push(doc.data());
@@ -145,7 +140,6 @@ export class NotificationsPage implements OnInit {
       this.qmoney = 6000;
       collection.where("money", ">=", this.qmoney).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -197,7 +191,6 @@ export class NotificationsPage implements OnInit {
       this.qpeopleup = "8";
       collection.where("person", ">=", this.qpeople).where("person", "<", this.qpeopleup).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -210,7 +203,6 @@ export class NotificationsPage implements OnInit {
       this.qpeople = "8";
       collection.where("person", ">=", this.qpeople).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.qplace.push(doc.data());
           if (this.qplace !== this.packages) {
             this.qplace.push(doc.data());
@@ -223,7 +215,6 @@ export class NotificationsPage implements OnInit {
 
 
   get(uid) {
-    console.log(uid);
     this.router.navigate(['/join/' + uid])
   }
 

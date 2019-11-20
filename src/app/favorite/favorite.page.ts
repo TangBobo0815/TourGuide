@@ -1,10 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, } from '@angular/router';
 
 import { UserDateService } from '../services/user-date.service';
-import { PackageService } from '../services/package.service';
-import { AuthService } from '../services/auth.service';
+
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { User } from "../../models/user";
@@ -30,8 +29,6 @@ export class FavoritePage implements OnInit {
 
   constructor(
     public authData:UserDateService,
-    private packDetail:PackageService,
-    private auth: AuthService,
     private router: Router,
     private db: AngularFirestore,
     private afAuth:AngularFireAuth) {
@@ -47,18 +44,15 @@ export class FavoritePage implements OnInit {
 
   ngOnInit() {
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
-      console.log(doc.data());
       this.loginUserName=doc.data().Name;
-      console.log('userName:'+this.loginUserName);
     }).then(()=>{
       firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
         if(querySnapshot.size==0){
-          console.log('No value')
         }
         querySnapshot.forEach(doc => {
-          console.log(doc.id,doc.data());
           this.array=doc.data().package;
-          console.log(this.array);
+          this.array2=doc.data().package.packageId;
+          console.log(this.array2)
         })
       })
     })
@@ -67,7 +61,6 @@ export class FavoritePage implements OnInit {
   }
 
   get(uid){
-      console.log(uid); 
       this.router.navigate(['/join/'+uid])
     }
 
