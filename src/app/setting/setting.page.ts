@@ -24,13 +24,18 @@ export class SettingPage implements OnInit {
   ownpackage =null;
   packagejoin;
   packageForm:FormGroup;
+  loginUserName:string;
+  array=[];
+  //----
+  photo:string;
+
   constructor(private afAuth: AngularFireAuth, 
               private route: ActivatedRoute,
               public packDetail:PackageService,
               private alertCtrl: AlertController,
               private router: Router,
               private builder: FormBuilder
-             ) {
+             ){
               this.pacid = this.route.snapshot.paramMap.get('uid');
               var db = firebase.firestore();
               var collection = db.collection('packages')
@@ -40,8 +45,7 @@ export class SettingPage implements OnInit {
                 console.log(packages);
                 this.ownpackage=packages;
               })
-
-              }
+             }
 
   ngOnInit() {
     this.buildForm();
@@ -132,16 +136,52 @@ export class SettingPage implements OnInit {
     }
   }
 
-  Deletepackage(ownpackageID){
+  Deletepackage(ownpackageID,ownPackageTitle,context){
     var db = firebase.firestore();
-    var dpack = db.collection('packages')
-    var dorder = db.collection('order')
+    var dpack = db.collection('packages');
+    var dorder = db.collection('order');
+    var dattend =db.collection('attendStatus');
+    var dpackScore = db.collection('packageScore');
+    var dfavorite = db.collection('favorite');
+
     dpack.doc(ownpackageID).delete();
-    dorder.doc(ownpackageID).delete().then(
-      this.Sucess
-    );
-      this.Sucessdel();
+    firebase.firestore().collection('order').where('packageId','==',ownpackageID).get().then(querySnapshot => {
+      querySnapshot.forEach(data=>{
+        console.log('order:'+data.id);
+        dorder.doc(data.id).delete();
+      })
+    })
+    dfavorite.where('package','array-contains',{context:context,packageId:ownpackageID,photo:this.ownpackage.detailsArray[0]['photo'],title:ownPackageTitle}).get().then(query=>{
+      if(query.size==0) console.log('no');
+      else{
+        query.forEach(data=>{
+          console.log(data.id,data.data())
+          db.collection('favorite').doc(data.id).update({
+            package: firebase.firestore.FieldValue.arrayRemove({context:context,packageId:ownpackageID,photo:this.ownpackage.detailsArray[0]['photo'],title:ownPackageTitle})
+          })
+        })
+      }
+    })
+    firebase.firestore().collection('attendStatus').where('packageId','==',ownpackageID).get().then(querySnapshot => {
+      querySnapshot.forEach(data=>{
+        console.log('attendStatus:'+data.id);
+         dattend.doc(data.id).delete();
+      })
+    })
+    firebase.firestore().collection('packageScore').where('packageId','==',ownpackageID).get().then(querySnapshot => {
+      querySnapshot.forEach(data=>{
+        console.log('packageScore:'+data.id);
+         dpackScore.doc(data.id).delete();
+     })
+    })
+
+    //dpack.doc(ownpackageID).delete();
+    // dorder.doc(ownpackageID).delete().then(
+    //   this.Sucess
+    // );
+    this.Sucessdel();
   }
+
 
 
   updataPackage(packageId) {
