@@ -92,8 +92,6 @@ export class JoinPage implements OnInit {
             this.array2.push(doc.id);
         })
       }).then(()=>{
-        console.log(this.array2);
-        }).then(()=>{
         for(var i=0;i<=this.array.length;i++){
           const packId=this.array.pop();
           
@@ -115,12 +113,16 @@ export class JoinPage implements OnInit {
           }
           querySnapshot.forEach(doc => {
             console.log(doc.data());
-            this.favoritePack.push(doc.data().package);
+            this.favoritePack=doc.data().package;
+            console.log(this.favoritePack)
           })
           for(var i=0;i<this.favoritePack.length;i++){
-           
+            console.log(this.favoritePack[i]['packageId'])
+            if(this.favoritePack[i]['packageId']==this.id){
+              this.check = true;
+            }
           }
-    
+         
         })
       })
 
