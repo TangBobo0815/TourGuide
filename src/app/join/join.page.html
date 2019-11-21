@@ -106,7 +106,7 @@
       </ion-card-content>
       <ion-row>
         <ion-col>
-      <div text-left  *ngFor="let photos of packagejoin.detailsArray;let i = index" >
+      <div text-left >
           <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
             <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
           </div>
