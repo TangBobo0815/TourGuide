@@ -163,15 +163,16 @@ export class JoinPage implements OnInit {
     firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
       if (querySnapshot.size==0) {
         this.db.collection('favorite').doc(uid).set(data)
-        .then(
-        )
+        .then(i=>{
+          this.favoriteSuccess()
+        })
       }else{
         querySnapshot.forEach(doc => {
           this.db.collection('favorite').doc(doc.id).update({
             package: firebase.firestore.FieldValue.arrayUnion({packageId:id,title,context,photo:this.Array3})
-          }
-          ).then(
-          )
+          }).then(i=>{
+            this.favoriteSuccess()
+          })
         })
 
       }
@@ -193,6 +194,17 @@ export class JoinPage implements OnInit {
   async Sucess(){
     const toast = await this.toast.create({
       message: '已經申請過了哦!',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async favoriteSuccess(){
+    const toast = await this.toast.create({
+      message: '已加入收藏!',
       showCloseButton: true,
       duration: 3000,
       position: 'bottom',
