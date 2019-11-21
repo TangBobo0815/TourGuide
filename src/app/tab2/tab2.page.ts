@@ -81,7 +81,6 @@ export class Tab2Page implements OnInit {
         }
       }
       this.array=element;
-    
 
       for(var i=0;i<element.length;i++){
         var isenable:boolean=false;
@@ -112,6 +111,7 @@ export class Tab2Page implements OnInit {
     if(id == 1){
       this.wait = !this.wait;
       this.icon = !this.icon;
+
     }
     else if(id == 2){
 

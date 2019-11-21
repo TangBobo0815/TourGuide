@@ -75,6 +75,16 @@ export class JoinPage implements OnInit {
       this.packagejoin=packages;
     })
 
+    firebase.firestore().collection('packageScore').where('packageId','==',this.id).get().then(query=>{
+      if(query.size==0){this.packagejoin['score']='此行程尚未被評分';}
+      else{
+        query.forEach(doc=>{
+          this.packagejoin['score']=doc.data().total
+        })
+      }
+      console.log(this.packagejoin['score']);
+    })
+
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
       this.loginUserName=doc.data().Name;
     }).then(()=>{

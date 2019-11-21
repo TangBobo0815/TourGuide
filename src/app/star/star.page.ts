@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Router, ActivatedRoute } from '@angular/router';
 import * as angular from '@ionic/angular';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { AlertController , ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-star',
@@ -16,7 +17,7 @@ import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 export class StarPage implements OnInit {
   id:string;
-  star:number;
+  star:number=2;
   Total:number=0;
   Total2;
   array:[];
@@ -25,7 +26,9 @@ export class StarPage implements OnInit {
     private route: ActivatedRoute,
     private db: AngularFirestore,
     private rating: StarRatingModule,
-    private packageservice: PackageService        
+    private packageservice: PackageService,
+    private router : Router,
+    private alertCtrl:AlertController
   ) { }
 
   logRatingChange(rating){
@@ -49,7 +52,7 @@ export class StarPage implements OnInit {
           total:this.star
         }).then(() => {
           console.log('success1');
-          
+          this.starSuccess();
         });
       }else{
         querySnapshot.forEach(doc=>{
@@ -64,39 +67,44 @@ export class StarPage implements OnInit {
               firebase.firestore().collection('packageScore').doc(doc.id).get().then(docx => {
                 console.log(docx.data());
                 
-                
                 console.log('this.array.length'+this.array.length);
 
                 this.Total=totalFire+this.star;
                 console.log(this.Total);
                 
-                this.Total2=Math.round((this.Total)/(this.array.length+1));
+                this.Total2=Math.round((this.Total)/2);
                 console.log(this.Total2);
                 this.db.collection('packageScore').doc(doc.id).update({
                   total:this.Total2,
                 }).then(()=>{
-                console.log('success2');
+                  this.starSuccess();
                 })
               })
-              
-              
-              
-              
-            
-            
-            
             })
-            
-            
         })
       }
     })
-    }
-  
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('uid');
     console.log(this.id);
+  }
+
+  async starSuccess(){
+    const alert = await this.alertCtrl.create({
+      header: '評分完成',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
 
