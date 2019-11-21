@@ -76,43 +76,29 @@ export class JoinPage implements OnInit {
     })
 
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
-      console.log(doc.data());
       this.loginUserName=doc.data().Name;
-      console.log('userName:'+this.loginUserName);
     }).then(()=>{
       firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
         this.packUserName=doc.data().userName;
-        console.log(doc.data().userName);
-
-        // if(this.packUserName!=this.loginUserName){
-        //   this.view=true;
-        // }else{
-        //   this.view=false;
-        // }
-        // console.log(this.packUserName);
       })
     }).then(()=>{
       firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
           this.array.push(doc.id);
         })
       }).then(()=>{
-        console.log(this.array);
         firebase.firestore().collection('order').where('userName','==',this.loginUserName).get().then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            console.log(doc.data());
             this.array2.push(doc.id);
         })
+      }).then(()=>{
         console.log(this.array2);
         }).then(()=>{
         for(var i=0;i<=this.array.length;i++){
           const packId=this.array.pop();
-          console.log(packId);
           
           for(var i=0;i<=this.array2.length;i++){
             const packId2=this.array2.pop();
-            console.log(packId2);
             if((packId==packId2)&&(packId!=null) || this.packUserName==this.loginUserName){
               this.view=false;
               break;
@@ -147,24 +133,11 @@ export class JoinPage implements OnInit {
   join(){
     this.joinService.joinOrder(this.id,this.packUserName);
     this.view=false;
-    // this.joinService.getPackUser(this.id);
   }
 
-  // get(){
-  //   firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
-  //     this.packUserName=doc.data().userName;
-  //     console.log(doc.data().userName);
-  //   })
-  //   return this.packUserName;
-  //}
 
   ViewCreater(){
-    // this.userId = this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref;
-    // console.log(this.userId);
-    // this.router.navigate(['/profile/'+ this.userId])
-    console.log(this.packagejoin.userId);
     this.db.doc(this.packagejoin.userId).get().forEach(doc=>{
-      console.log(doc.data());
       this.userId=doc.data().uid;
       this.router.navigate(['/profile/'+ this.userId])
     })
@@ -187,27 +160,18 @@ export class JoinPage implements OnInit {
 
     firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
       if (querySnapshot.size==0) {
-        console.log('There is no document in this query')
         this.db.collection('favorite').doc(uid).set(data)
         .then(
         )
-        console.log(data);
       }else{
-        // querySnapshot.forEach(doc => {
-        //   console.log(doc.id,doc.data());
-        //   this.db.collection('favorite').doc(doc.id).delete().then(
-        //   )
-        // })
         querySnapshot.forEach(doc => {
-          console.log(doc.id,doc.data());
           this.db.collection('favorite').doc(doc.id).update({
-            package: firebase.firestore.FieldValue.arrayUnion({packageeId:id,title,context,photo:this.Array3})
+            package: firebase.firestore.FieldValue.arrayUnion({packageId:id,title,context,photo:this.Array3})
           }
           ).then(
           )
         })
 
-        console.log(data);
       }
     })
     this.check = !this.check;
@@ -215,15 +179,12 @@ export class JoinPage implements OnInit {
 
   getUserName(){
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
-      console.log(doc.data());
       this.userName=doc.data().Name;
-      console.log('userName:'+this.userName);
     })
     return this.userName
   }
 
   zoomImage(img) {
-    console.log(img);
     this.photoViewer.show(img,'圖片');
   }
 

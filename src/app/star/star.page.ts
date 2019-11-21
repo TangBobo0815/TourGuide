@@ -49,6 +49,7 @@ export class StarPage implements OnInit {
           total:this.star
         }).then(() => {
           console.log('success1');
+          
         });
       }else{
         querySnapshot.forEach(doc=>{

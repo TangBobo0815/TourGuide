@@ -1,21 +1,16 @@
-import { Injectable } from '@angular/core';
+
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore, DocumentReference, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore} from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable , of, BehaviorSubject , combineLatest, Timestamp, from} from 'rxjs';
+import { Observable , of} from 'rxjs';
 import {flatMap, map, toArray} from 'rxjs/operators';
 
 import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
-import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
-import { stringify } from '@angular/core/src/render3/util';
-import { Title } from '@angular/platform-browser';
-import { element, reference } from '@angular/core/src/render3';
-import { toDate } from '@angular/common/src/i18n/format_date';
 import { User } from 'src/models/user';
 import { Attend } from "../../models/attend";
 
@@ -63,7 +58,6 @@ export class AttendPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.id);
     firebase.firestore().collection('packages').where('packageId','==',this.id).get().then(qtitle =>{
       qtitle.forEach(doc1 =>{
         this.pactitle = doc1.data().title;
@@ -71,12 +65,9 @@ export class AttendPage implements OnInit {
     })
     firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        console.log(doc.data());
         if(doc.data().status=='申請成功'){
           this.arrays.push({userId:doc.data().userId,userName:doc.data().userName});
         }
-        console.log(this.arrays);
-        console.log(this.arrays.length)
       })
     }).then(()=>{
       const controlArray = <FormArray> this.attendForm.get('detailsGroup');
@@ -141,15 +132,12 @@ export class AttendPage implements OnInit {
       attend:form.detailsGroup,
     }
 
-   console.log(data)
-
    this.db.collection('attendStatus').add(data).then(()=>{
      this.Success();
    });
   }  
 
   checkChange(i,arr){
-    console.log(i,arr)
   }
 
   async Success(){

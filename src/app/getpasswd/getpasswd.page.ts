@@ -1,7 +1,7 @@
 import { Component , OnInit } from '@angular/core';
 import { User } from "../../models/user";
 
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';

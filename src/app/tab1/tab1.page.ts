@@ -6,10 +6,10 @@ import { User } from "../../models/user";
 import { UserDateService } from '../services/user-date.service';
 import { switchMap } from 'rxjs/operators';
 
-import { AngularFirestore, DocumentReference, AngularFirestoreCollection, Reference } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
-import { AlertController , ToastController } from '@ionic/angular';
+import {  ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -66,7 +66,6 @@ export class Tab1Page implements OnInit {
         }
       }
       this.orders=element;
-      console.log(this.orders)
     })
    
   
@@ -87,7 +86,6 @@ export class Tab1Page implements OnInit {
         }
         this.Failorders=failpac;
       })
-
       this.cancel = !this.cancel;
       this.icon1 = !this.icon1;
     }
@@ -117,7 +115,6 @@ export class Tab1Page implements OnInit {
       .then(()=>
         this.Sucess()
     )
-    console.log(data);
     this.show=false;
   }
 
@@ -130,7 +127,6 @@ export class Tab1Page implements OnInit {
       .then(()=>
         this.Fail()
     )
-    console.log(data);
     this.show=false;
   }
 
@@ -143,9 +139,7 @@ export class Tab1Page implements OnInit {
       closeButtonText: 'Ok'
     })
     toast.present();
-  //  this.router.navigate(['/order/tap1']);
   }
-
   async Fail(){
     const toast = await this.toast.create({
       message: '該名使用者已被拒絕！',
@@ -155,6 +149,5 @@ export class Tab1Page implements OnInit {
       closeButtonText: 'Ok'
     })
     toast.present();
-   // this.router.navigate(['/order/tap1']);
   }
 }
