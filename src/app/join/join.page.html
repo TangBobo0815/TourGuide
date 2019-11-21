@@ -107,11 +107,11 @@
       <ion-row>
         <ion-col>
       <div text-left  *ngFor="let photos of packagejoin.detailsArray;let i = index" >
-          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
+          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
             <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
           </div>
           <ng-template #nocheck >
-            <div  (click)="favorite(packagejoin.userName,packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
+            <div  (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
             <ion-icon name="heart-empty" class="iconsize"></ion-icon>
             </div>
           </ng-template>

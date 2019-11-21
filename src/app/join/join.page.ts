@@ -132,20 +132,37 @@ export class JoinPage implements OnInit {
               this.check = true;
             }
           }
-         
         })
       })
 
     })
     })
-
-    
   }
 
   join(){
     this.joinService.joinOrder(this.id,this.packUserName);
     this.view=false;
   }
+
+  deleteFavorite(ownPackageId,ownPackageTitle,ownPackagecontext){
+    
+    firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot=>{ 
+      querySnapshot.forEach(doc => {
+        console.log(doc.id,doc.data());
+      if(querySnapshot.size==0){
+        console.log('No Value')
+      }else{
+        this.db.collection('favorite').doc(doc.id).update({
+          package:firebase.firestore.FieldValue.arrayRemove({context:ownPackagecontext,packageId:ownPackageId,photo:this.packagejoin.detailsArray[0]['photo'],title:ownPackageTitle})
+        }).then(i=>{
+            this.Sucess()
+        }) 
+      }
+        console.log('success')
+       })
+    })
+
+    }
 
 
   ViewCreater(){
@@ -155,39 +172,60 @@ export class JoinPage implements OnInit {
     })
   }
 
-  favorite(name,id,title,context,phonearray){
-    let uid = this.db.createId();
-    this.Array3 = phonearray[0].photo;
-    
-    const data={
-      userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
-      userName:this.loginUserName,
-      package:[{
-        packageId:id,
-        title:title,
-        context:context,
-        photo:this.Array3
-      }],
-    }
-
-    firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
-      if (querySnapshot.size==0) {
-        this.db.collection('favorite').doc(uid).set(data)
-        .then(i=>{
-          this.favoriteSuccess()
-        })
-      }else{
-        querySnapshot.forEach(doc => {
-          this.db.collection('favorite').doc(doc.id).update({
-            package: firebase.firestore.FieldValue.arrayUnion({packageId:id,title,context,photo:this.Array3})
-          }).then(i=>{
+  favorite(id,title,context,phonearray){
+    if(this.check==false){
+      let uid = this.db.createId();
+      this.Array3 = phonearray[0].photo;
+      
+      const data={
+        userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+        userName:this.loginUserName,
+        package:[{
+          packageId:id,
+          title:title,
+          context:context,
+          photo:this.Array3
+        }],
+      }
+  
+      firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+        if (querySnapshot.size==0) {
+          this.db.collection('favorite').doc(uid).set(data)
+          .then(i=>{
             this.favoriteSuccess()
           })
-        })
-
-      }
-    })
-    this.check = !this.check;
+        }else{
+          querySnapshot.forEach(doc => {
+            this.db.collection('favorite').doc(doc.id).update({
+              package: firebase.firestore.FieldValue.arrayUnion({packageId:id,title,context,photo:this.Array3})
+            }).then(i=>{
+              this.favoriteSuccess()
+            })
+          })
+  
+        }
+      })
+      this.check = !this.check;
+    }else{
+      firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot=>{ 
+        querySnapshot.forEach(doc => {
+          console.log(doc.id,doc.data());
+        if(querySnapshot.size==0){
+          console.log('No Value')
+        }else{
+          this.db.collection('favorite').doc(doc.id).update({
+            package:firebase.firestore.FieldValue.arrayRemove({context:context,packageId:id,photo:this.packagejoin.detailsArray[0]['photo'],title:title})
+          }).then(i=>{
+              this.delSucess()
+          }) 
+        }
+          console.log('success')
+          this.check = !this.check;
+         })
+         
+      })
+    }
+    
   }
 
   getUserName(){
@@ -204,6 +242,17 @@ export class JoinPage implements OnInit {
   async Sucess(){
     const toast = await this.toast.create({
       message: '已經申請過了哦!',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async delSucess(){
+    const toast = await this.toast.create({
+      message: '已刪除收藏!',
       showCloseButton: true,
       duration: 3000,
       position: 'bottom',
