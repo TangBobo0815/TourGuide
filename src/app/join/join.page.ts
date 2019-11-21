@@ -48,6 +48,7 @@ export class JoinPage implements OnInit {
   context:string;
   money:string;
   userName:string;
+  favoritePack=[];
   //---------------
   joinForm:any;
   loginUserName:string;
@@ -104,7 +105,7 @@ export class JoinPage implements OnInit {
             this.array2.push(doc.id);
         })
         console.log(this.array2);
-      }).then(()=>{
+        }).then(()=>{
         for(var i=0;i<=this.array.length;i++){
           const packId=this.array.pop();
           console.log(packId);
@@ -121,17 +122,26 @@ export class JoinPage implements OnInit {
             continue;
           }
         }
+      }).then(()=>{
+        firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+          if (querySnapshot.size==0){
+            this.check = false;
+          }
+          querySnapshot.forEach(doc => {
+            console.log(doc.data());
+            this.favoritePack.push(doc.data().package);
+          })
+          for(var i=0;i<this.favoritePack.length;i++){
+           
+          }
+    
+        })
       })
-      })
+
+    })
     })
 
-    firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
-      if (querySnapshot.size==0){
-        this.check = false;
-      }else{
-        this.check = true;
-      }
-    })
+    
   }
 
   join(){
