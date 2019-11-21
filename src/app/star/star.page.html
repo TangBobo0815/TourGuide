@@ -1,29 +1,43 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>評分</ion-title>
+  <ion-toolbar class="text">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="order"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      評分
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>  
-  <ion-card>
-      <ion-card-content>
-          <ion-item lines="none">
-              <ion-label  position="stacked">為這個行程評分</ion-label>
+<ion-content >  
+  <div class="photostyle">
+    <ion-slides pager="true">
+        <ion-slide *ngFor="let photos of packages?.detailsArray">
+          <ion-img [src]=photos?.photo></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div class="bg">
+          <ion-item lines="none"  class="bg">
+              <ion-label  position="stacked">為<b>{{packages?.title}}評分吧!</b></ion-label>
               <br>
                 <ionic4-star-rating #rating
                 activeIcon = "ios-star"
                 defaultIcon = "ios-star-outline"
-                activeColor = "#488aff" 
-                defaultColor = "#f4f4f4"
+                activeColor = "#EEEE00" 
+                defaultColor = "#EEEE00"
                 readonly="false"
                 rating="3"
                 fontSize = "32px"
                 (ratingChanged)="logRatingChange($event)">
                 </ionic4-star-rating>
+                <br>
             </ion-item>
-      </ion-card-content>
+            <div class="borderList">
+                <ion-textarea class="trip" auto-grow="true" placeholder="告訴別人你有多喜歡這個行程~" style="height: 150px"></ion-textarea>
+              </div>
       <ion-card-content>
-        <ion-button  expand="full" (click)="setScore()">確定</ion-button>
+        <ion-button expand="full" shape="round" class="butstyle" fill="outline" (click)="setScore()">確定</ion-button>
       </ion-card-content>
-  </ion-card>    
+    </div> 
 </ion-content>

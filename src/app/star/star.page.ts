@@ -21,6 +21,7 @@ export class StarPage implements OnInit {
   Total:number=0;
   Total2;
   array:[];
+  packages;
 
   constructor( 
     private route: ActivatedRoute,
@@ -28,6 +29,7 @@ export class StarPage implements OnInit {
     private rating: StarRatingModule,
     private packageservice: PackageService,
     private router : Router,
+    public packDetail:PackageService,
     private alertCtrl:AlertController
   ) { }
 
@@ -88,7 +90,10 @@ export class StarPage implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('uid');
-    console.log(this.id);
+    this.packDetail.getPackagesData(this.id);
+    this.packDetail.getPjoin().subscribe(packages=>{
+      this.packages=packages;
+    })
   }
 
   async starSuccess(){
@@ -98,7 +103,7 @@ export class StarPage implements OnInit {
         {
           text: '確定',
           handler: () => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/order']);
           }
         }
       ]
