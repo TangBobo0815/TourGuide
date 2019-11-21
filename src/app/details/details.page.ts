@@ -13,7 +13,7 @@ import { Package } from '../../models/package'
 import { Observable, of, from } from 'rxjs';
 import { User } from "../../models/user";
 import { AlertController , ToastController } from '@ionic/angular';
-import { element } from '@angular/core/src/render3';
+import { element, query } from '@angular/core/src/render3';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @Component({
@@ -27,6 +27,8 @@ export class DetailsPage implements OnInit {
   packagejoin =null;
   userId:string;
   detailsArray:Array<string>;
+  userName;
+  b;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -68,4 +70,45 @@ export class DetailsPage implements OnInit {
     this.photoViewer.show(img,'圖片');
   }
 
+   
+  deleteFavorite(ownPackageId,ownPackageTitle,ownPackagecontext){
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      console.log(doc.data());
+      this.userName=doc.data().Name;
+      console.log('userName:'+this.userName);
+    }).then(()=>{
+    firebase.firestore().collection('favorite').where('userName','==',this.userName).get().then(querySnapshot=>{ 
+      querySnapshot.forEach(doc => {
+        console.log(doc.id,doc.data());
+      if(querySnapshot.size==0){
+        console.log('No Value')
+      }else{
+        this.db.collection('favorite').doc(doc.id).update({
+          package:firebase.firestore.FieldValue.arrayRemove({context:ownPackagecontext,packageId:ownPackageId,photo:this.packagejoin.detailsArray[0]['photo'],title:ownPackageTitle})
+        }).then(i=>{
+            this.Sucess()
+        }) 
+      }
+        console.log('success')
+       })
+    })
+
+   
+
+  
+
+    })
+    }
+    async Sucess(){
+      const toast = await this.toast.create({
+        message: '刪除成功',
+        showCloseButton: true,
+        duration: 3000,
+        position: 'bottom',
+        closeButtonText: 'Ok'
+      })
+      toast.present();
+    }
+    
+    
 }
