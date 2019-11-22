@@ -1,154 +1,157 @@
-<!--<ion-header>
-  <ion-toolbar color="">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
-    </ion-buttons>
-      <ion-title >
-        {{packagejoin.title}}
-        </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-  <ion-content >
-     
-    <ion-card>
-      <div>
-        <ion-slides pager="true" >
-            <ion-slide *ngFor="let photos of packagejoin.detailsArray">
-                <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
-            </ion-slide>
-          </ion-slides>
-    </div>
-      <div>
-        <ion-card-content >
-          <ion-card-content text-left color="dark">
-            <p>時間：{{packagejoin.startDate}} ～  {{packagejoin.endDate}}</p> 
-            <div></div>
-            <p>地點：{{packagejoin.place}}</p> 
-            <div></div>
-            <p>每人預算：NT${{packagejoin.money}}</p> 
-          </ion-card-content> 
-        </ion-card-content>
-      </div> 
-      </ion-card>
-      <ion-card>
-        <ion-card-header class="b" text-center>
-          行程規劃
-        </ion-card-header>
-        <ion-card-subtitle>
-            <ion-row>
-                <ion-col>
-             <b text-left class="user">開團者： {{packagejoin.userName}} </b>
-                </ion-col>
-                <ion-col>
-               <ion-button size="small" shape="round" color="navy" fill="outline" (click)="ViewCreater()">查看個人檔案
-                </ion-button>
-                </ion-col>
-              </ion-row>
-        </ion-card-subtitle>
-        <ion-card-content text-left>
-          <div></div>
-          {{packagejoin.context}}
-        </ion-card-content>
-      </ion-card>
-  
-  
-
-      <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="join()">加入行程
-        </ion-button>
-  </ion-content>-->
-
-
 <ion-header>
-  <ion-toolbar class="text">
+  <ion-toolbar class="toolbat">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      {{packagejoin.title}}
+      <ion-label class="latitle">{{packagejoin?.title}}</ion-label>
+      <br>
+      <ion-label class="latitle">{{packagejoin?.place}}{{packagejoin?.other}}</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class="paper">
-    <div>
-      <br>
+  <div class="title paper">
+    <div class="border" paddin-top="2px">
       <ion-slides pager="true">
-        <ion-slide *ngFor="let photos of packagejoin.detailsArray;let i = index">
-          <ion-img [src]=photos.photo (click)="zoomImage(photos.photo)"></ion-img>
+        <ion-slide *ngFor="let photos of packagejoin?.detailsArray;let i = index">
+          <ion-img [src]=photos?.photo (click)="zoomImage(photos.photo)" class="ionimg"></ion-img>
         </ion-slide>
       </ion-slides>
     </div>
-    <div>
-      <ion-card-content>
-        <ion-card-content text-left color="dark">
-          <div>
-            <p>起始日：{{packagejoin.startDate}}</p>
+    <div class="cutline">&nbsp;</div>
+    <div text-left class="plstyle">
+      <ion-label>{{packagejoin?.title}}</ion-label>
+    </div>
+    <div class="scstyle pdd" *ngIf="have;else nohave">
+      <ionic4-star-rating #rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#EEEE00"
+        defaultColor="#EEEE00" readonly="true" [(ngModel)]="packagejoin.score" fontSize="20px">
+      </ionic4-star-rating>
+    </div>
 
-          </div>
-          <div>
-            <p>最終日：{{packagejoin.endDate}}</p>
+    <ng-template #nohave>
+      <div class="pdd"> {{packagejoin?.score}}</div>
+    </ng-template>
 
-          </div>
-          <div>
-            <p>地點：{{packagejoin.place}}</p>
-
-          </div>
-          <div>
-            <p>每人預算：NT${{packagejoin.money}}</p>
-          </div>
-          <div>
-            <p>評分狀態：{{packagejoin.score}}</p>
-          </div>
-
-        </ion-card-content>
-      </ion-card-content>
+    <div class="moneystyle pdd">
+      <b>NT${{packagejoin?.money}}</b>
+    </div>
+  </div>
+  <div class="cutline">&nbsp;</div>
+  <div class="datestyle">
+    <ion-row>
+      <ion-col size="6" class="rightb">
+        <ion-label text-left class="datecolor ">起始日</ion-label>
+        <br>
+        <div text-left class="pdd">
+          <b>{{packagejoin?.startDate}}</b>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label text-left class="datecolor">最終日</ion-label>
+        <div class="cutline"></div>
+        <div text-left class="pdd">
+          <b>{{packagejoin?.endDate}}</b>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="cutline">&nbsp;</div>
+  <div class="contextstyle">
+    <div class="pdd">
+      <ion-label text-left class="contexttitle">行程簡介</ion-label>
+      <div class="pdd">
+        {{packagejoin?.context}}
+      </div>
+    </div>
+    <br>
+  </div>
+  <div class="contextstyle" (click)="ViewCreater()">
+    <div class="border"></div>
+    <ion-grid class="bottonline">
       <ion-row>
-        <ion-col>
-      <div text-left  *ngFor="let photos of packagejoin.detailsArray;let i = index" >
-          <div *ngIf="check;else nocheck" (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
-            <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
+        <ion-col size="8" text-left class="pacuser">
+          開團者{{packagejoin?.userName}}的個人檔案
+        </ion-col>
+        <ion-col size="4" text-right>
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="contextstyle">
+    <ion-grid>
+      <ion-row (click)="recommend(packagejoin.place, packagejoin.title)">
+        <ion-col size="9" text-left class="pacuser">
+          相同地區推薦
+        </ion-col>
+        <ion-col size="2" text-right>
+
+        </ion-col>
+        <ion-col size="1" text-right>
+          <div *ngIf="icon;else noicon">
+            <ion-icon name="arrow-dropright"></ion-icon>
           </div>
-          <ng-template #nocheck >
-            <div  (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
-            <ion-icon name="heart-empty" class="iconsize"></ion-icon>
+          <ng-template #noicon>
+            <div>
+              <ion-icon name="arrow-dropdown"></ion-icon>
             </div>
           </ng-template>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div text-right>
-        <ion-button class="userpro" size="small" shape="round" color="dark" fill="outline" (click)="ViewCreater()">
-          {{packagejoin.userName}}個人檔案
-        </ion-button>
-      </div>
-    </ion-col>
-    </ion-row>
-    </div>
-  </ion-card>
-  <div>
-    <ion-card class="trip">
-      <ion-card-header class="b" text-center>
-        行程規劃
-      </ion-card-header>
-      <ion-card-content text-left>
-        <div class="contextcolor">
-          {{packagejoin.context}}
-        </div>
-      </ion-card-content>
-    </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-  <ion-card-subtitle>
-    <ion-row *ngIf="view;else noview">
-      <ion-col>
+  <div>
+    <div *ngIf="haverecom;else nohaverecom" class="recmimg">
+      <ion-slides>
+        <ion-slide *ngFor="let recoms of recom">
+          <ion-grid (click)="getDetail(recoms.packageId)">
+            <ion-row>
+              <ion-col size="6">
+                <div>
+                  <ion-slides>
+                    <ion-slide *ngFor="let photos of recoms.detailsArray">
+                      <ion-img [src]=photos.photo></ion-img>
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+              </ion-col>
+              <ion-col size="6" class="size">
+                {{recoms.context}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <ng-template #nohaverecom>
+
+    </ng-template>
+  </div>
+
+  <div class="cutline">&nbsp;</div>
+  <div>
+    <ion-row>
+      <ion-col size="10">
         <ion-button size="small" shape="round" class="btncolor" (click)="join()" expand="full">加入行程
         </ion-button>
       </ion-col>
+      <ion-col size="2">
+        <div text-right>
+          <div *ngIf="check;else nocheck"
+            (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
+            <ion-icon name="heart" color="danger" class="iconsize"></ion-icon>
+          </div>
+          <ng-template #nocheck>
+            <div
+              (click)="favorite(packagejoin.packageId,packagejoin.title,packagejoin.context,packagejoin.detailsArray)">
+              <ion-icon name="heart-empty" class="iconsize"></ion-icon>
+            </div>
+          </ng-template>
+        </div>
+      </ion-col>
     </ion-row>
-  </ion-card-subtitle>
-
-  <ng-template #noview>
-  </ng-template>
+  </div>
 
 </ion-content>

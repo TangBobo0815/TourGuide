@@ -27,7 +27,12 @@ export class JoinPage implements OnInit {
   packages:Package[];
   array=[];
   array2=[];
+  recom1=[];
   Array3;
+  icon=true;
+  recom=[];
+  haverecom=false;
+  qplace=false;
   data: any;
   id:string;
   check=false;
@@ -36,6 +41,7 @@ export class JoinPage implements OnInit {
   userId;
   packUserName:string;
   view:boolean=true;
+  have;
   packId:string;
   packId2:string;
   //---------------
@@ -68,21 +74,22 @@ export class JoinPage implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('uid');
-    console.log(this.id);
     this.packDetail.getPackagesData(this.id);
     this.packDetail.getPjoin().subscribe(packages=>{
-      console.log(packages);
       this.packagejoin=packages;
     })
 
     firebase.firestore().collection('packageScore').where('packageId','==',this.id).get().then(query=>{
-      if(query.size==0){this.packagejoin['score']='此行程尚未被評分';}
+      if(query.size==0){
+        this.packagejoin['score']='此行程尚未被評分! 趕緊加入吧';
+        this.have=false;
+      }
       else{
         query.forEach(doc=>{
+          this.have=true;
           this.packagejoin['score']=doc.data().total
         })
       }
-      console.log(this.packagejoin['score']);
     })
 
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
@@ -90,11 +97,13 @@ export class JoinPage implements OnInit {
     }).then(()=>{
       firebase.firestore().collection('packages').doc(this.id).get().then(doc=>{
         this.packUserName=doc.data().userName;
+        this.qplace=doc.data().place;
       })
     }).then(()=>{
       firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
           this.array.push(doc.id);
+          this.qplace=doc.data().place;
         })
       }).then(()=>{
         firebase.firestore().collection('order').where('userName','==',this.loginUserName).get().then(querySnapshot => {
@@ -122,9 +131,7 @@ export class JoinPage implements OnInit {
             this.check = false;
           }
           querySnapshot.forEach(doc => {
-            console.log(doc.data());
             this.favoritePack=doc.data().package;
-            console.log(this.favoritePack)
           })
           for(var i=0;i<this.favoritePack.length;i++){
             console.log(this.favoritePack[i]['packageId'])
@@ -148,9 +155,7 @@ export class JoinPage implements OnInit {
     
     firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot=>{ 
       querySnapshot.forEach(doc => {
-        console.log(doc.id,doc.data());
       if(querySnapshot.size==0){
-        console.log('No Value')
       }else{
         this.db.collection('favorite').doc(doc.id).update({
           package:firebase.firestore.FieldValue.arrayRemove({context:ownPackagecontext,packageId:ownPackageId,photo:this.packagejoin.detailsArray[0]['photo'],title:ownPackageTitle})
@@ -158,7 +163,6 @@ export class JoinPage implements OnInit {
             this.Sucess()
         }) 
       }
-        console.log('success')
        })
     })
 
@@ -209,9 +213,7 @@ export class JoinPage implements OnInit {
     }else{
       firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot=>{ 
         querySnapshot.forEach(doc => {
-          console.log(doc.id,doc.data());
         if(querySnapshot.size==0){
-          console.log('No Value')
         }else{
           this.db.collection('favorite').doc(doc.id).update({
             package:firebase.firestore.FieldValue.arrayRemove({context:context,packageId:id,photo:this.packagejoin.detailsArray[0]['photo'],title:title})
@@ -219,7 +221,6 @@ export class JoinPage implements OnInit {
               this.delSucess()
           }) 
         }
-          console.log('success')
           this.check = !this.check;
          })
          
@@ -238,6 +239,32 @@ export class JoinPage implements OnInit {
   zoomImage(img) {
     this.photoViewer.show(img,'圖片');
   }
+
+  recommend(qpla, qtit){
+    this.recom1=[];
+    this.recom=[];
+    firebase.firestore().collection('packages').where('place','==',qpla).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        this.recom1.push(doc.data());
+      })
+    }).then(a =>{
+
+      for(var i=this.recom1.length -1 ;i>=0;i--){
+        if((this.recom1[i].title)== qtit){
+          this.recom1.splice(i, 1);
+        }
+      }
+      this.recom=this.recom1;
+    })
+    this.icon = !this.icon;
+    this.haverecom  = !this.haverecom;
+  }
+   
+  getDetail(uid) {
+    this.router.navigate(['/join/' + uid])
+
+  }
+  
 
   async Sucess(){
     const toast = await this.toast.create({
@@ -271,5 +298,6 @@ export class JoinPage implements OnInit {
     })
     toast.present();
   }
+
 
 }
