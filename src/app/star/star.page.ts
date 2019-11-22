@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as angular from '@ionic/angular';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { AlertController , ToastController } from '@ionic/angular';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-star',
@@ -22,6 +23,7 @@ export class StarPage implements OnInit {
   Total2;
   array:[];
   packages;
+  textForm:any;
 
   constructor( 
     private route: ActivatedRoute,
@@ -30,7 +32,8 @@ export class StarPage implements OnInit {
     private packageservice: PackageService,
     private router : Router,
     public packDetail:PackageService,
-    private alertCtrl:AlertController
+    private alertCtrl:AlertController,
+    private builder: FormBuilder,
   ) { }
 
   logRatingChange(rating){
@@ -43,6 +46,7 @@ export class StarPage implements OnInit {
     let uid=this.db.createId();
     let newscore = this.db.collection('packagaScore').doc(this.id);
     var db = firebase.firestore();
+    let form = this.textForm.value;
     
   
     firebase.firestore().collection('packageScore').where('packageId','==',this.id).get().then(querySnapshot => {
@@ -51,7 +55,8 @@ export class StarPage implements OnInit {
         this.db.collection('packageScore').doc(uid).set({
           packageId:this.id,
           score:[this.star],
-          total:this.star
+          total:this.star,
+          text:[form.text]
         }).then(() => {
           console.log('success1');
           this.starSuccess();
@@ -65,6 +70,7 @@ export class StarPage implements OnInit {
         
           this.db.collection('packageScore').doc(doc.id).update({
             score: firebase.firestore.FieldValue.arrayUnion(this.star),
+            text: firebase.firestore.FieldValue.arrayUnion(form.text)
             }).then(()=>{
               firebase.firestore().collection('packageScore').doc(doc.id).get().then(docx => {
                 console.log(docx.data());
@@ -89,12 +95,26 @@ export class StarPage implements OnInit {
   }
 
   ngOnInit() {
+    this.buildForm();
     this.id = this.route.snapshot.paramMap.get('uid');
     this.packDetail.getPackagesData(this.id);
     this.packDetail.getPjoin().subscribe(packages=>{
       this.packages=packages;
     })
   }
+
+  buildForm(){
+    this.textForm = this.builder.group({
+      text: ['']
+    });
+    this.textForm.valueChanges.subscribe(data => this.onValueChanged(data));
+  }
+
+  private onValueChanged(data?: any) {
+    if (!this.textForm) { return; }
+
+  }
+  
 
   async starSuccess(){
     const alert = await this.alertCtrl.create({

@@ -33,9 +33,11 @@
                 </ionic4-star-rating>
                 <br>
             </ion-item>
-            <div class="borderList">
-                <ion-textarea class="trip" auto-grow="true" placeholder="告訴別人你有多喜歡這個行程~" style="height: 150px"></ion-textarea>
+            <form [formGroup]="textForm">
+              <div class="borderList">
+                  <ion-textarea class="trip" auto-grow="true" placeholder="告訴別人你有多喜歡這個行程~" style="height: 150px" formControlName="text"></ion-textarea>
               </div>
+            </form>
       <ion-card-content>
         <ion-button expand="full" shape="round" class="butstyle" fill="outline" (click)="setScore()">確定</ion-button>
       </ion-card-content>
