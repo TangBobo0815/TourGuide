@@ -1,0 +1,36 @@
+.text{
+    color: white;
+}
+
+.butstyle{
+    --color:#ff5511;
+    --border-color: #ff5511;
+}
+
+.photostyle{
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    
+}
+
+.trip{
+  
+    background-color: rgba(223, 223, 223, 0.89);
+    padding:2px;
+  }
+
+  .borderList{
+    border-width:1px;
+    border-style:solid;
+    border-left-color: rgb(163, 163, 163);
+    border-right-color: rgb(163, 163, 163);
+    border-bottom-color:rgb(163, 163, 163);
+    color:black;
+    padding:2px;
+  }
+  
+  .bg{
+      background-color: white;
+      --ion-background-color: white;
+  }
