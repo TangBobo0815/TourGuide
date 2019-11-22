@@ -92,11 +92,6 @@ export class DetailsPage implements OnInit {
         console.log('success')
        })
     })
-
-   
-
-  
-
     })
     }
     async Sucess(){
