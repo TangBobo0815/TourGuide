@@ -9,8 +9,8 @@
 .ViewPH {
     margin: 0 auto;
     border-radius: 50%;
-    height:40%;
-    width:40%;
+    height:100px;
+    width:100px;
     
 }
 
@@ -59,10 +59,35 @@
 
 }
 
+.back{
+
+  background-image: url(src/assets/img/trip1.jpeg);
+}
+
 ion-item.my-label {
   font-size: 20px;
   --ion-background-color: rgb(235, 225, 214);
 }
 
+ion-card-content{
 
+  background-color: white;
+  height: 200px;
+  weight: 100px;
+}
 
+ion-card-content.trip{
+
+  background-image: url(src/assets/img/back.jpg);
+}
+
+b{
+ text-align: center;
+font-size: 15pt;
+}
+
+p{
+  font-size: 10pt;
+  line-height: 30px;
+  color: black;
+}
