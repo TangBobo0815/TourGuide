@@ -23,7 +23,7 @@ import * as firebase from 'firebase';
 })
 export class ProfilePage implements OnInit {
 
-  ownpack=[];
+  ownpack = [];
   updataForm: any;
   user: Observable<User>;
   test: string = 'false';
@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
   pac = false;
   icon = true;
   Creater = null;
+  joinpack=[];
   constructor(
     private builder: FormBuilder,
     private authData: UserDateService,
@@ -73,7 +74,8 @@ export class ProfilePage implements OnInit {
     }
 
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
-      this.ownid = doc.data().Name;})
+      this.ownid = doc.data().Name;
+    })
 
   }
 
@@ -158,18 +160,40 @@ export class ProfilePage implements OnInit {
         this.ownpack.push(doc.data());
       })
     })
-    if(this.ownid != []){
+    if (this.ownid != []) {
       this.ownid = [];
     }
     this.pac = !this.pac;
     this.icon = !this.icon;
-  } 
+  }
 
+  joinpackage() {
+    var db = firebase.firestore();
+    var collection = db.collection('packages')
 
-  get(uid){
-      console.log(uid);
-      this.router.navigate(['/setting/'+uid])
+    collection.where("userName", "==", this.userId).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.log(doc.data());
+        this.joinpack.push(doc.data());
+      })
+    })
+    if (this.ownid != []) {
+      this.ownid = [];
     }
+    this.pac = !this.pac;
+    this.icon = !this.icon;
+  }
+
+
+  get(uid) {
+    console.log(uid);
+    this.router.navigate(['/setting/' + uid])
+  }
+
+  getj(uid) {
+    this.router.navigate(['/join/' + uid])
+  }
+
 
 
   updataUser(user) {

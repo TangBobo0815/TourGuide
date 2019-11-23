@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { Router, } from '@angular/router';
 
 
@@ -18,6 +18,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from "../../models/user";
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -27,14 +28,19 @@ import { switchMap } from 'rxjs/operators';
 export class HomePage implements OnInit {
   packages: Package[];
   user: Observable<User>;
+  favoritePack=[];
   show = [];
   test = [];
+  packagej=null;
+  Array3=[];
   userName: string;
   isItemAvailable = false; // initialize the items with false
   unItemAvailable = true;
   join: any;
   i: number = 0;
   a: number = 0;
+  check=false;
+  have;
   loginUserName: string;
 
   Date = new Date();
@@ -70,7 +76,7 @@ export class HomePage implements OnInit {
       icon: 'contacts'
     },
     {
-      title: '訂單管理',
+      title: '入團管理',
       url: 'order',
       icon: 'clipboard'
     },
@@ -79,16 +85,6 @@ export class HomePage implements OnInit {
       url: 'favorite',
       icon: 'heart'
     },
-    // {
-    //   title: '',
-    //   url: 'setting',
-    //   icon: 'information-circle-outline'
-    // },
-    // {
-    //   title: '升級VIP',
-    //   url: 'vip',
-    //   icon: 'star-outline'
-    // }
   ];
   constructor(public popoverController: PopoverController,
     private platform: Platform,
@@ -100,6 +96,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private db: AngularFirestore,
     private backgroundMode: BackgroundMode,
+    private toast: ToastController,
+    public loadingController: LoadingController,
     private afAuth: AngularFireAuth
   ) {
     this.user = this.afAuth.authState.pipe(
@@ -111,6 +109,10 @@ export class HomePage implements OnInit {
         }
       }))
     this.initializeApp();
+    this.presentLoading();
+    this.packDetail.getPackages().subscribe(packages => {
+      this.packagej = packages;
+    })
     this.backgroundMode.enable();
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
       this.loginUserName = doc.data().Name;
@@ -119,7 +121,6 @@ export class HomePage implements OnInit {
         querySnapshot.forEach(docx => {
           this.packageId = docx.data().packageId;
           this.userName = docx.data().userName;
-
           firebase.firestore().collection('attendStatus').where('packageId', '==', docx.data().packageId).get().then(querySnapshot => {
             if (querySnapshot.size == 0) {
               this.a = -1;
@@ -136,9 +137,6 @@ export class HomePage implements OnInit {
         })
 
       })
-
-
-
     })
   }
 
@@ -168,24 +166,14 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.packDetail.getPackages().subscribe(packages => {
-      this.packages = packages;
-    })
   }
 
 
   getreload() {
     this.packDetail.getPackages().subscribe(packages => {
-      this.packages = packages;
-      this.test.push(this.packages);
+      this.packagej = packages;
     })
   }
-
-  getUser() {
-
-  }
-
-
 
   getItem(Item) {
     if (Item == "profile") {
@@ -210,16 +198,12 @@ export class HomePage implements OnInit {
 
 
   get(uid) {
-    console.log(uid);
     this.router.navigate(['/join/' + uid])
   }
 
 
   getDetail(uid) {
-
-    console.log(uid);
     this.router.navigate(['/join/' + uid])
-
   }
 
   getItems(ev: any) {
@@ -231,12 +215,94 @@ export class HomePage implements OnInit {
       this.packages = this.packages.filter(pak => {
         return (pak => pak.toLowerCase().indexOf(val) > -1);
       })
-
-
     }
-
-
   }
 
+  favorite(id,title,context,phonearray){
+    if(this.check==false){
+      let uid = this.db.createId();
+      this.Array3 = phonearray[0].photo;
+      const data={
+        userId:this.db.doc(`users/${this.afAuth.auth.currentUser.uid}`).ref,
+        userName:this.loginUserName,
+        package:[{
+          packageId:id,
+          title:title,
+          context:context,
+          photo:this.Array3
+        }],
+      }
+  
+      firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot => {
+        if (querySnapshot.size==0) {
+          this.db.collection('favorite').doc(uid).set(data)
+          .then(i=>{
+            this.favoriteSuccess()
+          })
+        }else{
+          querySnapshot.forEach(doc => {
+            this.db.collection('favorite').doc(doc.id).update({
+              package: firebase.firestore.FieldValue.arrayUnion({packageId:id,title,context,photo:this.Array3})
+            }).then(i=>{
+              this.favoriteSuccess()
+            })
+          })
+  
+        }
+      })
+      this.check = !this.check;
+    }else{
+      firebase.firestore().collection('favorite').where('userName','==',this.loginUserName).get().then(querySnapshot=>{ 
+        querySnapshot.forEach(doc => {
+        if(querySnapshot.size==0){
+        }else{
+          this.db.collection('favorite').doc(doc.id).update({
+            package:firebase.firestore.FieldValue.arrayRemove({context:context,packageId:id,photo:this.packagej.detailsArray[0]['photo'],title:title})
+          }).then(i=>{
+              this.delSucess()
+          }) 
+        }
+          this.check = !this.check;
+         })
+         
+      })
+    }
+    
+  }
+  
+  async delSucess(){
+    const toast = await this.toast.create({
+      message: '已刪除收藏!',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async favoriteSuccess(){
+    const toast = await this.toast.create({
+      message: '已加入收藏!',
+      showCloseButton: true,
+      duration: 3000,
+      position: 'bottom',
+      closeButtonText: 'Ok'
+    })
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: '載入行程中...',
+      duration: 4000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
+  }
+  
 
 }

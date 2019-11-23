@@ -1,68 +1,56 @@
 <ion-router-outlet main></ion-router-outlet>
 <ion-header>
-  
-    <ion-item>
-      <ion-menu-button></ion-menu-button>
-      <div   text-center>
-          <img class="image" src="..\..\assets\logo.png" >
-        </div>
-   <!--  <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"  [(ngModel)]="searchInput" ></ion-searchbar>-->
-     <ion-button  size="small" shape="round" (click)="popovers()">
-        <ion-icon  name="search"></ion-icon>
-        <ion-badge color="dark" slot="end"></ion-badge>
-      </ion-button>
-    </ion-item>
-
-   <!--  <ion-list *ngIf="searchInput !== ''" >
-      <ion-item *ngFor="let item of packages" (click)="getDetail(item.packageId)">
-        {{ item.title }}
-      </ion-item>
-  </ion-list>-->
-  
+  <ion-item>
+    <ion-menu-button></ion-menu-button>
+    <div text-center>
+      <img class="image" src="..\..\assets\logo.png">
+    </div>
+    <ion-button size="small" shape="round" (click)="popovers()">
+      <ion-icon name="search"></ion-icon>
+      <ion-badge color="dark" slot="end"></ion-badge>
+    </ion-button>
+  </ion-item>
 </ion-header>
 
 
-<ion-content *ngIf="searchInput == ''" >
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
+<ion-content *ngIf="searchInput == ''">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-item>
-    <ion-label> 
-          <ion-segment>
-            <ion-label>最新揪團趣</ion-label>
-            <ion-icon name="heart" color="danger"></ion-icon>
-          </ion-segment>
+    <ion-label>
+      <ion-segment>
+        <ion-label>最新揪團趣</ion-label>
+        <ion-icon name="heart" color="danger"></ion-icon>
+      </ion-segment>
     </ion-label>
   </ion-item>
-  <div *ngFor="let package of packages" disabled="false">
+  <div *ngFor="let package of packagej" disabled="false">
     <ion-card class="welcome-card" (click)="get(package.packageId)">
-      <div class="local-size" >
+      <div class="local-size">
         <ion-row>
           <ion-col>
             <ion-chip>
-              <!--<ion-avatar>
-                <img [src]="package.userImg">
-              </ion-avatar>-->
-              <ion-label>{{package.userName}}</ion-label>
+              <ion-label>{{package?.userName}}</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col text-right>
-           <b> {{package.place}} </b>
+            <b> {{package?.place}} </b>
           </ion-col>
         </ion-row>
       </div>
-      <div >
-          <ion-slides pager="true" >
-              <ion-slide *ngFor="let photos of package.detailsArray">
-                  <ion-img [src]=photos.photo  class="imagestyle"></ion-img>
-              </ion-slide>
-            </ion-slides>
+      <div>
+        <ion-slides pager="true">
+          <ion-slide *ngFor="let photos of package.detailsArray">
+            <ion-img [src]=photos?.photo class="imagestyle"></ion-img>
+          </ion-slide>
+        </ion-slides>
       </div>
       <ion-card-header>
-        <ion-card-title>{{package.title}}</ion-card-title>
+        <ion-card-title>{{package?.title}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-          <ion-text>{{package.context}}</ion-text>
+        <ion-text>{{package?.context}}</ion-text>
       </ion-card-content>
     </ion-card>
   </div>
@@ -76,7 +64,7 @@
           <ion-col>
             <img class="img" [src]="user.userImg">
           </ion-col>
-          <ion-col  size="9"><br>
+          <ion-col size="9"><br>
             {{user.Name}}
             <br>
             {{user.address}}
@@ -88,8 +76,7 @@
   <ion-content>
     <ion-list class="menu">
       <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-       <!-- <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">-->
-          <ion-item (click)="getItem(p.url)">
+        <ion-item (click)="getItem(p.url)">
           <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
           <ion-label>
             {{p.title}}

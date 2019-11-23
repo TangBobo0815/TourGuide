@@ -22,7 +22,7 @@
     font-size: 14px;
 }
 .border{
-    border-width:0.3px;
+    border-width:0.1px;
     border-style:solid;
     border-left-color: rgb(163, 163, 163);
     border-right-color: rgb(163, 163, 163);
@@ -90,4 +90,12 @@
 }
 .size{
     font-size: 14px;
+    padding:2px;
+}
+.pddtitle{
+    padding-top: 15px;
+    padding-left: 15px;
+}
+.contextpadd{
+    padding-left: 17px;
 }

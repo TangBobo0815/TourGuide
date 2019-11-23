@@ -223,42 +223,99 @@
     <ion-card >
       <ion-card-content class="back" text-center color="dark" >
         <div height="100px" weight="100px">
-          <img class="ViewPH" [src]="Creater.userImg">
+          <img class="ViewPH" [src]="Creater?.userImg">
         </div>
-      
-    
             <div>
-            
-              <b>{{Creater.Name}}</b>
+              <b>{{Creater?.Name}}</b>
               <br>
-              <b>{{Creater.gender}}</b>
+              <b>{{Creater?.gender}}</b>
             </div>
-         
       </ion-card-content>
       <ion-card-content class="trip">
         <div  center padding="18px">
             <div>
-                <p>信箱:{{Creater.email}}</p>
-    
+                <p>信箱:{{Creater?.email}}</p>
               </div>
               <div>
-                <p> 手機:{{Creater.phone}}</p>
+                <p> 手機:{{Creater?.phone}}</p>
     
               </div>
               <div>
                 <p>住址:{{Creater.address}}</p>
-    
               </div>
               <div>
-                <p>生日:{{Creater.date}}</p>
+                <p>生日:{{Creater?.date}}</p>
               </div>
-           
-       
-                  
-            
       </div>
     </ion-card-content>
     </ion-card>
+    <div>
+      <ion-item class="edit" (click)="joinpackage()">
+        <ion-grid >
+          <ion-row>
+            <ion-col size="9" text-left>
+              個人開團紀錄
+            </ion-col>
+            <ion-col size="2" text-right>
+
+            </ion-col>
+            <ion-col size="1" text-right>
+              <div *ngIf="icon;else noicon">
+                <ion-icon name="arrow-dropright"></ion-icon>
+              </div>
+              <ng-template #noicon>
+                <div>
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </div>
+              </ng-template>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <div *ngIf="pac;else nopac" class="borderList">
+        <ion-grid >
+          <ion-row>
+            <ion-col size="6">
+              <ion-grid>
+                <ion-row *ngFor="let joinpacka of joinpack;let even = even" (click)="getj(joinpacka.packageId)">
+                  <ion-col class="colpad">
+                    <div *ngIf="even">
+                      {{joinpacka.title}}
+                      <ion-slides>
+                        <ion-slide *ngFor="let photos of joinpacka.detailsArray">
+                          <ion-img [src]=photos.photo class="imagestyle"></ion-img>
+                        </ion-slide>
+                      </ion-slides>
+                      <div class="border"></div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col size="6">
+              <ion-grid>
+                <ion-row *ngFor="let joinpacka of joinpack;let odd = odd" (click)="getj(joinpacka.packageId)">
+                  <ion-col class="colpad">
+                    <div *ngIf="odd">
+                      {{joinpacka.title}}
+                      <ion-slides>
+                        <ion-slide *ngFor="let photos of joinpacka.detailsArray">
+                          <ion-img [src]=photos.photo class="imagestyle"></ion-img>
+                        </ion-slide>
+                      </ion-slides>
+                      <div class="border"></div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ng-template #nopac>
+        </ng-template>
+      </div>
+    </div>
   </ng-template>
 
 
