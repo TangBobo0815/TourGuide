@@ -167,18 +167,17 @@ export class ProfilePage implements OnInit {
     this.icon = !this.icon;
   }
 
-  joinpackage() {
+  joinpackage(name) {
     var db = firebase.firestore();
     var collection = db.collection('packages')
 
-    collection.where("userName", "==", this.userId).get().then(querySnapshot => {
+    collection.where("userName", "==", name).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        console.log(doc.data());
         this.joinpack.push(doc.data());
       })
     })
-    if (this.ownid != []) {
-      this.ownid = [];
+    if (this.joinpack != []) {
+      this.joinpack = [];
     }
     this.pac = !this.pac;
     this.icon = !this.icon;
@@ -186,7 +185,6 @@ export class ProfilePage implements OnInit {
 
 
   get(uid) {
-    console.log(uid);
     this.router.navigate(['/setting/' + uid])
   }
 
