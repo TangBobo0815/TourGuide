@@ -55,7 +55,8 @@ export class Tab1Page implements OnInit {
       ); 
 
       firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
-        this.ownid = doc.data().Name;})
+        this.ownid = doc.data().Name;
+      })
     }
 
   ngOnInit() {
@@ -67,8 +68,6 @@ export class Tab1Page implements OnInit {
       }
       this.orders=element;
     })
-   
-  
   }
 
   changewait(id){

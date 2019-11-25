@@ -10,6 +10,8 @@ import { AngularFirestore} from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import {Router} from '@angular/router';
+import * as firebase from 'firebase';
+
 
 
 
@@ -38,6 +40,7 @@ export class Tab2Page implements OnInit {
   icon2 = true;
   isenabled:boolean=false;
   Date=new Date();
+  userName:string;
   
   
   year=this.Date.getFullYear().toString();
@@ -73,6 +76,9 @@ export class Tab2Page implements OnInit {
     
 
   ngOnInit() {
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      this.userName=doc.data().Name;
+    })
     this.orderService.selectAll().forEach(element=>{
       
       for(var i=element.length;i>=0;i--){
@@ -84,6 +90,19 @@ export class Tab2Page implements OnInit {
 
       for(var i=0;i<element.length;i++){
         var isenable:boolean=false;
+        console.log(this.array[i].packageId)
+        firebase.firestore().collection('scoreStatus').where('packageId','==',this.array[i].packageId).get().then(doc=>{
+          if(doc.size==0){console.log('no')}
+          doc.forEach(data=>{
+            console.log(data.data())
+            for(var i=0;i<doc.size;i++){
+              console.log(doc.size);
+              if(data.data().user[i]['userId']==this.afAuth.auth.currentUser.uid){
+                this.array[i]['isenable']=false;
+              }
+            }
+          })
+        })
         if(element[i].startDate!=null){
           var startDate=element[i].startDate;
           
@@ -102,8 +121,12 @@ export class Tab2Page implements OnInit {
           this.array[i]['isenable']=false;
         }
       }
+      
+      
       this.orders=this.array;
     })
+
+    
   }
 
 
