@@ -31,22 +31,22 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-          <ion-item width="100%">
-            <ion-icon color="dark" class="datee" name="man"></ion-icon>
-            <ion-label class="datee">行程日期
+            <ion-item width="100%">
+              <ion-icon color="dark" class="datee" name="man"></ion-icon>
+              <ion-label class="datee">行程日期
 
-            </ion-label>
+              </ion-label>
 
-            <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="開始日期"
-              formControlName="startDate"></ion-datetime>
-            <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="startTime"></ion-datetime>  -->
+              <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="開始日期"
+                formControlName="startDate"></ion-datetime>
+              <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="startTime"></ion-datetime>  -->
 
 
-            <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="返回日期"
-              formControlName="endDate"></ion-datetime>
-            <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="endTime"></ion-datetime>-->
-          </ion-item>
-       </ion-col>
+              <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="返回日期"
+                formControlName="endDate"></ion-datetime>
+              <!-- <ion-datetime displayFormat="HH:mm" placeholder="Select Time" formControlName="endTime"></ion-datetime>-->
+            </ion-item>
+          </ion-col>
         </ion-row>
 
 
@@ -103,68 +103,44 @@
         </ion-row>
 
       </ion-grid>
-      <ion-slides formArrayName="detailsGroup" pager="true">
-        <ion-slide [formGroupName]="i" *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
-          <ion-card>
-
-            <ion-item>
-              <ion-icon name="images" slot="start" color="dark"></ion-icon>
-              <ion-label background-color="dark">圖片{{i+1}}</ion-label>
-            </ion-item>
-
-
-            <ion-item>
-              <ion-input type="file" accept="image/*" formControlName="photo" (change)="chooseFiles(i,$event)">
-              </ion-input>
-            </ion-item>
-            <ion-item center> <img [src]="imgUrl" style="width:80% ;height: 80%;" alt="無上傳圖片"></ion-item>
-            <ion-card-content>
-              <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
-                type="button" color="danger" shape="round" expand="full">
-                <ion-icon name="close"></ion-icon>
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-
-      <!-- <app-packages></app-packages> -->
-
-
-      <!--
-        <ion-slides formArrayName="detailsGroup" pager="true">
-            <ion-slide [formGroupName]="i"  *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">             
-                    <ion-card >
-                      <ion-item>
-                        <ion-icon name="bookmarks" slot="start" color="dark"></ion-icon>
-                        <ion-label>行程{{i+1}}</ion-label>
-                      </ion-item>
-                      <ion-item>
-                        <ion-input type="file" accept="image/*" formControlName="photo" (change)="chooseFiles(i,$event)">
-                        </ion-input>
-                      </ion-item>
-                      <ion-card-content>
-                        <ion-item>
-                          <ion-textarea placeholder="行程規劃(請輸入20-1000字)" formControlName="context"></ion-textarea>
-                        </ion-item>
-                        <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
-                          type="button" color="danger" shape="round" expand="full">
-                          <ion-icon name="close"></ion-icon>
-                        </ion-button>
-                      </ion-card-content>
-                    </ion-card>
-            </ion-slide>
-          </ion-slides>
-  -->
-
-      <ion-card>
-        <ion-item>
-          <ion-textarea class="trip" auto-grow="true" placeholder="行程規劃(請輸入20-1000字)" formControlName="context"
-            style="height: 190px"></ion-textarea>
-        </ion-item>
-      </ion-card>
       <ion-grid>
+        <ion-row>
+          <ion-col size-lg="6" size-md="4" size-sm="6" size="12">
+            <ion-slides formArrayName="detailsGroup" pager="true">
+              <ion-slide [formGroupName]="i"
+                *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
+                <ion-card>
+                  <ion-item>
+                    <ion-icon name="images" slot="start" color="dark"></ion-icon>
+                    <ion-label background-color="dark">圖片{{i+1}}</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input type="file" accept="image/*" formControlName="photo" (change)="chooseFiles(i,$event)">
+                    </ion-input>
+                  </ion-item>
+                  <ion-item center> <img [src]="imgUrl" style="width:80% ;height: 80%;" alt="無上傳圖片"></ion-item>
+                  <ion-card-content>
+                    <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
+                      type="button" color="danger" shape="round" expand="full">
+                      <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+          <ion-col size-lg="6" size-md="4" size-sm="6" size="12">
+            <ion-card>
+              <ion-item>
+                <ion-textarea class="trip" auto-grow="true" placeholder="行程規劃(請輸入20-1000字)" formControlName="context"
+                  style="height: 190px"></ion-textarea>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
+      <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
@@ -200,39 +176,6 @@
         <ion-button type="submit" class="btncolor" block shape="round" expand="full" [disabled]="!packageForm.valid">完成
         </ion-button>
       </div>
-
-      <!--
-          <div *ngIf="selectedItem" padding>
-            You navigated here from <b>{{selectedItem.title }}</b>
-          </div>
-        -->
-
     </form>
   </ion-list>
 </ion-content>
-
-
-
-<!--   <div formArrayName="detailsGroup" *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
-          <div [formGroupName]="i">
-            <ion-card>
-              <ion-item>
-                <ion-icon name="bookmarks" slot="start" color="dark"></ion-icon>
-                <ion-label>行程</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-input type="file" accept="image/*" formControlName="image" (change)="chooseFiles($event)">
-                </ion-input>
-              </ion-item>
-              <ion-card-content>
-                <ion-item>
-                  <ion-textarea placeholder="行程規劃(請輸入20-1000字)" formControlName="context"></ion-textarea>
-                </ion-item>
-                <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
-                  type="button" color="danger" shape="round" expand="full">
-                  <ion-icon name="close"></ion-icon>
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>-->

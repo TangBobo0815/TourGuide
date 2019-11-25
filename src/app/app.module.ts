@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './popover/popover.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 //----------------------------
 import { AngularFireModule } from 'angularfire2';
@@ -57,6 +59,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicRatingModule,
+    MatGridListModule,
     StarRatingModule
   ],
   providers: [

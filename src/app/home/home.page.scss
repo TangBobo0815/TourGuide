@@ -5,7 +5,6 @@
 }
 
 .welcome-card {
-
   color: black;
   background-color: white;
 }
@@ -20,24 +19,6 @@ ion-toolbar .menu {
   border-radius: 50%;
   
 }
-
-ion-grid{
-  padding-top: 14%;
-  padding-left:10%;
-}
-
-.local-size{
-  font-size:18px;
-}
-
-.size{
-  font-size:12px;
-}
-
-.iconsize{
-  font-size: 25px;
-}
-
 .image{
   height: 50px;
   
@@ -45,10 +26,6 @@ ion-grid{
 
 .pdd{
   padding: 5px;
-}
-
-.scstyle{
-  font-size: 13px;
 }
 
 .imagestyle{
@@ -63,4 +40,13 @@ ion-grid{
 
 ion-menu-button{
   color: navy;
+}
+
+.headerpad{
+  padding-top: 12px;
+}
+
+.nameplace{
+  width: 50%;
+  background-color:white;
 }

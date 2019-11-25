@@ -1,19 +1,24 @@
-<ion-router-outlet main></ion-router-outlet>
 <ion-header>
-  <ion-item>
-    <ion-menu-button></ion-menu-button>
-    <div text-center>
-      <img class="image" src="..\..\assets\logo.png">
-    </div>
-    <ion-button size="small" shape="round" (click)="popovers()">
-      <ion-icon name="search"></ion-icon>
-      <ion-badge color="dark" slot="end"></ion-badge>
-    </ion-button>
-  </ion-item>
+  <ion-router-outlet main></ion-router-outlet>
+  <ion-row>
+    <ion-col size="3" class="headerpad" text-center>
+      <ion-menu-button></ion-menu-button>
+    </ion-col>
+    <ion-col size="6">
+      <div text-center>
+        <img class="image" src="..\..\assets\logo.png">
+      </div>
+    </ion-col>
+    <ion-col size="3" class="headerpad" text-right>
+      <ion-button size="small" shape="round" (click)="popovers()">
+        <ion-icon name="search"></ion-icon>
+        <ion-badge color="dark" slot="end"></ion-badge>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-header>
 
-
-<ion-content *ngIf="searchInput == ''">
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -25,35 +30,42 @@
       </ion-segment>
     </ion-label>
   </ion-item>
-  <div *ngFor="let package of packagej" disabled="false">
-    <ion-card class="welcome-card" (click)="get(package.packageId)">
-      <div class="local-size">
-        <ion-row>
-          <ion-col>
-            <ion-chip>
-              <ion-label>{{package?.userName}}</ion-label>
-            </ion-chip>
-          </ion-col>
-          <ion-col text-right>
-            <b> {{package?.place}} </b>
-          </ion-col>
-        </ion-row>
-      </div>
-      <div>
-        <ion-slides pager="true">
-          <ion-slide *ngFor="let photos of package.detailsArray">
-            <ion-img [src]=photos?.photo class="imagestyle"></ion-img>
-          </ion-slide>
-        </ion-slides>
-      </div>
-      <ion-card-header>
-        <ion-card-title>{{package?.title}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text>{{package?.context}}</ion-text>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  <ion-grid>
+      <ion-row>
+        <ion-col size-lg="3" size-md="3" size-sm="6" size="12" *ngFor="let package of packagej">
+            <ion-card class="welcome-card" (click)="get(package.packageId)">
+                <div class="local-size">
+                  <ion-row>
+                    <ion-col>
+                      <ion-chip>
+                        <ion-label>{{package?.userName}}</ion-label>
+                      </ion-chip>
+                    </ion-col>
+                    <ion-col text-right>
+                      <b> {{package?.place}} </b>
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <div>
+                  <ion-slides pager="true">
+                    <ion-slide *ngFor="let photos of package.detailsArray">
+                      <ion-img [src]=photos?.photo class="imagestyle"></ion-img>
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+                <ion-card-header>
+                  <ion-card-title>{{package?.title}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <div >
+                      <ion-text >{{package?.context}}</ion-text>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>
 
 <ion-menu side="start">

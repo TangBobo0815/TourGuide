@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PackagePage } from './package.page';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -24,6 +24,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    MatGridListModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PackagePage]
