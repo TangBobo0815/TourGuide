@@ -95,8 +95,8 @@ export class Tab2Page implements OnInit {
           if(doc.size==0){console.log('no')}
           doc.forEach(data=>{
             console.log(data.data())
-            for(var i=0;i<doc.size;i++){
-              console.log(doc.size);
+            for(var i=0;i<this.array.length;i++){
+              console.log(data.data().length);
               if(data.data().user[i]['userId']==this.afAuth.auth.currentUser.uid){
                 this.array[i]['isenable']=false;
               }
