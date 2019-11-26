@@ -9,6 +9,7 @@ import * as angular from '@ionic/angular';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { AlertController , ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-star',
@@ -24,6 +25,7 @@ export class StarPage implements OnInit {
   array:[];
   packages;
   textForm:any;
+  userName:string;
 
   constructor( 
     private route: ActivatedRoute,
@@ -34,7 +36,12 @@ export class StarPage implements OnInit {
     public packDetail:PackageService,
     private alertCtrl:AlertController,
     private builder: FormBuilder,
-  ) { }
+    private afAuth: AngularFireAuth,
+  ) {
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      this.userName=doc.data().Name;
+    })
+  }
 
   logRatingChange(rating){
     this.star=rating;
@@ -44,11 +51,11 @@ export class StarPage implements OnInit {
   
   setScore(){
     let uid=this.db.createId();
+    let docId=this.db.createId();
     let newscore = this.db.collection('packagaScore').doc(this.id);
     var db = firebase.firestore();
     let form = this.textForm.value;
-    
-  
+
     firebase.firestore().collection('packageScore').where('packageId','==',this.id).get().then(querySnapshot => {
       if (querySnapshot.size==0) {
         console.log('There is no document in this query')
@@ -57,7 +64,13 @@ export class StarPage implements OnInit {
           score:[this.star],
           total:this.star,
           text:[form.text]
-        }).then(() => {
+        })
+        
+        this.db.collection('scoreStatus').doc(docId).set({
+          packageId:this.id,
+          user:[{userName:this.userName,userId:this.afAuth.auth.currentUser.uid}]
+        })
+        .then(() => {
           console.log('success1');
           this.starSuccess();
         });
@@ -86,6 +99,15 @@ export class StarPage implements OnInit {
                   total:this.Total2,
                 }).then(()=>{
                   this.starSuccess();
+                  firebase.firestore().collection('scoreStatus').where('packageId','==',this.id).get().then(querySnapshot=>{
+                    if(querySnapshot.size!=0){
+                      querySnapshot.forEach(data=>{
+                        this.db.collection('scoreStatus').doc(data.id).update({
+                          user: firebase.firestore.FieldValue.arrayUnion({userName:this.userName,userId:this.afAuth.auth.currentUser.uid}),
+                        })
+                      })
+                    }
+                  })
                 })
               })
             })
