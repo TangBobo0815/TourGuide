@@ -99,6 +99,8 @@ export class Tab2Page implements OnInit {
               console.log(data.data().length);
               if(data.data().user[i]['userId']==this.afAuth.auth.currentUser.uid){
                 this.array[i]['isenable']=false;
+              }else if(data.data().user[i]['userId']==null){
+                break;
               }
             }
           })
