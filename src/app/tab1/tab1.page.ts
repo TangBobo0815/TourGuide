@@ -70,6 +70,10 @@ export class Tab1Page implements OnInit {
     })
   }
 
+  goProfile(uid){
+    this.router.navigate(['/star-p/' + uid])
+  }
+
   changewait(id){
     if(id == 1){
       this.wait = !this.wait;

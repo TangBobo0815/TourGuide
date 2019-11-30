@@ -38,6 +38,21 @@
                   <ion-textarea class="trip" auto-grow="true" placeholder="告訴別人你有多喜歡這個行程~" style="height: 150px" formControlName="text"></ion-textarea>
               </div>
             </form>
+            <ion-item lines="none"  class="bg">
+              <ion-label  position="stacked">為<b>{{packages?.userName}}評分吧!</b></ion-label>
+              <br>
+                <ionic4-star-rating #rating
+                activeIcon = "ios-star"
+                defaultIcon = "ios-star-outline"
+                activeColor = "#EEEE00" 
+                defaultColor = "#EEEE00"
+                readonly="false"
+                rating="3"
+                fontSize = "32px"
+                (ratingChanged)="logRatingChangeP($event)">
+                </ionic4-star-rating>
+                <br>
+            </ion-item>
       <ion-card-content>
         <ion-button expand="full" shape="round" class="butstyle" fill="outline" (click)="setScore()">確定</ion-button>
       </ion-card-content>

@@ -30,6 +30,8 @@ const routes: Routes = [
   { path: 'favorite', loadChildren: './favorite/favorite.module#FavoritePageModule' },
   { path: 'details', loadChildren: './details/details.module#DetailsPageModule' },
   { path: 'details/:uid', loadChildren: './details/details.module#DetailsPageModule' },
+  { path: 'star-p', loadChildren: './star-p/star-p.module#StarPPageModule' },
+  { path: 'star-p/:uid', loadChildren: './star-p/star-p.module#StarPPageModule' },
   ]
 
 @NgModule({
