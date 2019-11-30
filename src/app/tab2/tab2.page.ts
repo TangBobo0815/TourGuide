@@ -11,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 
 
@@ -87,24 +88,15 @@ export class Tab2Page implements OnInit {
         }
       }
       this.array=element;
+      console.log(this.array);
+      console.log(this.array.length);
 
-      for(var i=0;i<element.length;i++){
+      for(var i=0;i<this.array.length;i++){
+  
         var isenable:boolean=false;
         console.log(this.array[i].packageId)
-        firebase.firestore().collection('scoreStatus').where('packageId','==',this.array[i].packageId).get().then(doc=>{
-          if(doc.size==0){console.log('no')}
-          doc.forEach(data=>{
-            console.log(data.data())
-            for(var i=0;i<this.array.length;i++){
-              console.log(data.data().length);
-              if(data.data().user[i]['userId']==this.afAuth.auth.currentUser.uid){
-                this.array[i]['isenable']=false;
-              }else if(data.data().user[i]['userId']==null){
-                break;
-              }
-            }
-          })
-        })
+        
+      
         if(element[i].startDate!=null){
           var startDate=element[i].startDate;
           
@@ -114,14 +106,34 @@ export class Tab2Page implements OnInit {
           startDate=startDate.replace("-", "/").replace("-", "/");
           const statDate2=Date.parse(startDate).valueOf();
           if((statDate2<=Today3)&&(element[i].status=='申請成功')){
-            isenable=true;
-            this.array[i]['isenable']=true;
+
+            firebase.firestore().collection('scoreStatus').where('packageId','==',element[i].packageId).get().then(doc=>{
+              if(doc.size==0){
+                console.log('no')
+              }else{
+                doc.forEach(data=>{
+                for(var j=0;j<10;j++){
+                  if(data.data().user[j]['userId']==this.afAuth.auth.currentUser.uid){
+                    console.log(data.data().user[j]['userId']);
+                    this.array[i]['isenable']=false;
+                  }else{
+                    this.array[i]['isenable']=true;
+
+                  }
+                }
+              })
+              }
+            })
+
           }else{
             this.array[i]['isenable']=false;
           }
         }else{
           this.array[i]['isenable']=false;
         }
+
+        console.log(this.array);
+
       }
       
       
