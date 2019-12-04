@@ -153,7 +153,8 @@ export class SignupPage implements OnInit {
       date:form.date,
       address:form.address,
       userImg:form.userImg,
-      userImgRef:this.fileRef
+      userImgRef:this.fileRef,
+      score:100
     };
     this.imgsrc$.subscribe(path=> data.userImg=path);
     this.auth.signUp(data).then(data=>{

@@ -2,9 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore} from 'angularfire2/firestore';
+import { AngularFirestore, DocumentReference} from 'angularfire2/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Observable , of} from 'rxjs';
+import { Observable , of, concat} from 'rxjs';
 import {flatMap, map, toArray} from 'rxjs/operators';
 
 import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { User } from 'src/models/user';
 import { Attend } from "../../models/attend";
+import { query } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-attend',
@@ -27,10 +28,15 @@ export class AttendPage implements OnInit {
   year=this.Date.getFullYear().toString();
   month=(this.Date.getMonth()+1).toString();
   date=this.Date.getDate().toString();
-  
-  Today=this.year+'-'+this.month+'-'+this.date;
+  loginUserName: string;
+  uid:DocumentReference;
 
-  id:string=this.route.snapshot.paramMap.get('uid');;
+  Today:string;
+  arrayPack=[];
+  arrayAttend=[];
+
+  //id:string=this.route.snapshot.paramMap.get('uid');
+  id:string;
   arrays=[];
   data=[];
   myBoolean = true;
@@ -58,32 +64,79 @@ export class AttendPage implements OnInit {
   }
 
   ngOnInit() {
-    firebase.firestore().collection('packages').where('packageId','==',this.id).get().then(qtitle =>{
-      qtitle.forEach(doc1 =>{
-        this.pactitle = doc1.data().title;
-      })
-    })
-    firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        if(doc.data().status=='申請成功'){
-          this.arrays.push({userId:doc.data().userId,userName:doc.data().userName});
-        }
-      })
-    }).then(()=>{
-      const controlArray = <FormArray> this.attendForm.get('detailsGroup');
-      for(var i=0;i<=this.arrays.length-1;i++){
-        controlArray.controls[i].get('userId').patchValue(this.arrays[i].userId);
-        controlArray.controls[i].get('userName').patchValue(this.arrays[i].userName);
-        controlArray.controls[i].get('status').patchValue(false);
-        if(i!=this.arrays.length-1){
-          this.addDetailsButtonClick();
-        }else{
-          break;
-        }
+    if((this.date).length!=2){
+      this.Today=this.year+'-'+this.month+'-'+'0'+this.date;
+    }
 
-        
-      }
+
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
+      this.loginUserName = doc.data().Name;
     })
+
+      firebase.firestore().collection('packages').where('startDate', '==', this.Today).get().then(querySnapshot => {
+        console.log(this.Today);
+        console.log(querySnapshot.size);
+  
+        querySnapshot.forEach(docx => {
+          console.log(docx.data())
+
+          this.arrayPack.push(docx.data( ));
+          console.log(this.arrayPack);
+          console.log(this.arrayPack[0].packageId);
+          console.log(this.arrayPack[0].userName);  
+        })
+      }).then(()=>{
+        for(var i=0;i<this.arrayPack.length;i++){
+          if(this.arrayPack[i].userName==this.loginUserName){
+            console.log(this.arrayPack[i].userName);
+            console.log(this.arrayPack[i].packageId);
+            console.log(this.loginUserName);
+            this.id=this.arrayPack[i].packageId;
+            console.log(this.id)
+          }
+        }
+      }).then(()=>{
+        if(this.id==null){
+          this.Null();
+        }
+        firebase.firestore().collection('attendStatus').where('packageId','==',this.id).get().then(query=>{
+          if(query.size==1){
+            console.log('您已點過名');
+            this.Already();
+          }
+        })
+        firebase.firestore().collection('packages').where('packageId','==',this.id).get().then(qtitle =>{
+          qtitle.forEach(doc1 =>{
+            this.pactitle = doc1.data().title;
+            console.log(this.pactitle);
+          })
+        }).then(()=>{
+          firebase.firestore().collection('order').where('packageId','==',this.id).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              if(doc.data().status=='申請成功'){
+                this.arrays.push({userId:doc.data().userId,userName:doc.data().userName});
+              }
+            })
+          }).then(()=>{
+            const controlArray = <FormArray> this.attendForm.get('detailsGroup');
+            for(var i=0;i<=this.arrays.length-1;i++){
+              controlArray.controls[i].get('userId').patchValue(this.arrays[i].userId);
+              controlArray.controls[i].get('userName').patchValue(this.arrays[i].userName);
+              controlArray.controls[i].get('status').patchValue(false);
+              if(i!=this.arrays.length-1){
+                this.addDetailsButtonClick();
+              }else{
+                break;
+              }
+            }
+          })
+        })
+      })
+
+    
+
+    
+    
     
     this.buildForm();
   }
@@ -134,7 +187,33 @@ export class AttendPage implements OnInit {
 
    this.db.collection('attendStatus').add(data).then(()=>{
      this.Success();
-   });
+   })
+
+   
+
+   .then(()=>{
+     firebase.firestore().collection('attendStatus').where('packageId','==',this.id).get().then(query=>{
+       query.forEach(doc=>{
+         console.log(doc.data());
+         this.arrayAttend=doc.data().attend;
+         
+         
+         for(var i=0;i<this.arrayAttend.length;i++){
+          if(this.arrayAttend[i].status==false){
+            this.uid=this.arrayAttend[i].userId;
+            this.db.doc(this.uid).get().forEach(data=>{
+              console.log(data.data());
+              this.db.doc(this.uid).update({
+                score:(data.data().score)-5
+              })
+            })
+           
+          }
+         }
+        
+       })
+     })
+   })
   }  
 
   checkChange(i,arr){
@@ -143,6 +222,38 @@ export class AttendPage implements OnInit {
   async Success(){
     const alert = await this.alertCtrl.create({
       header: '完成',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async Null(){
+    const alert = await this.alertCtrl.create({
+      header: '您今天沒有行程',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async Already(){
+    const alert = await this.alertCtrl.create({
+      header: '您已點名過了哦',
       buttons: [
         {
           text: '確定',
