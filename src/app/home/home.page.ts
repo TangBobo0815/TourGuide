@@ -83,7 +83,7 @@ export class HomePage implements OnInit {
     {
       title: '出席點名',
       url: 'attend',
-      icon: 'heart'
+      icon: 'checkbox-outline'
     },
     {
       title: '收藏',

@@ -33,7 +33,7 @@ export class ProfilePage implements OnInit {
   view = true;
   pac = false;
   icon = true;
-  Creater = null;
+  Creater;
   joinpack=[];
   constructor(
     private builder: FormBuilder,
@@ -58,12 +58,10 @@ export class ProfilePage implements OnInit {
             return of(null);
           }
         }));
-
       this.authData.getCreateData('XMJQSh1auHXCrObAz0hfOmJfxC33').subscribe(CreaterData => {
         this.Creater = CreaterData;
       });
     }
-
     this.userId = this.route.snapshot.paramMap.get('uid');
     if (this.userId != null) {
       this.view = !this.view;
