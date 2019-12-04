@@ -8,4 +8,5 @@ export class User {
     address?:string;
     userImg?:string;
     userImgRef?:string;
+    score:number;
 }

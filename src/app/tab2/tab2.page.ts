@@ -11,11 +11,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-
-
-
-
 
 @Component({
   selector: 'app-tab2',
@@ -107,23 +102,7 @@ export class Tab2Page implements OnInit {
           const statDate2=Date.parse(startDate).valueOf();
           if((statDate2<=Today3)&&(element[i].status=='申請成功')){
 
-            firebase.firestore().collection('scoreStatus').where('packageId','==',element[i].packageId).get().then(doc=>{
-              if(doc.size==0){
-                console.log('no')
-              }else{
-                doc.forEach(data=>{
-                for(var j=0;j<10;j++){
-                  if(data.data().user[j]['userId']==this.afAuth.auth.currentUser.uid){
-                    console.log(data.data().user[j]['userId']);
-                    this.array[i]['isenable']=false;
-                  }else{
-                    this.array[i]['isenable']=true;
-
-                  }
-                }
-              })
-              }
-            })
+            this.array[i]['isenable']=true;
 
           }else{
             this.array[i]['isenable']=false;

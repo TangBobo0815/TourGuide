@@ -45,9 +45,7 @@ export class StarPage implements OnInit {
     private builder: FormBuilder,
     private afAuth: AngularFireAuth,
   ) {
-    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
-      this.userName=doc.data().Name;
-    })
+    
   }
 
   logRatingChange(rating){
@@ -176,6 +174,16 @@ export class StarPage implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.id = this.route.snapshot.paramMap.get('uid');
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc=>{
+      this.userName=doc.data().Name;
+      console.log(this.userName);
+    }).then(()=>{
+      firebase.firestore().collection('scoreStatus').where('packageId','==',this.id).where('user','array-contains',{userName:this.userName,userId:this.afAuth.auth.currentUser.uid}).get().then(query=>{
+        if(query.size!=0){
+          this.alreadySuccess();
+        }
+      })
+    })
     this.packDetail.getPackagesData(this.id);
     this.packDetail.getPjoin().subscribe(packages=>{
       this.packages=packages;
@@ -188,6 +196,8 @@ export class StarPage implements OnInit {
         console.log(this.packUserId,this.packUser)
       })
     })
+
+    
   }
 
   buildForm(){
@@ -206,6 +216,22 @@ export class StarPage implements OnInit {
   async starSuccess(){
     const alert = await this.alertCtrl.create({
       header: '評分完成',
+      buttons: [
+        {
+          text: '確定',
+          handler: () => {
+            this.router.navigate(['/order']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async alreadySuccess(){
+    const alert = await this.alertCtrl.create({
+      header: '您已對此行程評分過了喔',
       buttons: [
         {
           text: '確定',

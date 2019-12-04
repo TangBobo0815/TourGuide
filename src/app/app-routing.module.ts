@@ -26,12 +26,13 @@ const routes: Routes = [
   { path: '', loadChildren: './order/order.module#OrderPageModule' },
   { path: 'star', loadChildren: './star/star.module#StarPageModule' },
   { path: 'star/:uid', loadChildren: './star/star.module#StarPageModule' },
-  { path: 'attend/:uid', loadChildren: './attend/attend.module#AttendPageModule' },
+  { path: 'attend', loadChildren: './attend/attend.module#AttendPageModule' },
   { path: 'favorite', loadChildren: './favorite/favorite.module#FavoritePageModule' },
   { path: 'details', loadChildren: './details/details.module#DetailsPageModule' },
   { path: 'details/:uid', loadChildren: './details/details.module#DetailsPageModule' },
   { path: 'star-p', loadChildren: './star-p/star-p.module#StarPPageModule' },
   { path: 'star-p/:uid', loadChildren: './star-p/star-p.module#StarPPageModule' },
+  { path: 'attend-null', loadChildren: './attend-null/attend-null.module#AttendNullPageModule' },
   ]
 
 @NgModule({

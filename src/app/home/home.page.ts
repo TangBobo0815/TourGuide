@@ -81,10 +81,15 @@ export class HomePage implements OnInit {
       icon: 'clipboard'
     },
     {
+      title: '出席點名',
+      url: 'attend',
+      icon: 'heart'
+    },
+    {
       title: '收藏',
       url: 'favorite',
       icon: 'heart'
-    },
+    }
   ];
   constructor(public popoverController: PopoverController,
     private platform: Platform,
@@ -116,27 +121,6 @@ export class HomePage implements OnInit {
     this.backgroundMode.enable();
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
       this.loginUserName = doc.data().Name;
-    }).then(() => {
-      firebase.firestore().collection('packages').where('startDate', '==', this.Today).get().then(querySnapshot => {
-        querySnapshot.forEach(docx => {
-          this.packageId = docx.data().packageId;
-          this.userName = docx.data().userName;
-          firebase.firestore().collection('attendStatus').where('packageId', '==', docx.data().packageId).get().then(querySnapshot => {
-            if (querySnapshot.size == 0) {
-              this.a = -1;
-            } else {
-              this.a = 0;
-            }
-            querySnapshot.forEach(doc => {
-            })
-
-            if (this.loginUserName == docx.data().userName && querySnapshot.size == 0) {
-              this.router.navigate(['/attend/' + this.packageId])
-            }
-          })
-        })
-
-      })
     })
   }
 
@@ -145,8 +129,6 @@ export class HomePage implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-
-
   }
 
   popovers() {
@@ -193,6 +175,9 @@ export class HomePage implements OnInit {
     }
     else if (Item == "vip") {
       this.router.navigate(['/vip'])
+    }
+    else if (Item == "attend") {
+      this.router.navigate(['/attend'])
     }
   }
 
