@@ -99,7 +99,39 @@
             formControlName="context" style="height: 180px"></ion-textarea>
         </ion-item>
       </ion-card>
-
+      <ion-grid>
+        <ion-row>
+          <ion-col size-lg="6" size-md="4" size-sm="6" size="12">
+            <ion-slides formArrayName="detailsGroup" pager="true">
+              <ion-slide [formGroupName]="i"
+                *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
+                <ion-card>
+                  <ion-slide *ngFor="let photos of ownpackage?.detailsArray; let s = index">
+                    <ion-img [src]=photos?.photo (click)="zoomImage(photos.photo)" class="ionimg"></ion-img>
+                    <ion-input type="file"  accept="image/*" (change)="chooseFiles(i,s,$event)" formControlName="photo">修改照片</ion-input>
+                    <!-- <ion-item>
+                        <ion-icon name="images" slot="start" color="dark"></ion-icon>
+                        <ion-label background-color="dark">圖片{{i+1}}</ion-label>
+                      </ion-item> -->
+                  </ion-slide>
+                  
+                  
+                  
+                  
+                  <ion-item center> <img [src]="imgUrl" style="width:80% ;height: 80%;" alt="無上傳圖片"></ion-item>
+                  <ion-card-content>
+                    <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
+                      type="button" color="danger" shape="round" expand="full">
+                      <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </ion-slide>
+            </ion-slides>
+          </ion-col> 
+          
+        </ion-row>
+      </ion-grid>
 
       <ion-grid>
 

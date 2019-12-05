@@ -2,10 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl , FormArray } from '@angular/forms';
 import { PackageService } from '../services/package.service';
 import { AlertController } from '@ionic/angular';
 import { Routes, RouterModule } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable , of } from 'rxjs';
+import { AngularFireStorage , AngularFireUploadTask } from 'angularfire2/storage';
+import { AngularFirestore, DocumentReference } from 'angularfire2/firestore';
+import { DomSanitizer } from '@angular/platform-browser' ;
+
+export interface User {
+  uid:string;
+  Name:string;
+}
 
 @Component({
   selector: 'app-setting',
@@ -18,6 +28,7 @@ export class SettingPage implements OnInit {
   i:number=0;
   z:number=this.i+1;
   imgurl:string;
+  imgUrl;
   pacid;
   title;
   updataForm: any;
@@ -28,13 +39,25 @@ export class SettingPage implements OnInit {
   array=[];
   //----
   photo:string;
+  user: Observable<User>;
+
+  imgurl$:Observable<string>;
+  fileRef:string;
+  userName:string;
+  imgsrc$: Observable<string>;
+  snapshot:Observable<any>;
+  uploadPercent$:Observable<number>;
+  uploadTask: AngularFireUploadTask;
+  userRef:DocumentReference;
 
   constructor(private afAuth: AngularFireAuth, 
               private route: ActivatedRoute,
               public packDetail:PackageService,
               private alertCtrl: AlertController,
               private router: Router,
-              private builder: FormBuilder
+              private builder: FormBuilder,
+              private storage: AngularFireStorage,
+              private sanitizer: DomSanitizer
              ){
               this.pacid = this.route.snapshot.paramMap.get('uid');
               var db = firebase.firestore();
@@ -98,6 +121,18 @@ export class SettingPage implements OnInit {
     })
   }
 
+  addDetailsButtonClick(): void{
+    (<FormArray>this.packageForm.get('detailsGroup')).push(this.addDetailsFormGroup()) 
+  }
+
+  removeDetailsButtonClick(detailsGroupIndex):void{
+    (<FormArray>this.packageForm.get('detailsGroup')).removeAt(detailsGroupIndex)
+  }
+
+  get detailsArray():FormArray{
+    return <FormArray> this.packageForm.get('detailsGroup');
+  }
+
   formErrors = {
     'title': '',
     'context':''
@@ -143,6 +178,7 @@ export class SettingPage implements OnInit {
     var dattend =db.collection('attendStatus');
     var dpackScore = db.collection('packageScore');
     var dfavorite = db.collection('favorite');
+    var dscoreStatus = db.collection('scoreStatus');
 
     dpack.doc(ownpackageID).delete();
     firebase.firestore().collection('order').where('packageId','==',ownpackageID).get().then(querySnapshot => {
@@ -174,6 +210,12 @@ export class SettingPage implements OnInit {
          dpackScore.doc(data.id).delete();
      })
     })
+    firebase.firestore().collection('scoreStatus').where('packageId','==',ownpackageID).get().then(querySnapshot => {
+      querySnapshot.forEach(data=>{
+        console.log('scoreStatus:'+data.id);
+         dscoreStatus.doc(data.id).delete();
+     })
+    })
 
     //dpack.doc(ownpackageID).delete();
     // dorder.doc(ownpackageID).delete().then(
@@ -195,12 +237,55 @@ export class SettingPage implements OnInit {
       endDate:form.endDate,
       endTime:form.endTime,
       other:form.note,
+      detailsArray:this.ownpackage.detailsArray,
     };
     this.packDetail.updatepackage(packageId, data)
       .then(
         this.Sucess
       );
     this.Sucess();
+  }
+
+  chooseFiles(i,s,event){
+    console.log(i,s);
+    const controlArray = <FormArray> this.packageForm.get('detailsGroup');
+    const file:File=event.target.files[0];
+    const filePath = `packages/${new Date().getTime()}_${file.name}`;
+    const uploadTask = this.storage.upload(filePath,file);
+    const ref = this.storage.ref(filePath);
+  
+    this.uploadPercent$ =uploadTask.percentageChanges();
+    
+    //預覽照片始
+    let imgUrl = window.URL.createObjectURL(file);
+    let sanitizerUrl = this.sanitizer.bypassSecurityTrustUrl(imgUrl); 
+    this.imgUrl = sanitizerUrl;
+    //預覽照片末
+
+    uploadTask.then().then(()=>{
+      this.imgsrc$=ref.getDownloadURL();
+      this.imgsrc$.subscribe(path=>{
+        this.imgurl=path;
+        console.log("this.imgurl-1: " + this.imgurl);
+        console.log("filePath: " + filePath);
+        this.fileRef=filePath;
+        console.log(this.fileRef);
+        controlArray.controls[i].get('photo').patchValue(this.imgurl);
+        controlArray.controls[i].get('photoRef').patchValue(this.fileRef);
+        this.ownpackage.detailsArray[s]['photo']=this.imgurl;
+        this.ownpackage.detailsArray[s]['photoRef']=this.fileRef;
+        console.log(this.ownpackage.detailsArray);
+      })
+      console.log("this.imgurl-2: " + this.imgurl);
+      console.log('all file upload sucess');
+    
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+        //this.meta$=this.uploadTask.snapshotChanges().pipe(map(d=>d.state)) //map 將一個訂閱可以得到的資料轉成另一筆資料
+        
+    
   }
 
   async Sucess() {
