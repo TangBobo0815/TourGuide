@@ -12,7 +12,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { switchMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser' ;
 
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+
 
 export interface User {
   uid:string;

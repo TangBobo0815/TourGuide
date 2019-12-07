@@ -158,8 +158,6 @@
                   {{uploadPercent$ | async}}
                   <ion-input type="file"  style="display: none" (change)="chooseuserImg($event)"></ion-input>
                 </ion-item>
-                      <!--<ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
-                        [value]="pct"max="100"></ion-progress-bar></div>-->
                 <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
 
                 <div>
@@ -197,70 +195,7 @@
               </ion-text>
             </ion-item>
           
-            <!-- <div id ="recaptcha-container"></div>
-            <ion-button (click)="sendCode()">sms send code</ion-button>
-            
-            <div *ngIf="windowRef.confirmationResult">
-              <label for="code">enter your code</label><br>
-              <ion-input type="text" name="code" [(ngModel)]="verificationCode" class="input"></ion-input>
-
-              <ion-button (click)="verifyCode()">Verify</ion-button>
-            </div> -->
-            <!-- <p *ngIf="secondForm.invalid && secondForm.touched">
-              That's not a valid phone number
-            </p> -->
-                <!--<ion-row>
-                  <ion-col>
-                    <ion-item>
-                      <ion-label>手機</ion-label>
-                      <ion-input type="text" placeholder="輸入手機" formControlName="phone"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-
-                <ion-item *ngIf="formErrors.phone">
-                  <ion-text color="danger">
-                    <p>{{ formErrors.phone }}</p>
-                  </ion-text>
-                </ion-item>-->
-            <!-- <div formGroupName="userImgInfoGroup" *ngIf="show">
-              <ion-item>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col>
-                      <ion-item>
-                        <input id="fileId" type="file"  accept="image/*" (change)="chooseFiles($event)" 
-                          style="display: none"  formControlName="imgsrc"/>
-                        <ion-button type="button" [disabled]="!disabled" onclick="fileId.click()"  color="dark">身分證照上傳
-                        </ion-button>
-                        {{uploadPercent$ | async}}
-                        <ion-input type="file" style="display: none" (change)="chooseFiles($event)"></ion-input>
-                      </ion-item>
-
-                      <ionic-progress-bar *ngIf="uploadPercent$ | async pct"><progress class="progress is-info"
-                        [value]="pct"max="100"></ion-progress-bar></div>
-
-                      <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col>
-                      <ion-item [disabled]="!disabled" >
-                        <ion-label>身分證號碼</ion-label>
-                        <ion-input type="text" placeholder="輸入身分證號碼" formControlName="userid"></ion-input>
-                      </ion-item>
-
-                      <ion-item *ngIf="formErrors.userid">
-                        <ion-text color="danger">
-                          <p>{{ formErrors.userid }}</p>
-                        </ion-text>
-                      </ion-item>
-
-                    </ion-col>
-                  </ion-row> 
-                </ion-grid>
-              </ion-item>
-            </div> -->
+        
           </div>
           <div>
             <button mat-flat-button matStepperNext color="dark">下一步</button>
@@ -280,83 +215,3 @@
 </ion-content>
 
 
-<!--<mat-horizontal-stepper>
-  <mat-step [stepControl]="userformGroup1">
-    <ng-template matStepLabel>輸入您的資料</ng-template>
-      <form [formGroup]="registerForm">
-        <div>
-          <mat-form-field>
-            <input matInput placeholder="姓名" formControlName="Name" required>
-              <mat-error *ngIf="formErrors.Name">{{formErrors.Name}}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>請選擇性別</mat-label>
-            <mat-select  formControlName="gender" required>
-              <mat-option *ngFor="let food of foods" [value]="food.value">
-                {{food.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp3" placeholder="選擇生日(必填)" disabled >
-            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input matInput placeholder="手機" formControlName="phone" required>
-            <mat-error *ngIf="formErrors.phone">{{formErrors.phone}}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input matInput placeholder="地址" formControlName="address" required>
-            <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <button mat-button matStepperNext>下一步</button>
-        </div>
-      </form>
-  </mat-step>
-  <mat-step [stepControl]="userformGroup2">
-      <ng-template matStepLabel>輸入您的帳號密碼</ng-template>
-        <form [formGroup]="emailForm">
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="信箱(未來登入使用)"  formControlName="email" required>
-                <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
-              </mat-form-field>
-            </div>
-            <div formGroupName="passwordGroup">
-              <mat-form-field>
-                <input matInput placeholder="密碼" type="password" formControlName="password" required>
-                <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-                <input matInput placeholder="確認密碼" type="password" formControlName="confirmPassword" required>
-                <mat-error *ngIf="formErrors.confirmPassword">{{formErrors.confirmPassword}}</mat-error>
-              </mat-form-field>
-              <mat-error *ngIf="formErrors.matchPassword">{{formErrors.matchPassword}}</mat-error>              
-            </div>
-            <div>
-                <button mat-button matStepperPrevious>上一步</button>
-                <button mat-button matStepperNext>下一步</button>
-              </div>
-        </form>
-  </mat-step>
-  <mat-step [stepControl]="userformGroup3">
-      <ng-template matStepLabel>嚮導功能</ng-template>
-      <form [formGroup]="tourForm">
-        <div>
-         <mat-slide-toggle>是否開啟嚮導功能</mat-slide-toggle>
-        </div>
-      </form>
-  </mat-step>
-</mat-horizontal-stepper>-->

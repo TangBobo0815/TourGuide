@@ -6,10 +6,11 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-title>個人開團明細</ion-title>
+          <ion-title>個人開團明細</ion-title>
         </ion-col>
-        <ion-col text-right > 
-            <ion-button size="small"  color="danger" shape="round" fill="outline" (click)="Deletepackage(ownpackage.packageId,ownpackage.title,ownpackage.context)">刪除</ion-button>
+        <ion-col text-right>
+          <ion-button size="small" color="danger" shape="round" fill="outline"
+            (click)="Deletepackage(ownpackage.packageId,ownpackage.title,ownpackage.context)">刪除</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -26,7 +27,7 @@
             <ion-label position="stacked">
               <ion-icon name="create"></ion-icon>名稱
             </ion-label>
-            <ion-input type="text" [(ngModel)]="ownpackage.title" formControlName="title"></ion-input>
+            <!--   <ion-input type="text" [(ngModel)]="ownpackage.title" formControlName="title"></ion-input>-->
           </ion-item>
         </ion-col>
       </ion-row>
@@ -57,7 +58,7 @@
 
       <ion-grid>
         <ion-row>
-          <ion-col >
+          <ion-col>
             <ion-item>
               <ion-label position="stacked">
                 地區
@@ -87,7 +88,8 @@
                 <ion-select-option>金門縣</ion-select-option>
                 <ion-select-option>連江縣</ion-select-option>
               </ion-select>
-              <ion-input type="text" [(ngModel)]="ownpackage.other" formControlName="note" placeholder="地區備註"></ion-input>
+              <ion-input type="text" [(ngModel)]="ownpackage.other" formControlName="note" placeholder="地區備註">
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -101,35 +103,26 @@
       </ion-card>
       <ion-grid>
         <ion-row>
-          <ion-col size-lg="6" size-md="4" size-sm="6" size="12">
-            <ion-slides formArrayName="detailsGroup" pager="true">
-              <ion-slide [formGroupName]="i"
-                *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
-                <ion-card>
-                  <ion-slide *ngFor="let photos of ownpackage?.detailsArray; let s = index">
-                    <ion-img [src]=photos?.photo (click)="zoomImage(photos.photo)" class="ionimg"></ion-img>
-                    <ion-input type="file"  accept="image/*" (change)="chooseFiles(i,s,$event)" formControlName="photo">修改照片</ion-input>
-                    <!-- <ion-item>
-                        <ion-icon name="images" slot="start" color="dark"></ion-icon>
-                        <ion-label background-color="dark">圖片{{i+1}}</ion-label>
-                      </ion-item> -->
-                  </ion-slide>
-                  
-                  
-                  
-                  
-                  <ion-item center> <img [src]="imgUrl" style="width:80% ;height: 80%;" alt="無上傳圖片"></ion-item>
-                  <ion-card-content>
-                    <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
-                      type="button" color="danger" shape="round" expand="full">
-                      <ion-icon name="close"></ion-icon>
-                    </ion-button>
-                  </ion-card-content>
-                </ion-card>
+          <ion-col size-lg="6" size-md="4" size-sm="6" size="12" formArrayName="detailsGroup">
+            <ion-slides pager="true" [formGroupName]="i"
+              *ngFor="let detail of packageForm.get('detailsGroup').controls; let i = index">
+              <ion-slide *ngFor="let photos of ownpackage?.detailsArray; let s = index">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-img [src]=photos?.photo (click)="zoomImage(photos.photo)" class="imagestyle"></ion-img>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-input id="file" type="file" accept="image/*" (change)="chooseFiles(i,s,$event)"
+                        formControlName="photo"></ion-input>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
               </ion-slide>
             </ion-slides>
-          </ion-col> 
-          
+          </ion-col>
         </ion-row>
       </ion-grid>
 
@@ -159,7 +152,7 @@
         </ion-row>
       </ion-grid>
       <div padding text-center>
-        <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"  >
+        <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full">
           儲存
         </ion-button>
       </div>
