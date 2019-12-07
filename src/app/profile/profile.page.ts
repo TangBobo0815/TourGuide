@@ -30,11 +30,13 @@ export class ProfilePage implements OnInit {
   show: string = 'false';
   userId;
   ownid;
+  userName:string;
   view = true;
   pac = false;
   icon = true;
   Creater;
   joinpack=[];
+  array=[];
   constructor(
     private builder: FormBuilder,
     private authData: UserDateService,
@@ -73,6 +75,7 @@ export class ProfilePage implements OnInit {
 
     firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
       this.ownid = doc.data().Name;
+      console.log(this.ownid);
     })
 
   }
@@ -93,6 +96,42 @@ export class ProfilePage implements OnInit {
 
 
   ngOnInit() {
+
+    firebase.firestore().collection('users').where('uid','==',this.userId).get().then(query=>{
+      query.forEach(data=>{
+        this.userName=data.data().Name;
+        console.log(this.userId);
+        console.log(this.userName);
+      })
+    }).then(()=>{
+      firebase.firestore().collection('personScore').where('packUserName','==',this.ownid).get().then(query=>{
+        if(query.size==0){
+          this.array.push({scorePP:'你尚未被評分'});
+        }
+        else{
+          query.forEach(doc=>{
+            this.array.push({scorePP:doc.data().total});
+          })
+        }
+      })
+      console.log(this.array);
+    }).then(()=>{
+      
+      firebase.firestore().collection('personScore').where('packUserName','==',this.userName).get().then(query=>{
+        if(query.size==0){
+          this.array.push({scoreP:'此開團者尚未被評分'});
+        }
+        else{
+          query.forEach(doc=>{
+            this.array.push({scoreP:doc.data().total});
+          })
+        }
+      })
+      console.log(this.array);
+    })
+    
+    
+
     this.buildForm();
   }
 

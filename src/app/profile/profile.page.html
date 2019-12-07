@@ -46,6 +46,14 @@
               <ion-row>
                 <ion-col>
                   <ion-item>
+                    評分狀態:
+                    <ion-label left>{{array[0].scorePP}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
                     信譽積分:
                     <ion-label left>{{user.score}}</ion-label>
                   </ion-item>
@@ -174,6 +182,22 @@
               <ion-row>
                 <ion-col>
                   <ion-item>
+                    評分狀態:
+                    <ion-label left>{{array[0].scorePP}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    信譽積分:
+                    <ion-label left>{{user.score}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
                     信箱:
                     <ion-label left>{{user.email}}</ion-label>
                   </ion-item>
@@ -253,6 +277,12 @@
               </div>
               <div>
                 <p>生日:{{Creater?.date}}</p>
+              </div>
+              <div>
+                <p>評分狀態:{{array[1].scoreP}}</p>
+              </div>
+              <div>
+                <p>信譽積分:{{Creater?.score}}</p>
               </div>
       </div>
     </ion-card-content>
