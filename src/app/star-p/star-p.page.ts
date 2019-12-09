@@ -51,16 +51,7 @@ export class StarPPage implements OnInit {
     private route: ActivatedRoute
   ) {
 
-    if (this.orderId == null || this.orderId == '') {
-      this.user = this.afAuth.authState.pipe(
-        switchMap(user => {
-          if (user) {
-            return this.db.doc<User>(`users/${user.uid}`).valueChanges();
-          } else {
-            return of(null);
-          }
-        }));
-    }
+   
 
     
   }
