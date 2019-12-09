@@ -57,7 +57,7 @@
           <ion-row>
             <ion-col left size="6">
               <ion-item>
-                <ion-label (click)="goProfile(order.UID)"><b>{{order.name}}</b>申請加入</ion-label>
+                <ion-label (click)="goProfile(order.id)"><b>{{order.name}}</b>申請加入</ion-label>
               </ion-item>
             </ion-col>
             <ion-col size="3">
@@ -192,7 +192,7 @@
             <ion-row>
               <ion-col left>
                 <ion-item>
-                  <ion-label><b>{{agreeorder.name}}</b>申請已被您接受</ion-label>
+                  <ion-label (click)="goProfile(agreeorder.id)"><b>{{agreeorder.name}}</b>申請已被您接受</ion-label>
                 </ion-item>
               </ion-col>
             </ion-row>

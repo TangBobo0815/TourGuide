@@ -25,11 +25,18 @@ export class StarPPage implements OnInit {
   user: Observable<User>;
   test: string = 'false';
   show: string = 'false';
-  userId;
+  orderId;
   updataForm: any;
   view = true;
   pac = false;
   icon = true;
+  userData;
+  userId:DocumentReference;
+  array=[];
+  arrayP=[];
+  joinpack=[];
+  ownid;
+  userName:string;
 
   constructor(
     private builder: FormBuilder,
@@ -44,7 +51,7 @@ export class StarPPage implements OnInit {
     private route: ActivatedRoute
   ) {
 
-    if (this.userId == null || this.userId == '') {
+    if (this.orderId == null || this.orderId == '') {
       this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if (user) {
@@ -54,12 +61,48 @@ export class StarPPage implements OnInit {
           }
         }));
     }
+
+    
   }
 
   ngOnInit() {
     this.buildForm();
-    this.userId = this.route.snapshot.paramMap.get('uid');
-  }
+    this.orderId = this.route.snapshot.paramMap.get('uid');
+    firebase.firestore().collection('users').doc(this.afAuth.auth.currentUser.uid).get().then(doc => {
+      this.ownid = doc.data().Name;
+      console.log(this.ownid);
+    }).then(()=>{
+      firebase.firestore().collection('order').doc(this.orderId).get().then(doc=>{
+        this.userId = doc.data().userId;
+        console.log(this.userId)
+      }).then(()=>{
+        this.db.doc(this.userId).get().forEach(doc=>{
+          this.array.push(doc.data())
+          console.log(this.array);
+        }).then(()=>{
+          this.db.doc(this.userId).get().forEach(query=>{
+              this.userName=query.data().Name;
+              console.log(this.userName);
+          }).then(()=>{
+            firebase.firestore().collection('personScore').where('packUserName','==',this.userName).get().then(query=>{
+              if(query.size==0){
+                this.arrayP.push({scoreP:'此開團者尚未被評分'});
+              }
+              else{
+                query.forEach(doc=>{
+                  this.arrayP.push({scoreP:doc.data().total});
+                })
+              }
+            })
+            console.log(this.arrayP);
+          })
+        })
+      })
+    })
+          
+      
+
+   }
 
   buildForm() {
     this.updataForm = this.builder.group({
@@ -96,8 +139,30 @@ export class StarPPage implements OnInit {
     if (!this.updataForm) { return; }
 
     const form = this.updataForm;
-    
-    
   }
 
+  getj(uid) {
+    this.router.navigate(['/join/' + uid])
+  }
+
+  joinpackage(name) {
+    var db = firebase.firestore();
+    var collection = db.collection('packages')
+
+    collection.where("userName", "==", name).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        this.joinpack.push(doc.data());
+      })
+    })
+    if (this.joinpack != []) {
+      this.joinpack = [];
+    }
+    this.pac = !this.pac;
+    this.icon = !this.icon;
+  }
+
+
+  
+
+  
 }

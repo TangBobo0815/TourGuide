@@ -67,11 +67,14 @@ export class Tab1Page implements OnInit {
         }
       }
       this.orders=element;
+      
     })
   }
 
+  
   goProfile(uid){
     this.router.navigate(['/star-p/' + uid])
+    console.log(uid) 
   }
 
   changewait(id){
@@ -101,6 +104,7 @@ export class Tab1Page implements OnInit {
           }
         }
         this.agreeorders=argeepac;
+        console.log(this.agreeorders);
       })
 
       this.agree = !this.agree;
