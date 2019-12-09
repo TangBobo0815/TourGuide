@@ -217,7 +217,7 @@ export class SettingPage implements OnInit {
      })
     })
 
-    //dpack.doc(ownpackageID).delete();
+    // dpack.doc(ownpackageID).delete();
     // dorder.doc(ownpackageID).delete().then(
     //   this.Sucess
     // );
