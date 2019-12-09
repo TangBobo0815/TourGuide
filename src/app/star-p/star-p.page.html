@@ -10,247 +10,42 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="view;else noview">
-    <div center *ngIf="(authData.user | async) || {} as user" font-size="12px">
-      <div padding-top="10px" *ngIf="show;else noshow">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4">
-              <img class="img" [src]="user.userImg">
-            </ion-col>
-            <ion-col size="8">
-              <ion-row>
-                <ion-col>
-                  <ion-item>
-                    姓名:
-                    <ion-label left>{{user.Name}}</ion-label>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-item>
-                    性別:
-                    <ion-label left>{{user.gender}}</ion-label>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-item>
-                    生日:
-                    <ion-label left>{{user.date}}</ion-label>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="2">
-          <!--    <div text-center pdding-left="5px">
-                <img class="score" src="https://image.flaticon.com/icons/svg/179/179249.svg">4.2
-              </div>-->
-            </ion-col>
-            <ion-col size="10">
-              <ion-item>
-                信箱:
-                <ion-label left>{{user.email}}</ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <br />
-        <ion-item class="edit" (click)="show = !show">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="11" text-left>
-                編輯基本資料
-              </ion-col>
-              <ion-col size="1" text-right>
-                <ion-icon name="arrow-dropright"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-        <br />
-        <ion-item class="edit" (click)="ownpackage()">
-          <ion-grid >
-            <ion-row>
-              <ion-col size="9" text-left>
-                個人開團紀錄
-              </ion-col>
-              <ion-col size="2" text-right>
-
-              </ion-col>
-              <ion-col size="1" text-right>
-                <div *ngIf="icon;else noicon">
-                  <ion-icon name="arrow-dropright"></ion-icon>
-                </div>
-                <ng-template #noicon>
-                  <div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                  </div>
-                </ng-template>
-
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-        <div *ngIf="pac;else nopac" class="borderList">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6">
-                <ion-grid>
-                  <ion-row *ngFor="let package of ownpack;let even = even">
-                    <ion-col class="colpad">
-                      <div *ngIf="even">
-                        {{package.title}}
-                        <ion-slides>
-                          <ion-slide *ngFor="let photos of package.detailsArray">
-                            <ion-img [src]=photos.photo class="imagestyle"></ion-img>
-                          </ion-slide>
-                        </ion-slides>
-                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
-                        </ion-button>
-                        <div class="border"></div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-col>
-              <ion-col size="6">
-                <ion-grid>
-                  <ion-row *ngFor="let package of ownpack;let odd = odd">
-                    <ion-col class="colpad">
-                      <div *ngIf="odd">
-                        {{package.title}}
-                        <ion-slides>
-                          <ion-slide *ngFor="let photos of package.detailsArray">
-                            <ion-img [src]=photos.photo class="imagestyle"></ion-img>
-                          </ion-slide>
-                        </ion-slides>
-                        <ion-button size="small" class="button" shape="round" color="dark" fill="outline" expand="full" (click)="get(package.packageId)">編輯此團
-                        </ion-button>
-                        <div class="border"></div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <ng-template #nopac>
-
-          </ng-template>
-        </div>
-      </div>
-
-      <ng-template #noshow>
-        <div center padding="10px" font-size="12px">
-          <form [formGroup]="updataForm" (ngSubmit)="updataUser(user)">
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-item>
-                    <ion-label>姓名:</ion-label>
-                    <ion-label>{{user.Name}}</ion-label>
-                  </ion-item>
-                </ion-col>
-                <ion-col>
-                  <ion-item>
-                    <ion-label>性別:</ion-label>
-                    <ion-label>{{user.gender}}</ion-label>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-item>
-                    信箱:
-                    <ion-label left>{{user.email}}</ion-label>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-
-              <div>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      手機:
-                      <ion-input left [(ngModel)]="user.phone" formControlName="phone"></ion-input>
-                    </ion-item>
-                    <ion-item *ngIf="formErrors.phone">
-                      <ion-text color="danger">
-                        <p>{{ formErrors.phone }}</p>
-                      </ion-text>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      住址:
-                      <ion-input left [(ngModel)]="user.address" formControlName="address"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item>
-                      生日:
-                      <ion-datetime display-format="DD/MM/YYYY" picker-format="DD M YYYY" placeholder="選擇日期"
-                        [(ngModel)]="user.date" formControlName="date">
-                      </ion-datetime>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </div>
-            </ion-grid>
-            <div padding text-center>
-              <ion-button type="submit" color="dark" id="touron" block shape="round" expand="full"
-                routerLink="/profile">
-                儲存
-              </ion-button>
-            </div>
-          </form>
-        </div>
-      </ng-template>
-
-    </div>
-  </div>
-
-  <ng-template #noview>
     <ion-card >
       <ion-card-content class="back" text-center color="dark" >
         <div height="100px" weight="100px">
-          <img class="ViewPH" [src]="Creater?.userImg">
+          <img class="ViewPH" [src]="array[0].userImg">
         </div>
             <div>
-              <b>{{Creater?.Name}}</b>
+              <b>{{array[0].Name}}</b>
               <br>
-              <b>{{Creater?.gender}}</b>
+              <b>{{array[0].gender}}</b>
             </div>
       </ion-card-content>
       <ion-card-content class="trip">
         <div  center padding="18px">
             <div>
-                <p>信箱:{{Creater?.email}}</p>
+                <p>信箱:{{array[0].email}}</p>
               </div>
               <div>
-                <p> 手機:{{Creater?.phone}}</p>
-    
+                <p> 手機:{{array[0].phone}}</p>
               </div>
               <div>
-                <p>住址:{{Creater.address}}</p>
+                <p>住址:{{array[0].address}}</p>
               </div>
               <div>
-                <p>生日:{{Creater?.date}}</p>
+                <p>生日:{{array[0].date}}</p>
+              </div>
+              <div>
+                <p>評分狀態:{{arrayP[0].scoreP}}</p>
+              </div>
+              <div>
+                <p>信譽積分:{{array[0].score}}</p>
               </div>
       </div>
     </ion-card-content>
     </ion-card>
     <div>
-      <ion-item class="edit" (click)="joinpackage(Creater?.Name)">
+      <ion-item class="edit" (click)="joinpackage(array[0].Name)">
         <ion-grid >
           <ion-row>
             <ion-col size="9" text-left>
@@ -316,9 +111,4 @@
         </ng-template>
       </div>
     </div>
-  </ng-template>
-
-
-
-
 </ion-content>
