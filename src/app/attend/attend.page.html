@@ -1,8 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title class="fontstyle">{{pactitle}}的點名出席系統!</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar class="text">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+          <ion-title class="fontstyle">{{pactitle}}的點名出席系統!</ion-title>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content padding>
   <form [formGroup]="attendForm" (ngSubmit)="submitForm()">
