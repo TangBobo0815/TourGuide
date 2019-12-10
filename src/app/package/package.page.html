@@ -118,7 +118,11 @@
                     <ion-input type="file" accept="image/*" formControlName="photo" (change)="chooseFiles(i,$event)">
                     </ion-input>
                   </ion-item>
+                  
                   <ion-item center> <img [src]="imgUrl" style="width:80% ;height: 80%;" alt="無上傳圖片"></ion-item>
+                  <ion-item>
+                      <ion-progress-bar *ngIf="uploadPercent$ | async pct" color="secondary" [value]="pct" max="1"></ion-progress-bar>
+                  </ion-item>
                   <ion-card-content>
                     <ion-button *ngIf="packageForm.get('detailsGroup').length>1" (click)="removeDetailsButtonClick(i)"
                       type="button" color="danger" shape="round" expand="full">

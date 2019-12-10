@@ -32,9 +32,10 @@ export class AttendPage implements OnInit {
   uid:DocumentReference;
 
   Today:string;
+
   arrayPack=[];
   arrayAttend=[];
-
+  
   //id:string=this.route.snapshot.paramMap.get('uid');
   id:string;
   arrays=[];
@@ -64,8 +65,14 @@ export class AttendPage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.buildForm();
+  
+
     if((this.date).length!=2){
       this.Today=this.year+'-'+this.month+'-'+'0'+this.date;
+    }else{
+      this.Today=this.year+'-'+this.month+'-'+this.date;
     }
 
 
@@ -138,7 +145,7 @@ export class AttendPage implements OnInit {
     
     
     
-    this.buildForm();
+    
   }
 
   buildForm() {
