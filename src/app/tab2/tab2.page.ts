@@ -159,5 +159,10 @@ export class Tab2Page implements OnInit {
     
   }
 
+  goProfile(uid){
+    this.route.navigate(['/join/' + uid])
+    console.log(uid) 
+  }
+
 
 }

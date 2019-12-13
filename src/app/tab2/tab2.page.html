@@ -34,7 +34,7 @@
         <div>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col (click)="goProfile(order.packageId)">
                 {{order.title}}
               </ion-col>
             </ion-row>
